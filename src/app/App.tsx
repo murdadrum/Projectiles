@@ -2,6 +2,9 @@ import { Tile } from "./components/Tile";
 import { TileModal } from "./components/TileModal";
 import { useState } from "react";
 import { AnimatePresence } from "motion/react";
+import exampleImage from "../assets/9b575cc4c10f94dbf5e12e6297f8384ca5a66aec.png";
+import tile7Image from "../assets/a4b05d016588a10ebfcf010ecce10d0b8b6caf19.png";
+import tile9Image from "../assets/f639cb36dc00fd59e0437ddb7d1b94103abb88bd.png";
 
 // Mosaic color palette - 16 colors for 4x4 grid
 const tileColors = [
