@@ -228,9 +228,10 @@ export default function App() {
   return (
     <div className="min-h-screen bg-[#0A0A0A] pt-8 md:pt-12 flex flex-col items-center justify-center">
       <div className="w-full max-w-[min(90vh,90vw)] md:max-w-[min(72vh,72vw)] px-4">
-        <div className="text-center mb-8 md:mb-12">
-          <h1 className="text-4xl md:text-5xl font-light text-white tracking-tight">
-            ProjecTiles
+        <div className="flex justify-end mb-4 md:mb-6">
+          <h1 className="text-3xl md:text-5xl font-mono font-bold text-white tracking-widest uppercase">
+            <span className="text-[rgb(255,255,255)] font-normal">ProjecTiles</span>
+         
           </h1>
         </div>
         
@@ -247,9 +248,9 @@ export default function App() {
           ))}
         </div>
         
-        <p className="text-center mt-6 md:mt-8 text-xs md:text-sm text-white/40 font-mono uppercase tracking-wider">
+        <p className="text-left mt-6 md:mt-8 text-xs md:text-sm text-white/40 font-mono uppercase tracking-wider">
           <a href="mailto:josh@hooloovoocafe.com" className="hover:text-cyan-400 transition-colors">
-            JOSH@HOOLOOVOOCAFE.COM
+            JOSH@REMOTELYAMUSED.COM
           </a>
         </p>
       </div>
