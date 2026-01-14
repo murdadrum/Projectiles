@@ -54,14 +54,15 @@ const tileInfo: { [key: number]: {
     embedUrl: "https://venndiachrome.figma.site/"
   },
   1: { // Tile 2
-    title: "NeuralCanvas",
-    subtitle: "AI Art Studio",
-    description: "Generative art platform powered by machine learning for creative exploration.",
+    title: "ProjecTiles Template",
+    subtitle: "Portfolio Web App",
+    description: "Launch-ready portfolio template built for fast customization and publishing.",
     details: [
-      "Integrates multiple AI models for style transfer and image generation.",
-      "Supports batch processing with preset templates and custom parameters.",
+      "Modular hero, grid, and project sections for quick content swaps.",
+      "Responsive layout with tile-based navigation and embedded demos.",
     ],
-    techStack: ["Python", "TensorFlow", "React"]
+    techStack: ["React", "Vite", "Tailwind CSS"],
+    embedUrl: "https://projectiles-template.figma.site"
   },
   2: { // Tile 3
     title: "Promptly",

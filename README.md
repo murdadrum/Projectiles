@@ -8,4 +8,24 @@
   Run `npm i` to install the dependencies.
 
   Run `npm run dev` to start the development server.
+
+  ## Deploying to Firebase Hosting
+
+  Build the production bundle:
+
+  ```
+  npm run build
+  ```
+
+  Deploy to Firebase Hosting (project: `remotelyamused`):
+
+  ```
+  firebase deploy --only hosting
+  ```
+
+  If authentication expires, re-authenticate:
+
+  ```
+  firebase login --reauth
+  ```
   
