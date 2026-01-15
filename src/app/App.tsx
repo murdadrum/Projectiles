@@ -67,6 +67,7 @@ const tileInfo: {
       "Smart filtering and priority inbox for focused communication.",
     ],
     techStack: ["Electron", "WebSocket", "Redis"],
+    embedUrl: "https://quartermasterlt-779175721635.us-west1.run.app",
   },
   2: {
     // Tile 3
