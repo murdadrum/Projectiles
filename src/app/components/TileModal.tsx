@@ -133,19 +133,41 @@ export function TileModal({ color, index, totalTiles, onClose, onNext, onPrev, p
                 </div>
               </div>
 
-              {/* Mobile: Link to open app */}
+              {/* Mobile: Embedded preview */}
               {tileInfo.embedUrl && (
                 <a
                   href={tileInfo.embedUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="md:hidden w-full flex items-center justify-center gap-2 bg-[#00E5FF] text-black px-6 py-4 rounded-lg font-mono text-sm uppercase tracking-wider hover:bg-[#00D4EE] transition-colors"
+                  className="md:hidden inline-flex items-center justify-center gap-2 bg-[#00E5FF] text-black px-5 py-3 rounded-lg font-mono text-xs uppercase tracking-widest hover:bg-[#00D4EE] transition-colors"
                 >
-                  Launch App
-                  <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  Launch Live App
+                  <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
                   </svg>
                 </a>
+              )}
+
+              {(tileInfo.embedUrl || previewImage) && (
+                <div className="md:hidden w-full">
+                  <div className="w-full h-[420px] rounded-xl overflow-hidden border border-white/10 bg-black/40 shadow-[0_0_0_1px_rgba(255,255,255,0.04)]">
+                    {tileInfo.embedUrl ? (
+                      <iframe
+                        src={tileInfo.embedUrl}
+                        className="w-full h-full border-0"
+                        title={tileInfo.title}
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        sandbox="allow-same-origin allow-scripts allow-forms allow-popups allow-modals"
+                      />
+                    ) : previewImage ? (
+                      <img
+                        src={previewImage}
+                        alt={tileInfo.title}
+                        className="w-full h-full object-cover"
+                      />
+                    ) : null}
+                  </div>
+                </div>
               )}
 
               {/* About the Project */}
