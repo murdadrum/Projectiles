@@ -262,7 +262,7 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-[#0A0A0A] pt-8 md:pt-12 flex flex-col items-center justify-center">
+    <div className="min-h-screen bg-[#0A0A0A] pt-8 md:pt-12 flex flex-col items-center justify-start">
       <div className="w-full max-w-[min(90vh,90vw)] md:max-w-[min(72vh,72vw)] px-4">
         <div className="flex justify-end mb-4 md:mb-6">
           <h1 className="text-3xl md:text-5xl font-mono font-bold text-white tracking-widest uppercase">
