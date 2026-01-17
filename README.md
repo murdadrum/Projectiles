@@ -28,4 +28,9 @@
   ```
   firebase login --reauth
   ```
+
+  ## Security notes
+
+  - Do not commit secrets. Use local `.env` files for any tokens/keys.
+  - Keep production credentials in your hosting provider (Firebase/GCP) env config.
   

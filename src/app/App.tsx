@@ -92,6 +92,7 @@ const tileInfo: {
       "Learns from team patterns to provide contextual recommendations.",
     ],
     techStack: ["TypeScript", "OpenAI", "GitHub API"],
+    embedUrl: "https://quartermastermds.remotelyamused.com",
   },
   4: {
     // Tile 5
@@ -263,36 +264,35 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-[#0A0A0A] pt-8 md:pt-12 flex flex-col items-center justify-start">
-      <div className="w-full max-w-[min(90vh,90vw)] md:max-w-[min(72vh,72vw)] px-4">
-        <div className="flex justify-end mb-4 md:mb-6">
-          <h1 className="text-3xl md:text-5xl font-mono font-bold text-white tracking-widest uppercase">
-            <span className="text-[rgb(255,255,255)] font-normal">
+      <div className="w-full max-w-[887px] px-4">
+        <div className="bg-black/70 rounded-none px-6 md:px-10 py-8 md:py-10">
+          <div className="flex justify-end">
+            <h1 className="text-[40px] md:text-[58px] leading-none font-['Aldrich'] font-normal text-white tracking-[4px] uppercase text-right">
               ProjecTiles
-            </span>
-          </h1>
-        </div>
+            </h1>
+          </div>
 
-        {/* 4x4 Grid on all screen sizes */}
-        <div className="grid grid-cols-4 gap-2 sm:gap-3 md:gap-4 w-full aspect-square">
-          {tileColors.map((color, index) => (
-            <Tile
-              key={index}
-              color={color}
-              index={index}
-              onClick={() => setSelectedTile({ color, index })}
-              previewImage={previewImages[index]}
-            />
-          ))}
-        </div>
+          <div className="mt-6 md:mt-8 grid grid-cols-4 grid-rows-4 gap-6 md:gap-10 w-full aspect-square">
+            {tileColors.map((color, index) => (
+              <Tile
+                key={index}
+                color={color}
+                index={index}
+                onClick={() => setSelectedTile({ color, index })}
+                previewImage={previewImages[index]}
+              />
+            ))}
+          </div>
 
-        <p className="text-left mt-6 md:mt-8 text-xs md:text-sm text-white/40 font-mono uppercase tracking-wider">
-          <a
-            href="mailto:josh@remotelyamused.com"
-            className="hover:text-cyan-400 transition-colors"
-          >
-            JOSH@REMOTELYAMUSED.COM
-          </a>
-        </p>
+          <p className="text-left mt-6 md:mt-8 text-[12px] md:text-[16px] text-white/80 font-['Abel'] uppercase tracking-[1.2px]">
+            <a
+              href="mailto:josh@remotelyamused.com"
+              className="hover:text-white transition-colors"
+            >
+              JOSH@REMOTELYAMUSED.COM
+            </a>
+          </p>
+        </div>
       </div>
 
       {/* Modal */}

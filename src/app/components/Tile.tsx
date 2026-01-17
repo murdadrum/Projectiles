@@ -17,15 +17,13 @@ export function Tile({ color, index, onClick, previewImage }: TileProps) {
   return (
     <div 
       className={`
-        w-full aspect-square rounded-lg cursor-pointer relative overflow-hidden
+        w-full h-full rounded-[4px] cursor-pointer relative overflow-hidden
         transition-all duration-300 ease-out
-        border-2 border-white/10
-        ${isHovered ? 'shadow-[0_0_15px_8px] border-white/30' : 'shadow-md'}
+        ${isHovered ? 'shadow-[0_6px_14px_rgba(0,0,0,0.35)]' : 'shadow-[0px_3px_1px_-2px_rgba(0,0,0,0.2),0px_2px_2px_rgba(0,0,0,0.14),0px_1px_5px_rgba(0,0,0,0.12)]'}
       `}
       style={{ 
         backgroundColor: color,
-        filter: isHovered ? 'saturate(1.2) brightness(1.05)' : 'saturate(1) brightness(1)',
-        boxShadow: isHovered ? `0 0 8px 4px ${color}` : undefined
+        filter: isHovered ? 'saturate(1.05) brightness(1.02)' : 'saturate(1) brightness(1)'
       }}
       onClick={onClick}
       onMouseEnter={() => setIsHovered(true)}
@@ -36,8 +34,8 @@ export function Tile({ color, index, onClick, previewImage }: TileProps) {
         className={`
           absolute inset-0 pointer-events-none
           transition-opacity duration-300
-          bg-gradient-to-br from-white/20 via-transparent to-transparent
-          ${isHovered ? 'opacity-100' : 'opacity-0'}
+          bg-[linear-gradient(180deg,rgba(255,255,255,0.07)_0%,rgba(255,255,255,0.07)_100%)]
+          ${isHovered ? 'opacity-90' : 'opacity-100'}
         `}
       />
       
