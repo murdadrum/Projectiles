@@ -1,36 +1,34 @@
+# ProjecTiles
 
-  # ProjecTiles
+This is a code bundle for ProjecTiles. The original app is available at https://projectiles.figma.site.
 
-  This is a code bundle for ProjecTiles. The original project is available at https://www.figma.com/design/uQr8CdIznHWC1pwlAGY8kq/ProjecTiles.
+## Running the code
 
-  ## Running the code
+Run `npm i` to install the dependencies.
 
-  Run `npm i` to install the dependencies.
+Run `npm run dev` to start the development server.
 
-  Run `npm run dev` to start the development server.
+## Deploying to Firebase Hosting
 
-  ## Deploying to Firebase Hosting
+Build the production bundle:
 
-  Build the production bundle:
+```
+npm run build
+```
 
-  ```
-  npm run build
-  ```
+Deploy to Firebase Hosting (project: `remotelyamused`):
 
-  Deploy to Firebase Hosting (project: `remotelyamused`):
+```
+firebase deploy --only hosting
+```
 
-  ```
-  firebase deploy --only hosting
-  ```
+If authentication expires, re-authenticate:
 
-  If authentication expires, re-authenticate:
+```
+firebase login --reauth
+```
 
-  ```
-  firebase login --reauth
-  ```
+## Security notes
 
-  ## Security notes
-
-  - Do not commit secrets. Use local `.env` files for any tokens/keys.
-  - Keep production credentials in your hosting provider (Firebase/GCP) env config.
-  
+- Do not commit secrets. Use local `.env` files for any tokens/keys.
+- Keep production credentials in your hosting provider (Firebase/GCP) env config.
