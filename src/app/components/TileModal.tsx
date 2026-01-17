@@ -1,5 +1,20 @@
 import { motion } from "motion/react";
 import { useEffect, useState } from "react";
+import {
+  Dialog,
+  IconButton,
+  Box,
+  Typography,
+  Chip,
+  Button,
+  Paper,
+  Divider,
+} from '@mui/material';
+import { useTheme } from '@mui/material/styles';
+import CloseIcon from '@mui/icons-material/Close';
+import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 
 interface TileModalProps {
   color: string;
@@ -21,6 +36,7 @@ interface TileModalProps {
 
 export function TileModal({ color, index, totalTiles, onClose, onNext, onPrev, previewImage, tileInfo }: TileModalProps) {
   const [isVisible, setIsVisible] = useState(false);
+  const theme = useTheme();
 
   useEffect(() => {
     // Trigger entrance animation
@@ -55,42 +71,131 @@ export function TileModal({ color, index, totalTiles, onClose, onNext, onPrev, p
   };
 
   return (
-    <div
-      className={`
-        fixed inset-0 z-[100] flex items-center justify-center p-0 md:p-8
-        transition-all duration-300 ease-out
-        ${isVisible ? 'bg-black/80 backdrop-blur-md' : 'bg-black/0 backdrop-blur-none pointer-events-none'}
-      `}
-      onClick={handleClose}
+    <Dialog
+      open={true}
+      onClose={handleClose}
+      maxWidth="lg"
+      fullWidth
+      fullScreen
+      PaperProps={{
+        elevation: 24, // Material Design maximum elevation
+        sx: {
+          bgcolor: theme.palette.background.default,
+          backgroundImage: 'none',
+          m: { xs: 0, md: 4 },
+          borderRadius: { xs: 0, md: 1 },
+          height: { xs: '100%', md: 'calc(100% - 64px)' },
+          maxHeight: { xs: '100%', md: 'calc(100% - 64px)' },
+        },
+      }}
+      sx={{
+        '& .MuiBackdrop-root': {
+          bgcolor: 'rgba(0, 0, 0, 0.8)',
+          backdropFilter: 'blur(8px)',
+        },
+      }}
     >
-      <div
-        className={`
-          bg-[#0A0A0A] border-x md:border border-white/10 w-full max-w-6xl h-full md:h-[90vh] md:max-h-[90vh]
-          overflow-y-auto md:rounded-lg shadow-2xl flex flex-col md:flex-row-reverse
-          transition-all duration-500 cubic-bezier(0.16, 1, 0.3, 1)
-          ${isVisible ? 'opacity-100 scale-100 translate-y-0' : 'opacity-0 scale-95 translate-y-8'}
-        `}
-        onClick={(e) => e.stopPropagation()}
+      {/* Close Button */}
+      <IconButton
+        onClick={handleClose}
+        sx={{
+          position: 'absolute',
+          top: { xs: 8, md: 16 },
+          right: { xs: 8, md: 16 },
+          zIndex: 60,
+          color: 'rgba(255, 255, 255, 0.7)',
+          bgcolor: 'rgba(0, 0, 0, 0.4)',
+          backdropFilter: 'blur(8px)',
+          border: '1px solid rgba(255, 255, 255, 0.1)',
+          '&:hover': {
+            bgcolor: 'rgba(0, 0, 0, 0.6)',
+            color: 'white',
+          },
+        }}
       >
-        {/* Close Button */}
-        <button
-          onClick={handleClose}
-          className="absolute top-4 right-4 z-[60] text-white/50 hover:text-white transition-colors bg-black/40 p-2 rounded-full backdrop-blur-md border border-white/10"
-        >
-          <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M6 18L18 6M6 6l12 12" />
-          </svg>
-        </button>
+        <CloseIcon />
+      </IconButton>
 
+      {/* Navigation Buttons */}
+      <IconButton
+        onClick={onPrev}
+        sx={{
+          position: 'absolute',
+          left: { xs: 8, md: 16 },
+          top: '50%',
+          transform: 'translateY(-50%)',
+          zIndex: 60,
+          color: 'rgba(255, 255, 255, 0.7)',
+          bgcolor: 'rgba(0, 0, 0, 0.4)',
+          backdropFilter: 'blur(8px)',
+          border: '1px solid rgba(255, 255, 255, 0.1)',
+          '&:hover': {
+            bgcolor: 'rgba(0, 0, 0, 0.6)',
+            color: 'white',
+          },
+        }}
+      >
+        <ArrowBackIcon />
+      </IconButton>
+
+      <IconButton
+        onClick={onNext}
+        sx={{
+          position: 'absolute',
+          right: { xs: 8, md: 16 },
+          top: '50%',
+          transform: 'translateY(-50%)',
+          zIndex: 60,
+          color: 'rgba(255, 255, 255, 0.7)',
+          bgcolor: 'rgba(0, 0, 0, 0.4)',
+          backdropFilter: 'blur(8px)',
+          border: '1px solid rgba(255, 255, 255, 0.1)',
+          '&:hover': {
+            bgcolor: 'rgba(0, 0, 0, 0.6)',
+            color: 'white',
+          },
+        }}
+      >
+        <ArrowForwardIcon />
+      </IconButton>
+
+      <Box
+        sx={{
+          display: 'flex',
+          flexDirection: { xs: 'column', md: 'row-reverse' },
+          height: '100%',
+          overflow: 'hidden',
+        }}
+      >
         {tileInfo ? (
           /* Project Layout with Info */
           <>
             {/* DESKTOP ONLY: COMPONENT / IMAGE COLUMN (Right side) */}
-            <div className="hidden md:flex w-full md:w-2/3 bg-black/20 flex-col flex-shrink-0 border-l border-white/10 relative">
+            <Box
+              sx={{
+                display: { xs: 'none', md: 'flex' },
+                width: { md: '66.666%' },
+                bgcolor: 'rgba(0, 0, 0, 0.2)',
+                flexDirection: 'column',
+                flexShrink: 0,
+                borderLeft: '1px solid rgba(255, 255, 255, 0.1)',
+                position: 'relative',
+              }}
+            >
               {tileInfo.embedUrl || previewImage ? (
-                <div className="relative flex-1 p-8 flex items-center justify-center overflow-hidden">
+                <Box sx={{ position: 'relative', flex: 1, p: 4, display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden' }}>
                   {/* Inner Container */}
-                  <div className="w-full h-full shadow-2xl rounded-sm overflow-hidden border border-white/5 bg-[#0A0A0A] relative">
+                  <Paper
+                    elevation={8}
+                    sx={{
+                      width: '100%',
+                      height: '100%',
+                      borderRadius: 0.5,
+                      overflow: 'hidden',
+                      bgcolor: theme.palette.background.default,
+                      position: 'relative',
+                    }}
+                  >
                     {tileInfo.embedUrl ? (
                       <iframe
                         src={tileInfo.embedUrl}
@@ -98,148 +203,304 @@ export function TileModal({ color, index, totalTiles, onClose, onNext, onPrev, p
                         title={tileInfo.title}
                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                         sandbox="allow-same-origin allow-scripts allow-forms allow-popups allow-modals"
+                        style={{ border: 0, width: '100%', height: '100%' }}
                       />
                     ) : previewImage ? (
-                      <img
+                      <Box
+                        component="img"
                         src={previewImage}
                         alt={tileInfo.title}
-                        className="w-full h-full object-cover"
+                        sx={{ width: '100%', height: '100%', objectFit: 'cover' }}
                       />
                     ) : null}
-                  </div>
-                </div>
+                  </Paper>
+                </Box>
               ) : null}
 
               {/* Desktop Footer */}
-              <div className="bg-[#050505] border-t border-white/5 p-4 flex justify-between items-center text-[10px] font-mono text-white/30 uppercase tracking-widest z-10 shrink-0">
-                <span>Powered by React + Vite</span>
-                <span>{tileInfo.techStack.join(' • ')}</span>
-              </div>
-            </div>
+              <Box
+                sx={{
+                  bgcolor: '#050505',
+                  borderTop: '1px solid rgba(255, 255, 255, 0.05)',
+                  p: 2,
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
+                }}
+              >
+                <Typography variant="caption" sx={{ color: 'text.secondary', opacity: 0.3, textTransform: 'uppercase', letterSpacing: '0.1em' }}>
+                  Powered by React + Vite
+                </Typography>
+                <Typography variant="caption" sx={{ color: 'text.secondary', opacity: 0.3, textTransform: 'uppercase', letterSpacing: '0.1em' }}>
+                  {tileInfo.techStack.join(' • ')}
+                </Typography>
+              </Box>
+            </Box>
 
             {/* TEXT COLUMN (Full width on mobile, 1/3 on desktop) */}
-            <div className="w-full md:w-1/3 p-6 md:p-8 space-y-6 md:space-y-8 bg-[#0A0A0A]/95 flex-shrink-0">
-              <div>
+            <Box
+              sx={{
+                width: { xs: '100%', md: '33.333%' },
+                p: { xs: 3, md: 4 },
+                bgcolor: 'rgba(10, 10, 10, 0.95)',
+                flexShrink: 0,
+                overflowY: 'auto',
+              }}
+            >
+              <Box sx={{ mb: 4 }}>
                 {tileInfo.subtitle && (
-                  <div className="font-mono text-xs text-[#00E5FF] uppercase tracking-widest mb-2">{tileInfo.subtitle}</div>
+                  <Typography
+                    variant="overline"
+                    sx={{
+                      color: 'primary.main',
+                      letterSpacing: '0.15em',
+                      display: 'block',
+                      mb: 1,
+                    }}
+                  >
+                    {tileInfo.subtitle}
+                  </Typography>
                 )}
-                <h2 className="text-3xl md:text-4xl font-light leading-tight mb-4 text-white">{tileInfo.title}</h2>
-                <div className="flex flex-wrap gap-2 mb-6">
+                <Typography
+                  variant="h4"
+                  sx={{
+                    fontWeight: 300,
+                    mb: 2,
+                    color: 'text.primary',
+                  }}
+                >
+                  {tileInfo.title}
+                </Typography>
+                <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1, mb: 3 }}>
                   {tileInfo.techStack.map(tag => (
-                    <span key={tag} className="text-[10px] px-2 py-1 border border-white/10 rounded-full text-white/60 uppercase tracking-wider">
-                      {tag}
-                    </span>
+                    <Chip
+                      key={tag}
+                      label={tag}
+                      size="small"
+                      variant="outlined"
+                      sx={{
+                        borderColor: 'rgba(255, 255, 255, 0.1)',
+                        color: 'rgba(255, 255, 255, 0.6)',
+                        fontSize: '0.625rem',
+                        textTransform: 'uppercase',
+                        letterSpacing: '0.05em',
+                      }}
+                    />
                   ))}
-                </div>
-              </div>
+                </Box>
+              </Box>
 
               {/* Mobile: Link to open app */}
               {tileInfo.embedUrl && (
-                <a
+                <Button
                   href={tileInfo.embedUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="md:hidden w-full flex items-center justify-center gap-2 bg-[#00E5FF] text-black px-6 py-4 rounded-lg font-mono text-sm uppercase tracking-wider hover:bg-[#00D4EE] transition-colors"
+                  variant="contained"
+                  color="primary"
+                  endIcon={<OpenInNewIcon />}
+                  fullWidth
+                  sx={{
+                    display: { xs: 'flex', md: 'none' },
+                    mb: 3,
+                    py: 1.5,
+                    textTransform: 'uppercase',
+                    letterSpacing: '0.1em',
+                    fontWeight: 500,
+                  }}
                 >
                   Launch App
-                  <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-                  </svg>
-                </a>
+                </Button>
               )}
 
               {/* About the Project */}
               {(tileInfo.description || tileInfo.details) && (
-                <div className="space-y-4">
-                  <h3 className="font-mono text-xs text-white/40 uppercase tracking-widest">About the Project</h3>
+                <Box sx={{ mb: 4 }}>
+                  <Typography
+                    variant="overline"
+                    sx={{
+                      color: 'text.secondary',
+                      opacity: 0.4,
+                      letterSpacing: '0.15em',
+                      display: 'block',
+                      mb: 2,
+                    }}
+                  >
+                    About the Project
+                  </Typography>
                   {tileInfo.description && (
-                    <p className="text-sm text-white/70 leading-relaxed pl-4 border-l border-white/10">
+                    <Typography
+                      variant="body2"
+                      sx={{
+                        color: 'text.secondary',
+                        opacity: 0.7,
+                        lineHeight: 1.6,
+                        pl: 2,
+                        borderLeft: '1px solid rgba(255, 255, 255, 0.1)',
+                        mb: 2,
+                      }}
+                    >
                       {tileInfo.description}
-                    </p>
+                    </Typography>
                   )}
                   {tileInfo.details && tileInfo.details.length > 0 && (
-                    <ul className="space-y-3">
+                    <Box component="ul" sx={{ pl: 0, listStyle: 'none', m: 0 }}>
                       {tileInfo.details.map((bullet, i) => (
-                        <li key={i} className="text-sm text-white/60 leading-relaxed pl-4 border-l border-white/10">
+                        <Typography
+                          key={i}
+                          component="li"
+                          variant="body2"
+                          sx={{
+                            color: 'text.secondary',
+                            opacity: 0.6,
+                            lineHeight: 1.6,
+                            pl: 2,
+                            borderLeft: '1px solid rgba(255, 255, 255, 0.1)',
+                            mb: 1.5,
+                          }}
+                        >
                           {bullet}
-                        </li>
+                        </Typography>
                       ))}
-                    </ul>
+                    </Box>
                   )}
-                </div>
+                </Box>
               )}
 
+              <Divider sx={{ my: 3, borderColor: 'rgba(255, 255, 255, 0.05)' }} />
+
               {/* Engineering Context */}
-              <div className="space-y-4">
-                <h3 className="font-mono text-xs text-white/40 uppercase tracking-widest">Engineering</h3>
-                <div className="text-sm text-white/60 leading-relaxed font-light">
-                  <p className="mb-2">
-                    <strong className="text-white/80">Tech Stack:</strong> {tileInfo.techStack.join(', ')}
-                  </p>
-                  <p className="text-white/60">
-                    {index === 7 
-                      ? "MuseBox layers prompt inputs, style refs, and shot metadata into a structured payload before dispatching model requests. Generated assets stream back into a scene-based storyboard, with previews and export actions optimized for fast iteration."
-                      : index === 5
-                      ? "Built with Web Audio API for low-latency real-time sound processing. Features MIDI support and customizable synthesizer parameters for creative music production."
-                      : index === 2
-                      ? "Promptly uses multimodal AI models to analyze uploaded assets and construct detailed, structurally sound prompts for creative workflows."
-                      : "Advanced architecture leveraging modern frameworks and best practices for optimal performance, scalability, and user experience."}
-                  </p>
-                </div>
-              </div>
+              <Box>
+                <Typography
+                  variant="overline"
+                  sx={{
+                    color: 'text.secondary',
+                    opacity: 0.4,
+                    letterSpacing: '0.15em',
+                    display: 'block',
+                    mb: 2,
+                  }}
+                >
+                  Engineering
+                </Typography>
+                <Typography variant="body2" sx={{ color: 'text.secondary', opacity: 0.6, lineHeight: 1.6, mb: 1 }}>
+                  <strong style={{ opacity: 0.8 }}>Tech Stack:</strong> {tileInfo.techStack.join(', ')}
+                </Typography>
+                <Typography variant="body2" sx={{ color: 'text.secondary', opacity: 0.6, lineHeight: 1.6 }}>
+                  {index === 7 
+                    ? "MuseBox layers prompt inputs, style refs, and shot metadata into a structured payload before dispatching model requests. Generated assets stream back into a scene-based storyboard, with previews and export actions optimized for fast iteration."
+                    : index === 5
+                    ? "Built with Web Audio API for low-latency real-time sound processing. Features MIDI support and customizable synthesizer parameters for creative music production."
+                    : index === 2
+                    ? "Promptly uses multimodal AI models to analyze uploaded assets and construct detailed, structurally sound prompts for creative workflows."
+                    : "Advanced architecture leveraging modern frameworks and best practices for optimal performance, scalability, and user experience."}
+                </Typography>
+              </Box>
 
               {/* Padding at bottom for mobile scrolling */}
-              <div className="h-12 md:hidden"></div>
-            </div>
+              <Box sx={{ height: { xs: 6, md: 0 } }} />
+            </Box>
           </>
         ) : (
           /* Simple Layout without Info */
           <>
             {/* Image/Embed Column */}
-            <div className="w-full md:w-2/3 bg-black/20 flex flex-col flex-shrink-0 h-[45vh] md:h-auto min-h-[300px] md:min-h-0 border-b md:border-b-0 md:border-l border-white/10 relative">
-              <div className="relative flex-1 p-0 md:p-8 flex items-center justify-center overflow-hidden">
-                <div className="w-full h-full md:shadow-2xl md:rounded-sm overflow-hidden md:border border-white/5 relative" style={{ backgroundColor: color }}>
+            <Box
+              sx={{
+                width: { xs: '100%', md: '66.666%' },
+                bgcolor: 'rgba(0, 0, 0, 0.2)',
+                display: 'flex',
+                flexDirection: 'column',
+                flexShrink: 0,
+                height: { xs: '45vh', md: 'auto' },
+                minHeight: { xs: '300px', md: 0 },
+                borderBottom: { xs: '1px solid rgba(255, 255, 255, 0.1)', md: 'none' },
+                borderLeft: { xs: 'none', md: '1px solid rgba(255, 255, 255, 0.1)' },
+                position: 'relative',
+              }}
+            >
+              <Box sx={{ position: 'relative', flex: 1, p: { xs: 0, md: 4 }, display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden' }}>
+                <Paper
+                  elevation={8}
+                  sx={{
+                    width: '100%',
+                    height: '100%',
+                    borderRadius: { xs: 0, md: 0.5 },
+                    overflow: 'hidden',
+                    position: 'relative',
+                    bgcolor: color,
+                  }}
+                >
                   {previewImage && (
-                    <div className="absolute inset-0 flex items-center justify-center p-4">
-                      <img 
-                        src={previewImage} 
+                    <Box sx={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', p: 2 }}>
+                      <Box
+                        component="img"
+                        src={previewImage}
                         alt={`Preview ${index + 1}`}
-                        className="w-full h-full object-contain rounded-md"
+                        sx={{ width: '100%', height: '100%', objectFit: 'contain', borderRadius: 0.5 }}
                       />
-                    </div>
+                    </Box>
                   )}
                   
                   {/* Embedded web app - only for tile 6 (index 5) */}
                   {index === 5 && (
                     <iframe
                       src="https://musebox-779175721635.us-west1.run.app/"
-                      className="absolute inset-0 w-full h-full border-0"
                       title="Musebox App"
                       allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                       sandbox="allow-same-origin allow-scripts allow-forms allow-popups allow-modals"
+                      style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', border: 0 }}
                     />
                   )}
-                </div>
-              </div>
+                </Paper>
+              </Box>
 
               {/* Footer */}
-              <div className="bg-[#050505] border-t border-white/5 p-4 flex justify-between items-center text-[10px] font-mono text-white/30 uppercase tracking-widest z-10 shrink-0">
-                <span>Tile {index + 1} of {totalTiles}</span>
-                <span>{color}</span>
-              </div>
-            </div>
+              <Box
+                sx={{
+                  bgcolor: '#050505',
+                  borderTop: '1px solid rgba(255, 255, 255, 0.05)',
+                  p: 2,
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
+                }}
+              >
+                <Typography variant="caption" sx={{ color: 'text.secondary', opacity: 0.3, textTransform: 'uppercase', letterSpacing: '0.1em' }}>
+                  Tile {index + 1} of {totalTiles}
+                </Typography>
+                <Typography variant="caption" sx={{ color: 'text.secondary', opacity: 0.3, textTransform: 'uppercase', letterSpacing: '0.1em' }}>
+                  {color}
+                </Typography>
+              </Box>
+            </Box>
 
             {/* Simple Info Column */}
-            <div className="w-full md:w-1/3 p-6 md:p-8 space-y-8 bg-[#0A0A0A]/95 flex-shrink-0">
-              <div>
-                <h2 className="text-3xl md:text-4xl font-light leading-tight mb-4 text-white">Tile {index + 1}</h2>
-                <p className="text-sm text-white/60">Navigate using arrow keys or click outside to close.</p>
-              </div>
-            </div>
+            <Box
+              sx={{
+                width: { xs: '100%', md: '33.333%' },
+                p: { xs: 3, md: 4 },
+                bgcolor: 'rgba(10, 10, 10, 0.95)',
+                flexShrink: 0,
+              }}
+            >
+              <Typography
+                variant="h4"
+                sx={{
+                  fontWeight: 300,
+                  mb: 2,
+                  color: 'text.primary',
+                }}
+              >
+                Tile {index + 1}
+              </Typography>
+              <Typography variant="body2" sx={{ color: 'text.secondary', opacity: 0.6 }}>
+                Navigate using arrow keys or click outside to close.
+              </Typography>
+            </Box>
           </>
         )}
-
-      </div>
-    </div>
+      </Box>
+    </Dialog>
   );
 }

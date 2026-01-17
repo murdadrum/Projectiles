@@ -2,6 +2,43 @@ import { Tile } from "./components/Tile";
 import { TileModal } from "./components/TileModal";
 import { useState } from "react";
 import { AnimatePresence } from "motion/react";
+import { ThemeProvider, createTheme } from '@mui/material/styles';
+import CssBaseline from '@mui/material/CssBaseline';
+import { Typography, Box } from '@mui/material';
+
+// Material Design dark theme
+const darkTheme = createTheme({
+  palette: {
+    mode: 'dark',
+    primary: {
+      main: '#00E5FF', // Cyan accent
+    },
+    background: {
+      default: '#0A0A0A',
+      paper: '#1A1A1A',
+    },
+    text: {
+      primary: '#FFFFFF',
+      secondary: 'rgba(255, 255, 255, 0.7)',
+    },
+  },
+  typography: {
+    fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
+    h1: {
+      fontFamily: '"Aldrich", "Roboto Mono", "Courier New", "Courier", monospace',
+      fontWeight: 400,
+      letterSpacing: '0.25em',
+    },
+    caption: {
+      fontFamily: '"Abel", "Roboto", "Helvetica", "Arial", sans-serif',
+      letterSpacing: '0.075em',
+    },
+  },
+  shape: {
+    borderRadius: 4,
+  },
+  spacing: 8, // Material Design 8dp grid
+});
 
 // Mosaic color palette - 16 colors for 4x4 grid
 const tileColors = [
@@ -23,12 +60,8 @@ const tileColors = [
   '#a7c4bc', // sage green
 ];
 
-// Preview images - starting from tile 6 (index 5)
-const previewImages: { [key: number]: string } = {
-  5: exampleImage, // Tile 6
-  6: tile7Image, // Tile 7
-  8: tile9Image, // Tile 9
-};
+// Preview images - optional preview images for tiles
+const previewImages: { [key: number]: string } = {};
 
 // Tile information for special layouts
 const tileInfo: { [key: number]: { 
@@ -223,50 +256,131 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-[#0A0A0A] pt-8 md:pt-12 flex flex-col items-center justify-center">
-      <div className="w-full max-w-[min(90vh,90vw)] md:max-w-[min(72vh,72vw)] px-4">
-        <div className="flex justify-end mb-4 md:mb-6">
-          <h1 className="text-3xl md:text-5xl font-mono font-bold text-white tracking-widest uppercase">
-            <span className="text-[rgb(255,255,255)] font-normal">ProjecTiles</span>
-         
-          </h1>
-        </div>
-        
-        {/* 4x4 Grid on all screen sizes */}
-        <div className="grid grid-cols-4 gap-2 sm:gap-3 md:gap-4 w-full aspect-square">
-          {tileColors.map((color, index) => (
-            <Tile 
-              key={index} 
-              color={color} 
-              index={index}
-              onClick={() => setSelectedTile({ color, index })}
-              previewImage={previewImages[index]}
+    <div style={{ width: '100%', height: '100%' }}>
+      <ThemeProvider theme={darkTheme}>
+        <CssBaseline />
+        <Box
+          sx={{
+            minHeight: '100vh',
+            bgcolor: 'background.default',
+            display: 'flex',
+            alignItems: 'flex-start',
+            justifyContent: 'center',
+            py: { xs: 3, sm: 4, md: 6 },
+            px: { xs: 2, sm: 3, md: 4 },
+          }} className="px-[32px] pt-[60px] pb-[24px] py-[48px] pr-[16px] pl-[16px]"
+        >
+          <Box
+            sx={{
+              width: '100%',
+              maxWidth: { 
+                xs: 'min(85vh, 95vw)',
+                sm: 'min(75vh, 85vw)', 
+                md: 'min(72vh, 72vw)' 
+              },
+              display: 'flex',
+              flexDirection: 'column',
+              pt: '48px',
+            }}
+          >
+            {/* Header - Aligned to right of grid */}
+            <Box 
+              sx={{ 
+                mb: 3,
+                width: '100%',
+                display: 'flex',
+                justifyContent: 'flex-end',
+              }} className="px-[12px] py-[0px]"
+            >
+              <Typography
+                component="h1"
+                sx={{
+                  fontFamily: '"Aldrich", sans-serif',
+                  fontWeight: 400,
+                  fontSize: { 
+                    xs: '1.75rem',  // 28px
+                    sm: '2.25rem',  // 36px
+                    md: '3rem',     // 48px
+                    lg: '3.625rem'  // 58px
+                  },
+                  lineHeight: { xs: '1.5rem', sm: '1.75rem', md: '1.75rem', lg: '1.75rem' }, // 28px
+                  letterSpacing: { xs: '2px', sm: '3px', md: '4px' },
+                  textTransform: 'uppercase',
+                  color: 'text.primary',
+                  textAlign: 'center',
+                }} className="text-right"
+              >
+                ProjecTiles
+              </Typography>
+            </Box>
+
+            {/* 4x4 Material Design Grid */}
+            <Box
+              sx={{
+                display: 'grid',
+                gridTemplateColumns: 'repeat(4, 1fr)',
+                gap: { xs: 0.75, sm: 1, md: 1.5 },
+                width: '100%',
+                aspectRatio: '1',
+              }} className="p-[12px] mt-[-12px] mr-[0px] mb-[0px] ml-[0px]"
+            >
+              {tileColors.map((color, index) => (
+                <Tile
+                  key={index}
+                  color={color}
+                  index={index}
+                  onClick={() => setSelectedTile({ color, index })}
+                  previewImage={previewImages[index]}
+                />
+              ))}
+            </Box>
+
+            {/* Footer - Aligned to left of grid */}
+            <Typography
+              variant="caption"
+              sx={{
+                display: 'flex',
+                alignItems: 'flex-end',
+                mt: { xs: 2, sm: 2.5, md: 3 },
+                fontFamily: '"Abel", sans-serif',
+                fontWeight: 400,
+                fontSize: { xs: '0.75rem', sm: '0.875rem', md: '1rem' }, // 16px at desktop
+                lineHeight: { xs: '1rem', sm: '1.125rem', md: '1.25rem' }, // 20px at desktop
+                color: 'rgba(255, 255, 255, 0.8)',
+                letterSpacing: { xs: '0.8px', sm: '1px', md: '1.2px' },
+                textTransform: 'uppercase',
+                textAlign: 'left',
+                '& a': {
+                  color: 'inherit',
+                  textDecoration: 'none',
+                  transition: 'color 0.3s',
+                  '&:hover': {
+                    color: 'primary.main',
+                  },
+                },
+              }} className="mt-[12px] mr-[0px] mb-[0px] ml-[0px] px-[12px] py-[0px]"
+            >
+              <a href="mailto:josh@hooloovoocafe.com">JOSH@REMOTELYAMUSED.COM</a>
+            </Typography>
+          </Box>
+        </Box>
+
+        {/* Modal */}
+        <AnimatePresence mode="wait">
+          {selectedTile && (
+            <TileModal
+              color={selectedTile.color}
+              index={selectedTile.index}
+              totalTiles={tileColors.length}
+              onClose={() => setSelectedTile(null)}
+              onNext={handleNext}
+              onPrev={handlePrev}
+              previewImage={previewImages[selectedTile.index]}
+              tileInfo={tileInfo[selectedTile.index]}
             />
-          ))}
-        </div>
-        
-        <p className="text-left mt-6 md:mt-8 text-xs md:text-sm text-white/40 font-mono uppercase tracking-wider">
-          <a href="mailto:josh@hooloovoocafe.com" className="hover:text-cyan-400 transition-colors">
-            JOSH@REMOTELYAMUSED.COM
-          </a>
-        </p>
-      </div>
-      
-      {/* Modal */}
-      <AnimatePresence mode="wait">
-        {selectedTile && (
-          <TileModal
-            color={selectedTile.color}
-            index={selectedTile.index}
-            totalTiles={tileColors.length}
-            onClose={() => setSelectedTile(null)}
-            onNext={handleNext}
-            onPrev={handlePrev}
-            previewImage={previewImages[selectedTile.index]}
-            tileInfo={tileInfo[selectedTile.index]}
-          />
-        )}
-      </AnimatePresence>
+          )}
+        </AnimatePresence>
+      </ThemeProvider>
     </div>
   );
 }
