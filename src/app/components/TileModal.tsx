@@ -256,13 +256,13 @@ export function TileModal({ color, index, totalTiles, onClose, onNext, onPrev, p
             <Box
               sx={{
                 width: { xs: '100%', md: '33.333%' },
-                p: { xs: 3, md: 4 },
+                p: { xs: 2, sm: 2.5, md: 3, lg: 4 },
                 bgcolor: 'rgba(10, 10, 10, 0.95)',
                 flexShrink: 0,
                 overflowY: 'auto',
               }}
             >
-              <Box sx={{ mb: 4 }}>
+              <Box sx={{ mb: { xs: 2, sm: 2.5, md: 3, lg: 4 } }}>
                 {tileInfo.subtitle && (
                   <Typography
                     variant="overline"
@@ -270,7 +270,8 @@ export function TileModal({ color, index, totalTiles, onClose, onNext, onPrev, p
                       color: 'primary.main',
                       letterSpacing: '0.15em',
                       display: 'block',
-                      mb: 1,
+                      mb: { xs: 0.5, sm: 0.75, md: 1 },
+                      fontSize: { xs: '0.625rem', sm: '0.6875rem', md: '0.75rem' },
                     }}
                   >
                     {tileInfo.subtitle}
@@ -280,13 +281,15 @@ export function TileModal({ color, index, totalTiles, onClose, onNext, onPrev, p
                   variant="h4"
                   sx={{
                     fontWeight: 300,
-                    mb: 2,
+                    mb: { xs: 1.5, sm: 1.75, md: 2 },
                     color: 'text.primary',
+                    fontSize: { xs: '1.25rem', sm: '1.5rem', md: '1.75rem', lg: '2rem' },
+                    lineHeight: 1.2,
                   }}
                 >
                   {tileInfo.title}
                 </Typography>
-                <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1, mb: 3 }}>
+                <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: { xs: 0.75, md: 1 }, mb: { xs: 2, sm: 2.5, md: 3 } }}>
                   {tileInfo.techStack.map(tag => (
                     <Chip
                       key={tag}
@@ -296,9 +299,10 @@ export function TileModal({ color, index, totalTiles, onClose, onNext, onPrev, p
                       sx={{
                         borderColor: 'rgba(255, 255, 255, 0.1)',
                         color: 'rgba(255, 255, 255, 0.6)',
-                        fontSize: '0.625rem',
+                        fontSize: { xs: '0.5625rem', sm: '0.5938rem', md: '0.625rem' },
                         textTransform: 'uppercase',
                         letterSpacing: '0.05em',
+                        height: { xs: 20, sm: 22, md: 24 },
                       }}
                     />
                   ))}
@@ -317,11 +321,12 @@ export function TileModal({ color, index, totalTiles, onClose, onNext, onPrev, p
                   fullWidth
                   sx={{
                     display: { xs: 'flex', md: 'none' },
-                    mb: 3,
-                    py: 1.5,
+                    mb: { xs: 2, sm: 2.5, md: 3 },
+                    py: { xs: 1.25, sm: 1.5 },
                     textTransform: 'uppercase',
                     letterSpacing: '0.1em',
                     fontWeight: 500,
+                    fontSize: { xs: '0.75rem', sm: '0.8125rem', md: '0.875rem' },
                   }}
                 >
                   Launch App
@@ -330,7 +335,7 @@ export function TileModal({ color, index, totalTiles, onClose, onNext, onPrev, p
 
               {/* About the Project */}
               {(tileInfo.description || tileInfo.details) && (
-                <Box sx={{ mb: 4 }}>
+                <Box sx={{ mb: { xs: 2.5, sm: 3, md: 3.5, lg: 4 } }}>
                   <Typography
                     variant="overline"
                     sx={{
@@ -338,7 +343,8 @@ export function TileModal({ color, index, totalTiles, onClose, onNext, onPrev, p
                       opacity: 0.4,
                       letterSpacing: '0.15em',
                       display: 'block',
-                      mb: 2,
+                      mb: { xs: 1.25, sm: 1.5, md: 2 },
+                      fontSize: { xs: '0.625rem', sm: '0.6875rem', md: '0.75rem' },
                     }}
                   >
                     About the Project
@@ -350,9 +356,10 @@ export function TileModal({ color, index, totalTiles, onClose, onNext, onPrev, p
                         color: 'text.secondary',
                         opacity: 0.7,
                         lineHeight: 1.6,
-                        pl: 2,
+                        pl: { xs: 1.5, md: 2 },
                         borderLeft: '1px solid rgba(255, 255, 255, 0.1)',
-                        mb: 2,
+                        mb: { xs: 1.5, md: 2 },
+                        fontSize: { xs: '0.8125rem', sm: '0.8438rem', md: '0.875rem' },
                       }}
                     >
                       {tileInfo.description}
@@ -369,9 +376,10 @@ export function TileModal({ color, index, totalTiles, onClose, onNext, onPrev, p
                             color: 'text.secondary',
                             opacity: 0.6,
                             lineHeight: 1.6,
-                            pl: 2,
+                            pl: { xs: 1.5, md: 2 },
                             borderLeft: '1px solid rgba(255, 255, 255, 0.1)',
-                            mb: 1.5,
+                            mb: { xs: 1.25, md: 1.5 },
+                            fontSize: { xs: '0.8125rem', sm: '0.8438rem', md: '0.875rem' },
                           }}
                         >
                           {bullet}
@@ -382,7 +390,7 @@ export function TileModal({ color, index, totalTiles, onClose, onNext, onPrev, p
                 </Box>
               )}
 
-              <Divider sx={{ my: 3, borderColor: 'rgba(255, 255, 255, 0.05)' }} />
+              <Divider sx={{ my: { xs: 2, sm: 2.5, md: 3 }, borderColor: 'rgba(255, 255, 255, 0.05)' }} />
 
               {/* Engineering Context */}
               <Box>
@@ -393,15 +401,33 @@ export function TileModal({ color, index, totalTiles, onClose, onNext, onPrev, p
                     opacity: 0.4,
                     letterSpacing: '0.15em',
                     display: 'block',
-                    mb: 2,
+                    mb: { xs: 1.25, sm: 1.5, md: 2 },
+                    fontSize: { xs: '0.625rem', sm: '0.6875rem', md: '0.75rem' },
                   }}
                 >
                   Engineering
                 </Typography>
-                <Typography variant="body2" sx={{ color: 'text.secondary', opacity: 0.6, lineHeight: 1.6, mb: 1 }}>
+                <Typography 
+                  variant="body2" 
+                  sx={{ 
+                    color: 'text.secondary', 
+                    opacity: 0.6, 
+                    lineHeight: 1.6, 
+                    mb: { xs: 0.75, md: 1 },
+                    fontSize: { xs: '0.8125rem', sm: '0.8438rem', md: '0.875rem' },
+                  }}
+                >
                   <strong style={{ opacity: 0.8 }}>Tech Stack:</strong> {tileInfo.techStack.join(', ')}
                 </Typography>
-                <Typography variant="body2" sx={{ color: 'text.secondary', opacity: 0.6, lineHeight: 1.6 }}>
+                <Typography 
+                  variant="body2" 
+                  sx={{ 
+                    color: 'text.secondary', 
+                    opacity: 0.6, 
+                    lineHeight: 1.6,
+                    fontSize: { xs: '0.8125rem', sm: '0.8438rem', md: '0.875rem' },
+                  }}
+                >
                   {index === 7 
                     ? "MuseBox layers prompt inputs, style refs, and shot metadata into a structured payload before dispatching model requests. Generated assets stream back into a scene-based storyboard, with previews and export actions optimized for fast iteration."
                     : index === 5
@@ -413,7 +439,7 @@ export function TileModal({ color, index, totalTiles, onClose, onNext, onPrev, p
               </Box>
 
               {/* Padding at bottom for mobile scrolling */}
-              <Box sx={{ height: { xs: 6, md: 0 } }} />
+              <Box sx={{ height: { xs: 4, sm: 5, md: 6 } }} />
             </Box>
           </>
         ) : (

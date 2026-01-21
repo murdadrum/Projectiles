@@ -246,7 +246,9 @@ function AppContent() {
   const [gridBounds, setGridBounds] = useState<DOMRect | null>(null);
   const [initialAnimationComplete, setInitialAnimationComplete] = useState(false);
   const [touchFlippedTiles, setTouchFlippedTiles] = useState<Set<number>>(new Set());
+  const [randomlyFlippedTiles, setRandomlyFlippedTiles] = useState<Set<number>>(new Set());
   const gridRef = useRef<HTMLDivElement>(null);
+  const flipTimerRef = useRef<NodeJS.Timeout | null>(null);
 
   // Detect if device supports touch
   const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
@@ -267,6 +269,12 @@ function AppContent() {
 
   const handleTileClick = (color: string, index: number) => {
     if (isTouchDevice) {
+      // Clear any existing timer
+      if (flipTimerRef.current) {
+        clearTimeout(flipTimerRef.current);
+        flipTimerRef.current = null;
+      }
+
       // On touch devices: first click flips, second click opens modal
       if (touchFlippedTiles.has(index)) {
         // Already flipped, so open modal
@@ -275,14 +283,49 @@ function AppContent() {
         }
         setSelectedTile({ color, index });
         // Reset flipped state when modal opens
-        setTouchFlippedTiles(prev => {
-          const newSet = new Set(prev);
-          newSet.delete(index);
-          return newSet;
-        });
+        setTouchFlippedTiles(new Set());
       } else {
-        // Not flipped yet, so flip it
-        setTouchFlippedTiles(prev => new Set(prev).add(index));
+        // Not flipped yet, so flip it (and unflip any other tiles)
+        setTouchFlippedTiles(new Set([index]));
+        
+        // Start 1200ms timer (50% longer than 800ms) to auto-flip back and then flip a random different tile
+        flipTimerRef.current = setTimeout(() => {
+          // Flip back to original
+          setTouchFlippedTiles(new Set());
+          
+          // After a brief delay, flip a random different tile to command attention
+          setTimeout(() => {
+            // Get available tiles (not yet randomly flipped and not the current tile)
+            const availableTiles = Array.from({ length: tileColors.length }, (_, i) => i)
+              .filter(i => i !== index && !randomlyFlippedTiles.has(i));
+            
+            // If all tiles have been randomly flipped, reset the tracking
+            let randomIndex;
+            if (availableTiles.length === 0) {
+              // Reset and exclude only the current tile
+              setRandomlyFlippedTiles(new Set([index]));
+              const resetAvailable = Array.from({ length: tileColors.length }, (_, i) => i)
+                .filter(i => i !== index);
+              randomIndex = resetAvailable[Math.floor(Math.random() * resetAvailable.length)];
+            } else {
+              // Select from available tiles
+              randomIndex = availableTiles[Math.floor(Math.random() * availableTiles.length)];
+            }
+            
+            // Mark this tile as randomly flipped
+            setRandomlyFlippedTiles(prev => new Set([...prev, randomIndex]));
+            
+            // Flip the random tile
+            setTouchFlippedTiles(new Set([randomIndex]));
+            
+            // Set another timer for the new flipped tile (1200ms)
+            flipTimerRef.current = setTimeout(() => {
+              setTouchFlippedTiles(new Set());
+              flipTimerRef.current = null;
+            }, 1200);
+          }, 300); // 300ms delay between flip back and new flip for visual clarity
+          
+        }, 1200);
       }
     } else {
       // On desktop: click always opens modal
@@ -438,7 +481,7 @@ function AppContent() {
             },
           }}
         >
-          <a href="mailto:josh@hooloovoocafe.com">JOSH@REMOTELYAMUSED.COM</a>
+          <a href="mailto:josh@hooloovoocafe.com" className="pt-[0px] pr-[0px] pb-[0px] pl-[12px]">JOSH@REMOTELYAMUSED.COM</a>
         </Typography>
       </Box>
 
@@ -473,7 +516,7 @@ function ThemeWrapper() {
 }
 
 // Export default App component that blocks all Figma props
-export default function App() {
-  // Accept no props at all to prevent data-fg-* attributes from being passed down
+export default function App(props: any) {
+  // Explicitly ignore all props (including data-fg-* attributes) to prevent them from being passed down
   return <ThemeWrapper />;
 }
