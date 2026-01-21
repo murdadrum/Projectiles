@@ -434,13 +434,18 @@ function AppContent() {
   );
 }
 
-export default function App(_props: any) {
-  // Explicitly ignore all props (including Figma-specific data-fg-* props)
-  // by prefixing the parameter with underscore and not using it
+// Wrapper component to intercept and block all props from being passed to Material UI
+function ThemeWrapper() {
   return (
     <ThemeProvider theme={darkTheme}>
       <CssBaseline />
       <AppContent />
     </ThemeProvider>
   );
+}
+
+// Export default App component that blocks all Figma props
+export default function App() {
+  // Accept no props at all to prevent data-fg-* attributes from being passed down
+  return <ThemeWrapper />;
 }

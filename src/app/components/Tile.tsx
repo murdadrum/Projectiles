@@ -41,6 +41,7 @@ export function Tile({ color, index, onClick, previewImage, mousePosition, prevM
   const theme = useTheme();
   const [flipDirection, setFlipDirection] = useState<'horizontal' | 'vertical'>('horizontal');
   const [showingBack, setShowingBack] = useState(initialFlipped || false);
+  const [showAfterglow, setShowAfterglow] = useState(false);
   
   // Tiles that should NOT show preview on hover (indices 5, 6, 8 = tiles 6, 7, 9)
   const noPreviewIndices = [5, 6, 8];
@@ -122,6 +123,21 @@ export function Tile({ color, index, onClick, previewImage, mousePosition, prevM
     }
   }, [isActiveHover]); // Only run when hover state changes, not on every mouse move
 
+  // Trigger afterglow when tile flips back from back to front
+  useEffect(() => {
+    // Check if we just transitioned from showing back to showing front (flip back event)
+    if (!showingBack && !isActiveHover) {
+      setShowAfterglow(true);
+      
+      // Fade out afterglow after 400ms
+      const timer = setTimeout(() => {
+        setShowAfterglow(false);
+      }, 400);
+      
+      return () => clearTimeout(timer);
+    }
+  }, [showingBack, isActiveHover]);
+
   // Calculate proximity-based rotation
   const getProximityRotation = () => {
     // If this is the actively hovered tile, force it to flip completely based on direction
@@ -198,9 +214,9 @@ export function Tile({ color, index, onClick, previewImage, mousePosition, prevM
         animation: shouldBounce ? 'bounce 0.5s ease-out' : 'none',
         '@keyframes bounce': {
           '0%': { transform: 'translateY(0)' },
-          '30%': { transform: 'translateY(-8px)' },
+          '30%': { transform: 'translateY(-5.6px)' },
           '50%': { transform: 'translateY(0)' },
-          '70%': { transform: 'translateY(-4px)' },
+          '70%': { transform: 'translateY(-2.8px)' },
           '100%': { transform: 'translateY(0)' },
         },
       }}
@@ -231,6 +247,14 @@ export function Tile({ color, index, onClick, previewImage, mousePosition, prevM
             borderRadius: 1,
             overflow: 'hidden',
             background: `linear-gradient(90deg, rgba(255, 255, 255, 0.07) 0%, rgba(255, 255, 255, 0.07) 100%), linear-gradient(90deg, ${color} 0%, ${color} 100%)`,
+            // Afterglow effect - inner glow using bright white light
+            boxShadow: showAfterglow 
+              ? `inset 0 0 48px 16px rgba(255, 255, 255, 0.54), inset 0 0 96px 32px rgba(255, 255, 255, 0.36), inset 0 0 128px 48px rgba(255, 255, 255, 0.18)` 
+              : 'none',
+            transition: theme.transitions.create(['box-shadow'], {
+              duration: 400,
+              easing: 'cubic-bezier(0.4, 0, 0.2, 1)',
+            }),
             '&:hover': {
               '& .MuiCardActionArea-focusHighlight': {
                 opacity: 0.1,
