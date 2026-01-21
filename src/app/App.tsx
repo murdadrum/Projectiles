@@ -245,7 +245,11 @@ function AppContent() {
   const [hoveredTileIndex, setHoveredTileIndex] = useState<number | null>(null);
   const [gridBounds, setGridBounds] = useState<DOMRect | null>(null);
   const [initialAnimationComplete, setInitialAnimationComplete] = useState(false);
+  const [touchFlippedTiles, setTouchFlippedTiles] = useState<Set<number>>(new Set());
   const gridRef = useRef<HTMLDivElement>(null);
+
+  // Detect if device supports touch
+  const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
 
   const handleNext = () => {
     if (selectedTile) {
@@ -258,6 +262,34 @@ function AppContent() {
     if (selectedTile) {
       const prevIndex = (selectedTile.index - 1 + tileColors.length) % tileColors.length;
       setSelectedTile({ color: tileColors[prevIndex], index: prevIndex });
+    }
+  };
+
+  const handleTileClick = (color: string, index: number) => {
+    if (isTouchDevice) {
+      // On touch devices: first click flips, second click opens modal
+      if (touchFlippedTiles.has(index)) {
+        // Already flipped, so open modal
+        if (gridRef.current) {
+          setGridBounds(gridRef.current.getBoundingClientRect());
+        }
+        setSelectedTile({ color, index });
+        // Reset flipped state when modal opens
+        setTouchFlippedTiles(prev => {
+          const newSet = new Set(prev);
+          newSet.delete(index);
+          return newSet;
+        });
+      } else {
+        // Not flipped yet, so flip it
+        setTouchFlippedTiles(prev => new Set(prev).add(index));
+      }
+    } else {
+      // On desktop: click always opens modal
+      if (gridRef.current) {
+        setGridBounds(gridRef.current.getBoundingClientRect());
+      }
+      setSelectedTile({ color, index });
     }
   };
 
@@ -360,17 +392,11 @@ function AppContent() {
                 key={index}
                 color={color}
                 index={index}
-                onClick={() => {
-                  // Capture grid bounds when tile is clicked
-                  if (gridRef.current) {
-                    setGridBounds(gridRef.current.getBoundingClientRect());
-                  }
-                  setSelectedTile({ color, index });
-                }}
+                onClick={() => handleTileClick(color, index)}
                 previewImage={previewImages[index]}
-                mousePosition={mousePosition}
-                isActiveHover={hoveredTileIndex === index}
-                onTileHoverChange={(isHovering) => setHoveredTileIndex(isHovering ? index : null)}
+                mousePosition={isTouchDevice ? null : mousePosition}
+                isActiveHover={isTouchDevice ? false : hoveredTileIndex === index}
+                onTileHoverChange={(isHovering) => !isTouchDevice && setHoveredTileIndex(isHovering ? index : null)}
                 prevMousePosition={prevMousePosition}
                 initialFlipped={!initialAnimationComplete}
                 cascadeDelay={cascadeDelay}
@@ -380,6 +406,8 @@ function AppContent() {
                     setInitialAnimationComplete(true);
                   }
                 }}
+                isTouchFlipped={touchFlippedTiles.has(index)}
+                isTouchDevice={isTouchDevice}
               />
             );
           })}
