@@ -481,7 +481,7 @@ function AppContent() {
             },
           }}
         >
-          <a href="mailto:josh@hooloovoocafe.com" className="pt-[0px] pr-[0px] pb-[0px] pl-[12px]">JOSH@REMOTELYAMUSED.COM</a>
+          <a href="mailto:josh@remotelyamused.com" className="pt-[0px] pr-[0px] pb-[0px] pl-[12px]">JOSH@REMOTELYAMUSED.COM</a>
         </Typography>
       </Box>
 
