@@ -11,6 +11,9 @@ interface TileProps {
   prevMousePosition: { x: number; y: number } | null;
   isActiveHover?: boolean;
   onTileHoverChange?: (isHovering: boolean) => void;
+  initialFlipped?: boolean;
+  cascadeDelay?: number;
+  onInitialFlipComplete?: () => void;
 }
 
 // Placeholder images for the back of tiles
@@ -33,14 +36,59 @@ const placeholderImages = [
   "https://images.unsplash.com/photo-1611087966028-bc70bc75d5f3?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjcmVhdGl2ZSUyMHZpc3VhbCUyMGFydHxlbnwxfHx8fDE3Njg5NzE0ODh8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
 ];
 
-export function Tile({ color, index, onClick, previewImage, mousePosition, prevMousePosition, isActiveHover, onTileHoverChange }: TileProps) {
+export function Tile({ color, index, onClick, previewImage, mousePosition, prevMousePosition, isActiveHover, onTileHoverChange, initialFlipped, cascadeDelay, onInitialFlipComplete }: TileProps) {
   const tileRef = useRef<HTMLDivElement>(null);
   const theme = useTheme();
   const [flipDirection, setFlipDirection] = useState<'horizontal' | 'vertical'>('horizontal');
+  const [showingBack, setShowingBack] = useState(initialFlipped || false);
   
   // Tiles that should NOT show preview on hover (indices 5, 6, 8 = tiles 6, 7, 9)
   const noPreviewIndices = [5, 6, 8];
   const shouldShowPreview = previewImage && !noPreviewIndices.includes(index);
+
+  // Calculate if this tile is a neighbor of the hovered tile
+  const isNeighbor = () => {
+    if (!mousePosition || !tileRef.current || isActiveHover) return false;
+    
+    const rect = tileRef.current.getBoundingClientRect();
+    const gridRect = tileRef.current.parentElement?.getBoundingClientRect();
+    
+    if (!gridRect) return false;
+
+    // Calculate tile center relative to grid
+    const tileCenterX = rect.left - gridRect.left + rect.width / 2;
+    const tileCenterY = rect.top - gridRect.top + rect.height / 2;
+
+    // Calculate distance from mouse to tile center
+    const deltaX = mousePosition.x - tileCenterX;
+    const deltaY = mousePosition.y - tileCenterY;
+    const distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+
+    // Check if within neighbor radius (1.2 tile widths)
+    const neighborRadius = rect.width * 1.2;
+    
+    return distance > 0 && distance <= neighborRadius;
+  };
+
+  const shouldBounce = isNeighbor();
+
+  // Handle initial cascade flip animation
+  useEffect(() => {
+    if (initialFlipped) {
+      // Wait for cascade delay, then flip to front (colored) side
+      const timer = setTimeout(() => {
+        setShowingBack(false);
+        // Notify when flip completes
+        if (onInitialFlipComplete) {
+          setTimeout(() => {
+            onInitialFlipComplete();
+          }, 400); // Match animation duration
+        }
+      }, cascadeDelay || 0);
+      
+      return () => clearTimeout(timer);
+    }
+  }, [initialFlipped, cascadeDelay, onInitialFlipComplete]);
 
   // Determine approach direction when hovering starts
   useEffect(() => {
@@ -67,13 +115,12 @@ export function Tile({ color, index, onClick, previewImage, mousePosition, prevM
       const isHorizontalMovement = deltaX > deltaY;
       const isOnHorizontalEdge = Math.abs(posX) > Math.abs(posY);
       
-      if (isHorizontalMovement || isOnHorizontalEdge) {
-        setFlipDirection('horizontal');
-      } else {
-        setFlipDirection('vertical');
-      }
+      const newDirection = (isHorizontalMovement || isOnHorizontalEdge) ? 'horizontal' : 'vertical';
+      
+      // Only update if direction actually changed
+      setFlipDirection(prev => prev === newDirection ? prev : newDirection);
     }
-  }, [isActiveHover, mousePosition, prevMousePosition]);
+  }, [isActiveHover]); // Only run when hover state changes, not on every mouse move
 
   // Calculate proximity-based rotation
   const getProximityRotation = () => {
@@ -127,7 +174,18 @@ export function Tile({ color, index, onClick, previewImage, mousePosition, prevM
     return { rotateX, rotateY, isFlipped };
   };
 
-  const { rotateX, rotateY, isFlipped } = getProximityRotation();
+  const { rotateX, rotateY } = getProximityRotation();
+
+  // Calculate the final transform based on showingBack state and proximity rotation
+  const getFinalTransform = () => {
+    if (showingBack) {
+      // When showing back, flip 180 degrees (override proximity rotation)
+      return flipDirection === 'horizontal' ? 'rotateY(180deg)' : 'rotateX(180deg)';
+    } else {
+      // Normal proximity-based rotation
+      return `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+    }
+  };
 
   return (
     <Box
@@ -136,6 +194,15 @@ export function Tile({ color, index, onClick, previewImage, mousePosition, prevM
         width: '100%',
         aspectRatio: '1',
         perspective: '1000px',
+        // Apply bounce animation to neighboring tiles
+        animation: shouldBounce ? 'bounce 0.5s ease-out' : 'none',
+        '@keyframes bounce': {
+          '0%': { transform: 'translateY(0)' },
+          '30%': { transform: 'translateY(-8px)' },
+          '50%': { transform: 'translateY(0)' },
+          '70%': { transform: 'translateY(-4px)' },
+          '100%': { transform: 'translateY(0)' },
+        },
       }}
       onMouseEnter={() => onTileHoverChange?.(true)}
       onMouseLeave={() => onTileHoverChange?.(false)}
@@ -146,16 +213,16 @@ export function Tile({ color, index, onClick, previewImage, mousePosition, prevM
           height: '100%',
           position: 'relative',
           transformStyle: 'preserve-3d',
-          transform: `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`,
+          transform: getFinalTransform(),
           transition: theme.transitions.create(['transform'], {
-            duration: theme.transitions.duration.shorter,
-            easing: theme.transitions.easing.easeOut,
+            duration: showingBack || isActiveHover ? 400 : theme.transitions.duration.shorter,
+            easing: showingBack || isActiveHover ? 'cubic-bezier(0.34, 1.56, 0.64, 1)' : theme.transitions.easing.easeOut,
           }),
         }}
       >
         {/* Front face - colored tile */}
         <Card
-          elevation={isFlipped ? 2 : (isActiveHover ? 8 : 2)}
+          elevation={showingBack ? 2 : (isActiveHover ? 8 : 2)}
           sx={{
             position: 'absolute',
             width: '100%',
@@ -195,7 +262,7 @@ export function Tile({ color, index, onClick, previewImage, mousePosition, prevM
 
         {/* Back face - placeholder image (horizontal flip) */}
         <Card
-          elevation={isFlipped ? 8 : 2}
+          elevation={showingBack ? 8 : 2}
           sx={{
             position: 'absolute',
             width: '100%',

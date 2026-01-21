@@ -32,9 +32,10 @@ interface TileModalProps {
     techStack: string[];
     embedUrl?: string;
   };
+  gridBounds: DOMRect | null;
 }
 
-export function TileModal({ color, index, totalTiles, onClose, onNext, onPrev, previewImage, tileInfo }: TileModalProps) {
+export function TileModal({ color, index, totalTiles, onClose, onNext, onPrev, previewImage, tileInfo, gridBounds }: TileModalProps) {
   const [isVisible, setIsVisible] = useState(false);
   const theme = useTheme();
 
@@ -74,12 +75,26 @@ export function TileModal({ color, index, totalTiles, onClose, onNext, onPrev, p
     <Dialog
       open={true}
       onClose={handleClose}
-      maxWidth="lg"
-      fullWidth
-      fullScreen
+      maxWidth={false}
+      fullWidth={false}
+      fullScreen={false}
       PaperProps={{
         elevation: 24, // Material Design maximum elevation
-        sx: {
+        sx: gridBounds ? {
+          bgcolor: 'rgba(10, 10, 10, 0.85)',
+          backdropFilter: 'blur(24px)',
+          backgroundImage: 'none',
+          borderRadius: 1,
+          position: 'absolute',
+          top: `${gridBounds.top}px`,
+          left: `${gridBounds.left}px`,
+          width: `${gridBounds.width}px`,
+          height: `${gridBounds.height}px`,
+          m: 0,
+          maxWidth: 'none',
+          maxHeight: 'none',
+          border: '1px solid rgba(255, 255, 255, 0.1)',
+        } : {
           bgcolor: theme.palette.background.default,
           backgroundImage: 'none',
           m: { xs: 0, md: 4 },
@@ -90,8 +105,8 @@ export function TileModal({ color, index, totalTiles, onClose, onNext, onPrev, p
       }}
       sx={{
         '& .MuiBackdrop-root': {
-          bgcolor: 'rgba(0, 0, 0, 0.8)',
-          backdropFilter: 'blur(8px)',
+          bgcolor: 'rgba(0, 0, 0, 0.3)',
+          backdropFilter: 'blur(4px)',
         },
       }}
     >
