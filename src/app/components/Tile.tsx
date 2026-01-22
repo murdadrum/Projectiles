@@ -1,9 +1,9 @@
 import { useRef, useState, useEffect } from "react";
 import { Card, CardActionArea, Box } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
-import tile1Image from 'figma:asset/b13b88acf880894056f5c2f379c5092525703b34.png';
-import tile5Image from 'figma:asset/a50fe4659419b19780efd331617efb8b5bb21be6.png';
-import tile16Image from 'figma:asset/c1e517fc5ebf0047a4e6772359aeddd658d3402f.png';
+import tile1Image from '../../assets/b13b88acf880894056f5c2f379c5092525703b34.png';
+import tile5Image from '../../assets/a50fe4659419b19780efd331617efb8b5bb21be6.png';
+import tile16Image from '../../assets/c1e517fc5ebf0047a4e6772359aeddd658d3402f.png';
 
 interface TileProps {
   color: string;
