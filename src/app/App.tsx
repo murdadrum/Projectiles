@@ -64,14 +64,16 @@ const tileColors = [
 const previewImages: { [key: number]: string } = {};
 
 // Tile information for special layouts
-const tileInfo: { [key: number]: { 
-  title: string; 
-  subtitle?: string;
-  description: string; 
-  details: string[];
-  techStack: string[];
-  embedUrl?: string;
-} } = {
+const tileInfo: {
+  [key: number]: {
+    title: string;
+    subtitle?: string;
+    description: string;
+    details: string[];
+    techStack: string[];
+    embedUrl?: string;
+  }
+} = {
   0: { // Tile 1
     title: "VennDiachrome",
     subtitle: "WEB APP",
@@ -289,18 +291,18 @@ function AppContent() {
       } else {
         // Not flipped yet, so flip it (and unflip any other tiles)
         setTouchFlippedTiles(new Set([index]));
-        
+
         // Start 1200ms timer (50% longer than 800ms) to auto-flip back and then flip a random different tile
         flipTimerRef.current = setTimeout(() => {
           // Flip back to original
           setTouchFlippedTiles(new Set());
-          
+
           // After a brief delay, flip a random different tile to command attention
           setTimeout(() => {
             // Get available tiles (not yet randomly flipped and not the current tile)
             const availableTiles = Array.from({ length: tileColors.length }, (_, i) => i)
               .filter(i => i !== index && !randomlyFlippedTiles.has(i));
-            
+
             // If all tiles have been randomly flipped, reset the tracking
             let randomIndex;
             if (availableTiles.length === 0) {
@@ -313,20 +315,20 @@ function AppContent() {
               // Select from available tiles
               randomIndex = availableTiles[Math.floor(Math.random() * availableTiles.length)];
             }
-            
+
             // Mark this tile as randomly flipped
             setRandomlyFlippedTiles(prev => new Set([...prev, randomIndex]));
-            
+
             // Flip the random tile
             setTouchFlippedTiles(new Set([randomIndex]));
-            
+
             // Set another timer for the new flipped tile (1200ms)
             flipTimerRef.current = setTimeout(() => {
               setTouchFlippedTiles(new Set());
               flipTimerRef.current = null;
             }, 1200);
           }, 300); // 300ms delay between flip back and new flip for visual clarity
-          
+
         }, 1200);
       }
     } else {
@@ -344,7 +346,7 @@ function AppContent() {
       x: e.clientX - rect.left,
       y: e.clientY - rect.top,
     };
-    
+
     setPrevMousePosition(mousePosition);
     setMousePosition(newPosition);
   };
@@ -369,10 +371,10 @@ function AppContent() {
       <Box
         sx={{
           width: '100%',
-          maxWidth: { 
+          maxWidth: {
             xs: 'min(85vh, 95vw)',
-            sm: 'min(75vh, 85vw)', 
-            md: 'min(72vh, 72vw)' 
+            sm: 'min(75vh, 85vw)',
+            md: 'min(72vh, 72vw)'
           },
           display: 'flex',
           flexDirection: 'column',
@@ -380,8 +382,8 @@ function AppContent() {
         }}
       >
         {/* Header - Aligned to right of grid */}
-        <Box 
-          sx={{ 
+        <Box
+          sx={{
             mb: 3,
             width: '100%',
             display: 'flex',
@@ -394,7 +396,7 @@ function AppContent() {
             sx={{
               fontFamily: '"Aldrich", sans-serif',
               fontWeight: 400,
-              fontSize: { 
+              fontSize: {
                 xs: '1.75rem',  // 28px
                 sm: '2.25rem',  // 36px
                 md: '3rem',     // 48px
@@ -431,7 +433,7 @@ function AppContent() {
             const row = Math.floor(index / 4);
             const col = index % 4;
             const cascadeDelay = (row + col) * 100; // 100ms between each diagonal wave
-              
+
             return (
               <Tile
                 key={index}
