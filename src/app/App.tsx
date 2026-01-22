@@ -5,6 +5,7 @@ import { AnimatePresence } from "motion/react";
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import { Typography, Box } from '@mui/material';
+import tile16Image from 'figma:asset/d1189839d71010eac49be0b77e373fba3d5949f3.png';
 
 // Material Design dark theme
 const darkTheme = createTheme({
@@ -61,7 +62,9 @@ const tileColors = [
 ];
 
 // Preview images - optional preview images for tiles
-const previewImages: { [key: number]: string } = {};
+const previewImages: { [key: number]: string } = {
+  15: tile16Image, // About Me tile
+};
 
 // Tile information for special layouts
 const tileInfo: { [key: number]: { 
@@ -71,6 +74,13 @@ const tileInfo: { [key: number]: {
   details: string[];
   techStack: string[];
   embedUrl?: string;
+  contactLinks?: {
+    email: string;
+    github: string;
+    figma: string;
+    linkedin: string;
+    gumroad: string;
+  }
 } } = {
   0: { // Tile 1
     title: "VennDiachrome",
@@ -146,7 +156,7 @@ const tileInfo: { [key: number]: {
     techStack: ["Vue.js", "GraphQL", "PostgreSQL"]
   },
   7: { // Tile 8
-    title: "MuseBox Studio",
+    title: "MuseBox",
     subtitle: "Web Application",
     description: "A cinematic prompt studio for generating image sequences and storyboard-ready frames.",
     details: [
@@ -226,15 +236,24 @@ const tileInfo: { [key: number]: {
     ],
     techStack: ["Node.js", "Sharp", "React"]
   },
-  15: { // Tile 16
-    title: "ChatBridge",
-    subtitle: "Communication",
-    description: "Multi-platform messaging aggregator with unified inbox.",
+  15: { // Tile 16 - About Me
+    title: "About Me",
+    subtitle: "UX Engineer & Creative Technologist",
+    description: "I'm a multidisciplinary designer and developer passionate about creating delightful user experiences through the intersection of design and technology.",
     details: [
-      "Consolidates messages from Slack, Teams, Discord, and email.",
-      "Smart filtering and priority inbox for focused communication.",
+      "10+ years of experience in UX design, front-end development, and creative coding.",
+      "Specialized in building interactive web applications with React, TypeScript, and modern design systems.",
+      "Led design and engineering initiatives for products used by millions of users.",
+      "Passionate about bridging the gap between design and engineering teams.",
     ],
-    techStack: ["Electron", "WebSocket", "Redis"]
+    techStack: ["React", "TypeScript", "Figma", "Node.js", "Three.js"],
+    contactLinks: {
+      email: "josh@remotelyamused.com",
+      github: "https://github.com/murdadrum",
+      figma: "https://www.figma.com/@JoshUX",
+      linkedin: "https://www.linkedin.com/in/joshbarteaux",
+      gumroad: "https://remotelyamused.gumroad.com"
+    }
   }
 };
 
@@ -243,7 +262,6 @@ function AppContent() {
   const [mousePosition, setMousePosition] = useState<{ x: number; y: number } | null>(null);
   const [prevMousePosition, setPrevMousePosition] = useState<{ x: number; y: number } | null>(null);
   const [hoveredTileIndex, setHoveredTileIndex] = useState<number | null>(null);
-  const [gridBounds, setGridBounds] = useState<DOMRect | null>(null);
   const [initialAnimationComplete, setInitialAnimationComplete] = useState(false);
   const [touchFlippedTiles, setTouchFlippedTiles] = useState<Set<number>>(new Set());
   const [randomlyFlippedTiles, setRandomlyFlippedTiles] = useState<Set<number>>(new Set());
@@ -278,9 +296,6 @@ function AppContent() {
       // On touch devices: first click flips, second click opens modal
       if (touchFlippedTiles.has(index)) {
         // Already flipped, so open modal
-        if (gridRef.current) {
-          setGridBounds(gridRef.current.getBoundingClientRect());
-        }
         setSelectedTile({ color, index });
         // Reset flipped state when modal opens
         setTouchFlippedTiles(new Set());
@@ -329,9 +344,6 @@ function AppContent() {
       }
     } else {
       // On desktop: click always opens modal
-      if (gridRef.current) {
-        setGridBounds(gridRef.current.getBoundingClientRect());
-      }
       setSelectedTile({ color, index });
     }
   };
@@ -377,13 +389,13 @@ function AppContent() {
           pt: '48px',
         }}
       >
-        {/* Header - Aligned to right of grid */}
+        {/* Header - Aligned to left of grid */}
         <Box 
           sx={{ 
             mb: 3,
             width: '100%',
             display: 'flex',
-            justifyContent: 'flex-end',
+            justifyContent: 'flex-start',
             px: 1.5,
           }}
         >
@@ -396,16 +408,16 @@ function AppContent() {
                 xs: '1.75rem',  // 28px
                 sm: '2.25rem',  // 36px
                 md: '3rem',     // 48px
-                lg: '3.625rem'  // 58px
+                lg: '3rem'      // 48px
               },
-              lineHeight: { xs: '1.5rem', sm: '1.75rem', md: '1.75rem', lg: '1.75rem' }, // 28px
+              lineHeight: { xs: '1.5rem', sm: '1.75rem', md: '2.375rem', lg: '2.375rem' }, // 38px at desktop
               letterSpacing: { xs: '2px', sm: '3px', md: '4px' },
               textTransform: 'uppercase',
               color: 'text.primary',
-              textAlign: 'right',
+              textAlign: 'left',
             }}
           >
-            ProjecTiles
+            PROJECTILES
           </Typography>
         </Box>
 
@@ -422,7 +434,7 @@ function AppContent() {
           }}
           onMouseMove={handleGridMouseMove}
           onMouseLeave={handleGridMouseLeave}
-          ref={gridRef}
+          ref={gridRef} className="mx-[0px] my-[-12px]"
         >
           {tileColors.map((color, index) => {
             // Calculate cascade delay based on position (top-left to bottom-right)
@@ -456,33 +468,39 @@ function AppContent() {
           })}
         </Box>
 
-        {/* Footer - Aligned to left of grid */}
-        <Typography
-          variant="caption"
+        {/* Footer - Two columns: email on left, JOSH/UX on right */}
+        <Box
           sx={{
             display: 'flex',
+            justifyContent: 'flex-end',
             alignItems: 'flex-end',
             mt: { xs: 2, sm: 2.5, md: 3 },
-            fontFamily: '"Abel", sans-serif',
-            fontWeight: 400,
-            fontSize: { xs: '0.75rem', sm: '0.875rem', md: '1rem' }, // 16px at desktop
-            lineHeight: { xs: '1rem', sm: '1.125rem', md: '1.25rem' }, // 20px at desktop
-            color: 'rgba(255, 255, 255, 0.8)',
-            letterSpacing: { xs: '0.8px', sm: '1px', md: '1.2px' },
-            textTransform: 'uppercase',
-            textAlign: 'left',
-            '& a': {
-              color: 'inherit',
-              textDecoration: 'none',
-              transition: 'color 0.3s',
-              '&:hover': {
-                color: 'primary.main',
-              },
-            },
-          }}
+            px: 1.5,
+            width: '100%',
+          }} className="mt-[12px] mr-[0px] mb-[0px] ml-[0px]"
         >
-          <a href="mailto:josh@remotelyamused.com" className="pt-[0px] pr-[0px] pb-[0px] pl-[12px]">JOSH@REMOTELYAMUSED.COM</a>
-        </Typography>
+
+          {/* Left: @joshbarteaux */}
+          <Typography
+            sx={{
+              fontFamily: '"Aldrich", sans-serif',
+              fontWeight: 400,
+              fontSize: { 
+                xs: '1.5rem',    // 24px
+                sm: '1.5rem',    // 24px
+                md: '1.5rem',    // 24px
+                lg: '1.5rem'     // 24px
+              },
+              lineHeight: { xs: '1.25rem', sm: '1.5rem', md: '1.75rem', lg: '1.75rem' }, // 24px at desktop
+              letterSpacing: { xs: '2px', sm: '3px', md: '4px' },
+              textTransform: 'uppercase',
+              color: 'text.primary',
+              textAlign: 'right',
+            }}
+          >
+            <a href="mailto:josh@remotelyamused.com">@joshbarteaux</a>
+          </Typography>
+        </Box>
       </Box>
 
       {/* Modal */}
@@ -497,7 +515,6 @@ function AppContent() {
             onPrev={handlePrev}
             previewImage={previewImages[selectedTile.index]}
             tileInfo={tileInfo[selectedTile.index]}
-            gridBounds={gridBounds}
           />
         )}
       </AnimatePresence>
@@ -517,6 +534,11 @@ function ThemeWrapper() {
 
 // Export default App component that blocks all Figma props
 export default function App(props: any) {
-  // Explicitly ignore all props (including data-fg-* attributes) to prevent them from being passed down
-  return <ThemeWrapper />;
+  // Render a wrapper div that accepts all Figma data attributes,
+  // preventing them from being passed to Material UI components
+  return (
+    <div {...props}>
+      <ThemeWrapper />
+    </div>
+  );
 }

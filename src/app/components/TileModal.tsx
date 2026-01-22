@@ -9,12 +9,19 @@ import {
   Button,
   Paper,
   Divider,
+  TextField,
+  Alert,
+  Link,
 } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import CloseIcon from '@mui/icons-material/Close';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import OpenInNewIcon from '@mui/icons-material/OpenInNew';
+import EmailIcon from '@mui/icons-material/Email';
+import GitHubIcon from '@mui/icons-material/GitHub';
+import LinkedInIcon from '@mui/icons-material/LinkedIn';
+import { useForm } from 'react-hook-form';
 
 interface TileModalProps {
   color: string;
@@ -31,12 +38,25 @@ interface TileModalProps {
     details: string[];
     techStack: string[];
     embedUrl?: string;
+    contactLinks?: {
+      email: string;
+      github: string;
+      figma: string;
+      linkedin: string;
+      gumroad: string;
+    };
   };
-  gridBounds: DOMRect | null;
 }
 
-export function TileModal({ color, index, totalTiles, onClose, onNext, onPrev, previewImage, tileInfo, gridBounds }: TileModalProps) {
+interface ContactFormData {
+  name: string;
+  email: string;
+  message: string;
+}
+
+export function TileModal({ color, index, totalTiles, onClose, onNext, onPrev, previewImage, tileInfo }: TileModalProps) {
   const [isVisible, setIsVisible] = useState(false);
+  const [formSubmitted, setFormSubmitted] = useState(false);
   const theme = useTheme();
 
   useEffect(() => {
@@ -71,6 +91,14 @@ export function TileModal({ color, index, totalTiles, onClose, onNext, onPrev, p
     setTimeout(onClose, 300); // Wait for exit animation
   };
 
+  const { register, handleSubmit, formState: { errors } } = useForm<ContactFormData>();
+
+  const onSubmit = (data: ContactFormData) => {
+    console.log(data);
+    setFormSubmitted(true);
+    // Add your form submission logic here
+  };
+
   return (
     <Dialog
       open={true}
@@ -80,27 +108,17 @@ export function TileModal({ color, index, totalTiles, onClose, onNext, onPrev, p
       fullScreen={false}
       PaperProps={{
         elevation: 24, // Material Design maximum elevation
-        sx: gridBounds ? {
-          bgcolor: 'rgba(10, 10, 10, 0.85)',
-          backdropFilter: 'blur(24px)',
-          backgroundImage: 'none',
-          borderRadius: 1,
-          position: 'absolute',
-          top: `${gridBounds.top}px`,
-          left: `${gridBounds.left}px`,
-          width: `${gridBounds.width}px`,
-          height: `${gridBounds.height}px`,
-          m: 0,
-          maxWidth: 'none',
-          maxHeight: 'none',
-          border: '1px solid rgba(255, 255, 255, 0.1)',
-        } : {
+        sx: {
           bgcolor: theme.palette.background.default,
           backgroundImage: 'none',
-          m: { xs: 0, md: 4 },
+          m: { xs: 0, sm: 1.5, md: 2, lg: 3 },
           borderRadius: { xs: 0, md: 1 },
-          height: { xs: '100%', md: 'calc(100% - 64px)' },
-          maxHeight: { xs: '100%', md: 'calc(100% - 64px)' },
+          width: { xs: '100%', sm: 'fit-content', md: 'fit-content', lg: 'fit-content' },
+          height: { xs: '100%', sm: 'fit-content', md: 'fit-content', lg: 'fit-content' },
+          minWidth: { sm: '600px', md: '800px', lg: '1000px' },
+          minHeight: { sm: '400px', md: '500px', lg: '600px' },
+          maxWidth: { xs: '100%', sm: '98vw', md: '96vw', lg: '2200px' },
+          maxHeight: { xs: '100%', sm: '96vh', md: '94vh', lg: '1100px' },
         },
       }}
       sx={{
@@ -131,49 +149,6 @@ export function TileModal({ color, index, totalTiles, onClose, onNext, onPrev, p
         <CloseIcon />
       </IconButton>
 
-      {/* Navigation Buttons */}
-      <IconButton
-        onClick={onPrev}
-        sx={{
-          position: 'absolute',
-          left: { xs: 8, md: 16 },
-          top: '50%',
-          transform: 'translateY(-50%)',
-          zIndex: 60,
-          color: 'rgba(255, 255, 255, 0.7)',
-          bgcolor: 'rgba(0, 0, 0, 0.4)',
-          backdropFilter: 'blur(8px)',
-          border: '1px solid rgba(255, 255, 255, 0.1)',
-          '&:hover': {
-            bgcolor: 'rgba(0, 0, 0, 0.6)',
-            color: 'white',
-          },
-        }}
-      >
-        <ArrowBackIcon />
-      </IconButton>
-
-      <IconButton
-        onClick={onNext}
-        sx={{
-          position: 'absolute',
-          right: { xs: 8, md: 16 },
-          top: '50%',
-          transform: 'translateY(-50%)',
-          zIndex: 60,
-          color: 'rgba(255, 255, 255, 0.7)',
-          bgcolor: 'rgba(0, 0, 0, 0.4)',
-          backdropFilter: 'blur(8px)',
-          border: '1px solid rgba(255, 255, 255, 0.1)',
-          '&:hover': {
-            bgcolor: 'rgba(0, 0, 0, 0.6)',
-            color: 'white',
-          },
-        }}
-      >
-        <ArrowForwardIcon />
-      </IconButton>
-
       <Box
         sx={{
           display: 'flex',
@@ -198,7 +173,7 @@ export function TileModal({ color, index, totalTiles, onClose, onNext, onPrev, p
               }}
             >
               {tileInfo.embedUrl || previewImage ? (
-                <Box sx={{ position: 'relative', flex: 1, p: 4, display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden' }}>
+                <Box sx={{ position: 'relative', flex: 1, p: 4, display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden' }} className="bg-[rgba(0,0,0,0)]">
                   {/* Inner Container */}
                   <Paper
                     elevation={8}
@@ -232,7 +207,7 @@ export function TileModal({ color, index, totalTiles, onClose, onNext, onPrev, p
                 </Box>
               ) : null}
 
-              {/* Desktop Footer */}
+              {/* Desktop Footer with Navigation Buttons */}
               <Box
                 sx={{
                   bgcolor: '#050505',
@@ -241,12 +216,51 @@ export function TileModal({ color, index, totalTiles, onClose, onNext, onPrev, p
                   display: 'flex',
                   justifyContent: 'space-between',
                   alignItems: 'center',
+                  gap: 2,
                 }}
               >
-                <Typography variant="caption" sx={{ color: 'text.secondary', opacity: 0.3, textTransform: 'uppercase', letterSpacing: '0.1em' }}>
+                <Typography variant="caption" sx={{ color: 'text.secondary', opacity: 0.3, textTransform: 'uppercase', letterSpacing: '0.1em', flex: 1 }}>
                   Powered by React + Vite
                 </Typography>
-                <Typography variant="caption" sx={{ color: 'text.secondary', opacity: 0.3, textTransform: 'uppercase', letterSpacing: '0.1em' }}>
+                
+                {/* Navigation Buttons - Centered */}
+                <Box sx={{ display: 'flex', gap: 2, justifyContent: 'center' }}>
+                  <IconButton
+                    onClick={onPrev}
+                    size="small"
+                    sx={{
+                      color: 'rgba(255, 255, 255, 0.5)',
+                      bgcolor: 'rgba(0, 0, 0, 0.3)',
+                      backdropFilter: 'blur(8px)',
+                      border: '1px solid rgba(255, 255, 255, 0.08)',
+                      '&:hover': {
+                        bgcolor: 'rgba(0, 0, 0, 0.5)',
+                        color: 'rgba(255, 255, 255, 0.8)',
+                      },
+                    }}
+                  >
+                    <ArrowBackIcon fontSize="small" />
+                  </IconButton>
+
+                  <IconButton
+                    onClick={onNext}
+                    size="small"
+                    sx={{
+                      color: 'rgba(255, 255, 255, 0.5)',
+                      bgcolor: 'rgba(0, 0, 0, 0.3)',
+                      backdropFilter: 'blur(8px)',
+                      border: '1px solid rgba(255, 255, 255, 0.08)',
+                      '&:hover': {
+                        bgcolor: 'rgba(0, 0, 0, 0.5)',
+                        color: 'rgba(255, 255, 255, 0.8)',
+                      },
+                    }}
+                  >
+                    <ArrowForwardIcon fontSize="small" />
+                  </IconButton>
+                </Box>
+                
+                <Typography variant="caption" sx={{ color: 'text.secondary', opacity: 0.3, textTransform: 'uppercase', letterSpacing: '0.1em', flex: 1, textAlign: 'right' }}>
                   {tileInfo.techStack.join(' • ')}
                 </Typography>
               </Box>
@@ -392,51 +406,269 @@ export function TileModal({ color, index, totalTiles, onClose, onNext, onPrev, p
 
               <Divider sx={{ my: { xs: 2, sm: 2.5, md: 3 }, borderColor: 'rgba(255, 255, 255, 0.05)' }} />
 
+              {/* Contact Links - Show only for About Me tile */}
+              {tileInfo.contactLinks && (
+                <>
+                  <Box sx={{ mb: { xs: 2.5, sm: 3, md: 3.5, lg: 4 } }}>
+                    <Typography
+                      variant="overline"
+                      sx={{
+                        color: 'text.secondary',
+                        opacity: 0.4,
+                        letterSpacing: '0.15em',
+                        display: 'block',
+                        mb: { xs: 1.25, sm: 1.5, md: 2 },
+                        fontSize: { xs: '0.625rem', sm: '0.6875rem', md: '0.75rem' },
+                      }}
+                    >
+                      Connect With Me
+                    </Typography>
+                    <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1.5 }}>
+                      <Link
+                        href={`mailto:${tileInfo.contactLinks.email}`}
+                        sx={{
+                          display: 'flex',
+                          alignItems: 'center',
+                          gap: 1.5,
+                          color: 'text.secondary',
+                          textDecoration: 'none',
+                          opacity: 0.7,
+                          transition: 'opacity 0.2s',
+                          '&:hover': {
+                            opacity: 1,
+                          },
+                        }}
+                      >
+                        <EmailIcon sx={{ fontSize: '1.25rem' }} />
+                        <Typography variant="body2" sx={{ fontSize: { xs: '0.8125rem', sm: '0.8438rem', md: '0.875rem' } }}>
+                          {tileInfo.contactLinks.email}
+                        </Typography>
+                      </Link>
+                      <Link
+                        href={tileInfo.contactLinks.github}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        sx={{
+                          display: 'flex',
+                          alignItems: 'center',
+                          gap: 1.5,
+                          color: 'text.secondary',
+                          textDecoration: 'none',
+                          opacity: 0.7,
+                          transition: 'opacity 0.2s',
+                          '&:hover': {
+                            opacity: 1,
+                          },
+                        }}
+                      >
+                        <GitHubIcon sx={{ fontSize: '1.25rem' }} />
+                        <Typography variant="body2" sx={{ fontSize: { xs: '0.8125rem', sm: '0.8438rem', md: '0.875rem' } }}>
+                          GitHub
+                        </Typography>
+                      </Link>
+                      <Link
+                        href={tileInfo.contactLinks.figma}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        sx={{
+                          display: 'flex',
+                          alignItems: 'center',
+                          gap: 1.5,
+                          color: 'text.secondary',
+                          textDecoration: 'none',
+                          opacity: 0.7,
+                          transition: 'opacity 0.2s',
+                          '&:hover': {
+                            opacity: 1,
+                          },
+                        }}
+                      >
+                        <Box
+                          component="svg"
+                          viewBox="0 0 24 24"
+                          sx={{ width: '1.25rem', height: '1.25rem', fill: 'currentColor' }}
+                        >
+                          <path d="M6 6h6v6H6zm0 6h6v6H6zm6-6h6v6h-6z" />
+                        </Box>
+                        <Typography variant="body2" sx={{ fontSize: { xs: '0.8125rem', sm: '0.8438rem', md: '0.875rem' } }}>
+                          Figma
+                        </Typography>
+                      </Link>
+                      <Link
+                        href={tileInfo.contactLinks.linkedin}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        sx={{
+                          display: 'flex',
+                          alignItems: 'center',
+                          gap: 1.5,
+                          color: 'text.secondary',
+                          textDecoration: 'none',
+                          opacity: 0.7,
+                          transition: 'opacity 0.2s',
+                          '&:hover': {
+                            opacity: 1,
+                          },
+                        }}
+                      >
+                        <LinkedInIcon sx={{ fontSize: '1.25rem' }} />
+                        <Typography variant="body2" sx={{ fontSize: { xs: '0.8125rem', sm: '0.8438rem', md: '0.875rem' } }}>
+                          LinkedIn
+                        </Typography>
+                      </Link>
+                      <Link
+                        href={tileInfo.contactLinks.gumroad}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        sx={{
+                          display: 'flex',
+                          alignItems: 'center',
+                          gap: 1.5,
+                          color: 'text.secondary',
+                          textDecoration: 'none',
+                          opacity: 0.7,
+                          transition: 'opacity 0.2s',
+                          '&:hover': {
+                            opacity: 1,
+                          },
+                        }}
+                      >
+                        <Box
+                          component="svg"
+                          viewBox="0 0 24 24"
+                          sx={{ width: '1.25rem', height: '1.25rem', fill: 'currentColor' }}
+                        >
+                          <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z" />
+                        </Box>
+                        <Typography variant="body2" sx={{ fontSize: { xs: '0.8125rem', sm: '0.8438rem', md: '0.875rem' } }}>
+                          Gumroad
+                        </Typography>
+                      </Link>
+                    </Box>
+                  </Box>
+
+                  <Divider sx={{ my: { xs: 2, sm: 2.5, md: 3 }, borderColor: 'rgba(255, 255, 255, 0.05)' }} />
+                </>
+              )}
+
               {/* Engineering Context */}
-              <Box>
-                <Typography
-                  variant="overline"
-                  sx={{
-                    color: 'text.secondary',
-                    opacity: 0.4,
-                    letterSpacing: '0.15em',
-                    display: 'block',
-                    mb: { xs: 1.25, sm: 1.5, md: 2 },
-                    fontSize: { xs: '0.625rem', sm: '0.6875rem', md: '0.75rem' },
-                  }}
-                >
-                  Engineering
-                </Typography>
-                <Typography 
-                  variant="body2" 
-                  sx={{ 
-                    color: 'text.secondary', 
-                    opacity: 0.6, 
-                    lineHeight: 1.6, 
-                    mb: { xs: 0.75, md: 1 },
-                    fontSize: { xs: '0.8125rem', sm: '0.8438rem', md: '0.875rem' },
-                  }}
-                >
-                  <strong style={{ opacity: 0.8 }}>Tech Stack:</strong> {tileInfo.techStack.join(', ')}
-                </Typography>
-                <Typography 
-                  variant="body2" 
-                  sx={{ 
-                    color: 'text.secondary', 
-                    opacity: 0.6, 
-                    lineHeight: 1.6,
-                    fontSize: { xs: '0.8125rem', sm: '0.8438rem', md: '0.875rem' },
-                  }}
-                >
-                  {index === 7 
-                    ? "MuseBox layers prompt inputs, style refs, and shot metadata into a structured payload before dispatching model requests. Generated assets stream back into a scene-based storyboard, with previews and export actions optimized for fast iteration."
-                    : index === 5
-                    ? "Built with Web Audio API for low-latency real-time sound processing. Features MIDI support and customizable synthesizer parameters for creative music production."
-                    : index === 2
-                    ? "Promptly uses multimodal AI models to analyze uploaded assets and construct detailed, structurally sound prompts for creative workflows."
-                    : "Advanced architecture leveraging modern frameworks and best practices for optimal performance, scalability, and user experience."}
-                </Typography>
-              </Box>
+              {!tileInfo.contactLinks && (
+                <Box>
+                  <Typography
+                    variant="overline"
+                    sx={{
+                      color: 'text.secondary',
+                      opacity: 0.4,
+                      letterSpacing: '0.15em',
+                      display: 'block',
+                      mb: { xs: 1.25, sm: 1.5, md: 2 },
+                      fontSize: { xs: '0.625rem', sm: '0.6875rem', md: '0.75rem' },
+                    }}
+                  >
+                    Engineering
+                  </Typography>
+                  <Typography 
+                    variant="body2" 
+                    sx={{ 
+                      color: 'text.secondary', 
+                      opacity: 0.6, 
+                      lineHeight: 1.6, 
+                      mb: { xs: 0.75, md: 1 },
+                      fontSize: { xs: '0.8125rem', sm: '0.8438rem', md: '0.875rem' },
+                    }}
+                  >
+                    <strong style={{ opacity: 0.8 }}>Tech Stack:</strong> {tileInfo.techStack.join(', ')}
+                  </Typography>
+                  <Typography 
+                    variant="body2" 
+                    sx={{ 
+                      color: 'text.secondary', 
+                      opacity: 0.6, 
+                      lineHeight: 1.6,
+                      fontSize: { xs: '0.8125rem', sm: '0.8438rem', md: '0.875rem' },
+                    }}
+                  >
+                    {index === 7 
+                      ? "MuseBox layers prompt inputs, style refs, and shot metadata into a structured payload before dispatching model requests. Generated assets stream back into a scene-based storyboard, with previews and export actions optimized for fast iteration."
+                      : index === 5
+                      ? "Built with Web Audio API for low-latency real-time sound processing. Features MIDI support and customizable synthesizer parameters for creative music production."
+                      : index === 2
+                      ? "Promptly uses multimodal AI models to analyze uploaded assets and construct detailed, structurally sound prompts for creative workflows."
+                      : "Advanced architecture leveraging modern frameworks and best practices for optimal performance, scalability, and user experience."}
+                  </Typography>
+                </Box>
+              )}
+
+              {/* Contact Form */}
+              {tileInfo.contactLinks && (
+                <Box sx={{ mt: { xs: 2.5, sm: 3, md: 3.5, lg: 4 } }}>
+                  <Typography
+                    variant="overline"
+                    sx={{
+                      color: 'text.secondary',
+                      opacity: 0.4,
+                      letterSpacing: '0.15em',
+                      display: 'block',
+                      mb: { xs: 1.25, sm: 1.5, md: 2 },
+                      fontSize: { xs: '0.625rem', sm: '0.6875rem', md: '0.75rem' },
+                    }}
+                  >
+                    Contact
+                  </Typography>
+                  <form onSubmit={handleSubmit(onSubmit)}>
+                    <TextField
+                      label="Name"
+                      variant="outlined"
+                      fullWidth
+                      margin="normal"
+                      {...register('name', { required: 'Name is required' })}
+                      error={!!errors.name}
+                      helperText={errors.name?.message}
+                    />
+                    <TextField
+                      label="Email"
+                      variant="outlined"
+                      fullWidth
+                      margin="normal"
+                      {...register('email', { required: 'Email is required', pattern: { value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/, message: 'Invalid email address' } })}
+                      error={!!errors.email}
+                      helperText={errors.email?.message}
+                    />
+                    <TextField
+                      label="Message"
+                      variant="outlined"
+                      fullWidth
+                      margin="normal"
+                      multiline
+                      rows={4}
+                      {...register('message', { required: 'Message is required' })}
+                      error={!!errors.message}
+                      helperText={errors.message?.message}
+                    />
+                    <Button
+                      type="submit"
+                      variant="contained"
+                      color="primary"
+                      fullWidth
+                      sx={{
+                        mt: 2,
+                        py: 1.5,
+                        textTransform: 'uppercase',
+                        letterSpacing: '0.1em',
+                        fontWeight: 500,
+                        fontSize: { xs: '0.75rem', sm: '0.8125rem', md: '0.875rem' },
+                      }}
+                    >
+                      Send Message
+                    </Button>
+                  </form>
+                  {formSubmitted && (
+                    <Alert severity="success" sx={{ mt: 2 }}>
+                      Message sent successfully!
+                    </Alert>
+                  )}
+                </Box>
+              )}
 
               {/* Padding at bottom for mobile scrolling */}
               <Box sx={{ height: { xs: 4, sm: 5, md: 6 } }} />
@@ -496,7 +728,7 @@ export function TileModal({ color, index, totalTiles, onClose, onNext, onPrev, p
                 </Paper>
               </Box>
 
-              {/* Footer */}
+              {/* Footer with Navigation Buttons */}
               <Box
                 sx={{
                   bgcolor: '#050505',
@@ -505,12 +737,51 @@ export function TileModal({ color, index, totalTiles, onClose, onNext, onPrev, p
                   display: 'flex',
                   justifyContent: 'space-between',
                   alignItems: 'center',
+                  gap: 2,
                 }}
               >
-                <Typography variant="caption" sx={{ color: 'text.secondary', opacity: 0.3, textTransform: 'uppercase', letterSpacing: '0.1em' }}>
+                <Typography variant="caption" sx={{ color: 'text.secondary', opacity: 0.3, textTransform: 'uppercase', letterSpacing: '0.1em', flex: 1 }}>
                   Tile {index + 1} of {totalTiles}
                 </Typography>
-                <Typography variant="caption" sx={{ color: 'text.secondary', opacity: 0.3, textTransform: 'uppercase', letterSpacing: '0.1em' }}>
+                
+                {/* Navigation Buttons - Centered */}
+                <Box sx={{ display: 'flex', gap: 2, justifyContent: 'center' }}>
+                  <IconButton
+                    onClick={onPrev}
+                    size="small"
+                    sx={{
+                      color: 'rgba(255, 255, 255, 0.5)',
+                      bgcolor: 'rgba(0, 0, 0, 0.3)',
+                      backdropFilter: 'blur(8px)',
+                      border: '1px solid rgba(255, 255, 255, 0.08)',
+                      '&:hover': {
+                        bgcolor: 'rgba(0, 0, 0, 0.5)',
+                        color: 'rgba(255, 255, 255, 0.8)',
+                      },
+                    }}
+                  >
+                    <ArrowBackIcon fontSize="small" />
+                  </IconButton>
+
+                  <IconButton
+                    onClick={onNext}
+                    size="small"
+                    sx={{
+                      color: 'rgba(255, 255, 255, 0.5)',
+                      bgcolor: 'rgba(0, 0, 0, 0.3)',
+                      backdropFilter: 'blur(8px)',
+                      border: '1px solid rgba(255, 255, 255, 0.08)',
+                      '&:hover': {
+                        bgcolor: 'rgba(0, 0, 0, 0.5)',
+                        color: 'rgba(255, 255, 255, 0.8)',
+                      },
+                    }}
+                  >
+                    <ArrowForwardIcon fontSize="small" />
+                  </IconButton>
+                </Box>
+                
+                <Typography variant="caption" sx={{ color: 'text.secondary', opacity: 0.3, textTransform: 'uppercase', letterSpacing: '0.1em', flex: 1, textAlign: 'right' }}>
                   {color}
                 </Typography>
               </Box>

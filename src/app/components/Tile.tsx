@@ -1,6 +1,8 @@
 import { useRef, useState, useEffect } from "react";
 import { Card, CardActionArea, Box } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
+import tile1Image from 'figma:asset/b13b88acf880894056f5c2f379c5092525703b34.png';
+import tile16Image from 'figma:asset/d1189839d71010eac49be0b77e373fba3d5949f3.png';
 
 interface TileProps {
   color: string;
@@ -312,7 +314,7 @@ export function Tile({ color, index, onClick, previewImage, mousePosition, prevM
           >
             <Box
               component="img"
-              src={placeholderImages[index]}
+              src={index === 15 ? tile16Image : index === 0 ? tile1Image : placeholderImages[index]}
               alt={`Tile ${index + 1} back`}
               sx={{
                 width: '100%',
