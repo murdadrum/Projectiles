@@ -5,7 +5,6 @@ import { AnimatePresence } from "motion/react";
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import { Typography, Box } from '@mui/material';
-import tile16Image from 'figma:asset/d1189839d71010eac49be0b77e373fba3d5949f3.png';
 
 // Material Design dark theme
 const darkTheme = createTheme({
@@ -63,7 +62,6 @@ const tileColors = [
 
 // Preview images - optional preview images for tiles
 const previewImages: { [key: number]: string } = {
-  15: tile16Image, // About Me tile
 };
 
 // Tile information for special layouts
