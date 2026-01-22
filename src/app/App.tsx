@@ -125,7 +125,7 @@ const tileInfo: { [key: number]: {
     techStack: ["TypeScript", "OpenAI", "GitHub API"]
   },
   4: { // Tile 5
-    title: "HealthTrack",
+    title: "Sidenote",
     subtitle: "Mobile Health",
     description: "Personal wellness companion with habit tracking and health insights.",
     details: [
@@ -498,7 +498,7 @@ function AppContent() {
               textAlign: 'right',
             }}
           >
-            <a href="mailto:josh@remotelyamused.com">@joshbarteaux</a>
+            <a href="https://linkedin.com/in/joshbarteaux">@joshbarteaux</a>
           </Typography>
         </Box>
       </Box>
@@ -534,10 +534,10 @@ function ThemeWrapper() {
 
 // Export default App component that blocks all Figma props
 export default function App(props: any) {
-  // Render a wrapper div that accepts all Figma data attributes,
-  // preventing them from being passed to Material UI components
+  // Accept props but don't pass them down to prevent Figma data attributes 
+  // from being passed to Material UI components
   return (
-    <div {...props}>
+    <div>
       <ThemeWrapper />
     </div>
   );
