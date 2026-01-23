@@ -1,9 +1,9 @@
 import { useRef, useState, useEffect } from "react";
 import { Card, CardActionArea, Box } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
-import tile1Image from '../../assets/Tile1.png';
-import tile5Image from '../../assets/Tile5.png';
-import tile16Image from '../../assets/Tile16.png';
+import tile1Image from '../../../images/Tile1.png';
+import tile5Image from '../../../images/Tile5.png';
+import tile16Image from '../../../images/Tile16.png';
 
 interface TileProps {
   color: string;

@@ -8,6 +8,18 @@ Run `npm i` to install the dependencies.
 
 Run `npm run dev` to start the development server.
 
+## UI sync on build
+
+This project syncs UI assets from `https://github.com/murdadrum/Ptlive` before every build.
+
+- Manual sync: `npm run sync-ui`
+- Automatic sync: `npm run build` (via `prebuild`)
+
+Optional environment variables:
+
+- `PTLIVE_UI_REPO` (default: `https://github.com/murdadrum/Ptlive`)
+- `PTLIVE_UI_REF` (default: `main`)
+
 ## Deploying to Firebase Hosting
 
 Build the production bundle:

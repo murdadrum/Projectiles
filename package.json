@@ -4,6 +4,8 @@
   "version": "0.0.1",
   "type": "module",
   "scripts": {
+    "sync-ui": "node scripts/sync-ui.mjs",
+    "prebuild": "node scripts/sync-ui.mjs",
     "build": "vite build",
     "dev": "vite"
   },

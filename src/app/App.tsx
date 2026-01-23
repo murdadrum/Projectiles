@@ -6,6 +6,24 @@ import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import { Typography, Box } from '@mui/material';
 
+// Import tile images from Figma
+import imgTile0 from "figma:asset/e7f4d209239aa906453559f3c9d72157122359bc.png";
+import imgTile1 from "figma:asset/f9a6bb19bfd0783ff0a609bc7dc5f4eaf168913d.png";
+import imgTile2 from "figma:asset/a0f033feca22effc48fe25e752d1bf608e19be19.png";
+import imgTile3 from "figma:asset/211a6df52740c035818e4d494bffe0c1c8d6e9b6.png";
+import imgTile4 from "figma:asset/a1731673602dc60c65c2a511cab33064ca52bb4a.png";
+import imgTile5 from "figma:asset/b6eee35dfcd6556c9a1cad0bba22b81a61d0e23e.png";
+import imgTile6 from "figma:asset/139989f61001fa1248c9626e7731147f09520043.png";
+import imgTile7 from "figma:asset/535e811a44d7022bdae1e1b98488a8b98ac39536.png";
+import imgTile8 from "figma:asset/8d4c02cbc8a1f53547722fccbf6a7970a825b593.png";
+import imgTile9 from "figma:asset/f22999f701e867f15d4aeabf9f4c29760a105ea8.png";
+import imgTile10 from "figma:asset/50d6ceca728fe46911c413e6cc56072e69e8b89e.png";
+import imgTile11 from "figma:asset/6cf4f2b642a8f57792a2f325a4cef91211e940b4.png";
+import imgTile12 from "figma:asset/5263fe41ea24dd1c6b07fe35ce3749cf6dff3799.png";
+import imgTile13 from "figma:asset/70c9051db60a985c721347568f023a4add0e07d2.png";
+import imgTile14 from "figma:asset/391395dc32a58f84a9cc76c9ddc838712f3fa896.png";
+import imgTile15 from "figma:asset/70c9051db60a985c721347568f023a4add0e07d2.png";
+
 // Material Design dark theme
 const darkTheme = createTheme({
   palette: {
@@ -62,6 +80,22 @@ const tileColors = [
 
 // Preview images - optional preview images for tiles
 const previewImages: { [key: number]: string } = {
+  0: imgTile0,
+  1: imgTile1,
+  2: imgTile2,
+  3: imgTile3,
+  4: imgTile4,
+  5: imgTile5,
+  6: imgTile6,
+  7: imgTile7,
+  8: imgTile8,
+  9: imgTile9,
+  10: imgTile10,
+  11: imgTile11,
+  12: imgTile12,
+  13: imgTile13,
+  14: imgTile14,
+  15: imgTile15,
 };
 
 // Tile information for special layouts
@@ -99,8 +133,7 @@ const tileInfo: { [key: number]: {
       "Integrates multiple AI models for style transfer and image generation.",
       "Supports batch processing with preset templates and custom parameters.",
     ],
-    techStack: ["Python", "TensorFlow", "React"],
-    embedUrl: "https://quartermasterlt-779175721635.us-west1.run.app"
+    techStack: ["Python", "TensorFlow", "React"]
   },
   2: { // Tile 3
     title: "Promptly",
@@ -121,8 +154,7 @@ const tileInfo: { [key: number]: {
       "Analyzes pull requests for potential bugs, security issues, and style violations.",
       "Learns from team patterns to provide contextual recommendations.",
     ],
-    techStack: ["TypeScript", "OpenAI", "GitHub API"],
-    embedUrl: "https://quartermastermds.remotelyamused.com"
+    techStack: ["TypeScript", "OpenAI", "GitHub API"]
   },
   4: { // Tile 5
     title: "Sidenote",
@@ -302,18 +334,18 @@ function AppContent() {
       } else {
         // Not flipped yet, so flip it (and unflip any other tiles)
         setTouchFlippedTiles(new Set([index]));
-
+        
         // Start 1200ms timer (50% longer than 800ms) to auto-flip back and then flip a random different tile
         flipTimerRef.current = setTimeout(() => {
           // Flip back to original
           setTouchFlippedTiles(new Set());
-
+          
           // After a brief delay, flip a random different tile to command attention
           setTimeout(() => {
             // Get available tiles (not yet randomly flipped and not the current tile)
             const availableTiles = Array.from({ length: tileColors.length }, (_, i) => i)
               .filter(i => i !== index && !randomlyFlippedTiles.has(i));
-
+            
             // If all tiles have been randomly flipped, reset the tracking
             let randomIndex;
             if (availableTiles.length === 0) {
@@ -326,20 +358,20 @@ function AppContent() {
               // Select from available tiles
               randomIndex = availableTiles[Math.floor(Math.random() * availableTiles.length)];
             }
-
+            
             // Mark this tile as randomly flipped
             setRandomlyFlippedTiles(prev => new Set([...prev, randomIndex]));
-
+            
             // Flip the random tile
             setTouchFlippedTiles(new Set([randomIndex]));
-
+            
             // Set another timer for the new flipped tile (1200ms)
             flipTimerRef.current = setTimeout(() => {
               setTouchFlippedTiles(new Set());
               flipTimerRef.current = null;
             }, 1200);
           }, 300); // 300ms delay between flip back and new flip for visual clarity
-
+          
         }, 1200);
       }
     } else {
@@ -354,7 +386,7 @@ function AppContent() {
       x: e.clientX - rect.left,
       y: e.clientY - rect.top,
     };
-
+    
     setPrevMousePosition(mousePosition);
     setMousePosition(newPosition);
   };
@@ -370,52 +402,43 @@ function AppContent() {
         minHeight: '100vh',
         bgcolor: 'background.default',
         display: 'flex',
-        alignItems: 'flex-start',
+        alignItems: { xs: 'flex-start', md: 'center' },
         justifyContent: 'center',
-        py: { xs: 3, sm: 4, md: 6 },
-        px: { xs: 2, sm: 3, md: 4 },
-      }}
+        px: { xs: '16px', sm: '32px', md: '96px' },
+        py: { xs: '60px', sm: '32px', md: '48px' },
+      }} className="bg-[rgb(0,0,0)]"
     >
       <Box
         sx={{
           width: '100%',
-          maxWidth: {
-            xs: 'min(85vh, 95vw)',
-            sm: 'min(75vh, 85vw)',
-            md: 'min(72vh, 72vw)'
-          },
+          maxWidth: '696px',
           display: 'flex',
           flexDirection: 'column',
-          pt: '48px',
+          alignItems: 'center',
+          gap: 0,
         }}
       >
-        {/* Header - Aligned to left of grid */}
+        {/* Header - Centered */}
         <Box 
           sx={{ 
-            mb: 3,
             width: '100%',
             display: 'flex',
             justifyContent: 'flex-start',
-            px: 1.5,
+            px: '12px',
+            mb: 0,
           }}
         >
           <Typography
             component="h1"
             sx={{
-              fontFamily: '"Aldrich", sans-serif',
+              fontFamily: '\"Aldrich\", sans-serif',
               fontWeight: 400,
-              fontSize: {
-                xs: '1.75rem',  // 28px
-                sm: '2.25rem',  // 36px
-                md: '3rem',     // 48px
-                lg: '3rem'      // 48px
-              },
-              lineHeight: { xs: '1.5rem', sm: '1.75rem', md: '2.375rem', lg: '2.375rem' }, // 38px at desktop
-              letterSpacing: { xs: '2px', sm: '3px', md: '4px' },
+              fontSize: { xs: '32px', sm: '40px', md: '48px' },
+              lineHeight: { xs: '32px', sm: '36px', md: '38px' },
+              letterSpacing: '4px',
               textTransform: 'uppercase',
               color: 'text.primary',
-              textAlign: 'left',
-            }}
+            }} className="text-[48px]"
           >
             PROJECTILES
           </Typography>
@@ -424,81 +447,87 @@ function AppContent() {
         {/* 4x4 Material Design Grid */}
         <Box
           sx={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(4, 1fr)',
-            gap: { xs: 0.75, sm: 1, md: 1.5 },
             width: '100%',
-            aspectRatio: '1',
-            p: 1.5,
-            mt: -1.5,
+            p: '12px',
           }}
-          onMouseMove={handleGridMouseMove}
-          onMouseLeave={handleGridMouseLeave}
-          ref={gridRef} className="mx-[0px] my-[-12px]"
         >
-          {tileColors.map((color, index) => {
-            // Calculate cascade delay based on position (top-left to bottom-right)
-            const row = Math.floor(index / 4);
-            const col = index % 4;
-            const cascadeDelay = (row + col) * 100; // 100ms between each diagonal wave
-
-            return (
-              <Tile
-                key={index}
-                color={color}
-                index={index}
-                onClick={() => handleTileClick(color, index)}
-                previewImage={previewImages[index]}
-                mousePosition={isTouchDevice ? null : mousePosition}
-                isActiveHover={isTouchDevice ? false : hoveredTileIndex === index}
-                onTileHoverChange={(isHovering) => !isTouchDevice && setHoveredTileIndex(isHovering ? index : null)}
-                prevMousePosition={prevMousePosition}
-                initialFlipped={!initialAnimationComplete}
-                cascadeDelay={cascadeDelay}
-                onInitialFlipComplete={() => {
-                  // When the last tile finishes, mark animation as complete
-                  if (index === tileColors.length - 1) {
-                    setInitialAnimationComplete(true);
-                  }
-                }}
-                isTouchFlipped={touchFlippedTiles.has(index)}
-                isTouchDevice={isTouchDevice}
-              />
-            );
-          })}
+          <Box
+            sx={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(4, 1fr)',
+              gap: '6px',
+              width: '100%',
+            }}
+            onMouseMove={handleGridMouseMove}
+            onMouseLeave={handleGridMouseLeave}
+            ref={gridRef}
+          >
+            {tileColors.map((color, index) => {
+              // Calculate cascade delay based on position (top-left to bottom-right)
+              const row = Math.floor(index / 4);
+              const col = index % 4;
+              const cascadeDelay = (row + col) * 100; // 100ms between each diagonal wave
+              
+              return (
+                <Tile
+                  key={index}
+                  color={color}
+                  index={index}
+                  onClick={() => handleTileClick(color, index)}
+                  previewImage={previewImages[index]}
+                  mousePosition={isTouchDevice ? null : mousePosition}
+                  isActiveHover={isTouchDevice ? false : hoveredTileIndex === index}
+                  onTileHoverChange={(isHovering) => !isTouchDevice && setHoveredTileIndex(isHovering ? index : null)}
+                  prevMousePosition={prevMousePosition}
+                  initialFlipped={!initialAnimationComplete}
+                  cascadeDelay={cascadeDelay}
+                  onInitialFlipComplete={() => {
+                    // When the last tile finishes, mark animation as complete
+                    if (index === tileColors.length - 1) {
+                      setInitialAnimationComplete(true);
+                    }
+                  }}
+                  isTouchFlipped={touchFlippedTiles.has(index)}
+                  isTouchDevice={isTouchDevice}
+                />
+              );
+            })}
+          </Box>
         </Box>
 
         {/* Footer - Two columns: email on left, JOSH/UX on right */}
         <Box
           sx={{
+            width: '100%',
             display: 'flex',
             justifyContent: 'flex-end',
-            alignItems: 'flex-end',
-            mt: { xs: 2, sm: 2.5, md: 3 },
-            px: 1.5,
-            width: '100%',
-          }} className="mt-[12px] mr-[0px] mb-[0px] ml-[0px]"
+            alignItems: 'center',
+            px: '12px',
+            py: '2px',
+          }}
         >
-
-          {/* Left: @joshbarteaux */}
           <Typography
+            component="a"
+            href="mailto:josh@remotelyamused.com"
+            target="_blank"
+            rel="noopener noreferrer"
             sx={{
               fontFamily: '"Aldrich", sans-serif',
               fontWeight: 400,
-              fontSize: { 
-                xs: '1.5rem',    // 24px
-                sm: '1.5rem',    // 24px
-                md: '1.5rem',    // 24px
-                lg: '1.5rem'     // 24px
-              },
-              lineHeight: { xs: '1.25rem', sm: '1.5rem', md: '1.75rem', lg: '1.75rem' }, // 24px at desktop
-              letterSpacing: { xs: '2px', sm: '3px', md: '4px' },
+              fontSize: { xs: '16px', sm: '18px', md: '20px' },
+              lineHeight: { xs: '16px', sm: '18px', md: '20px' },
+              letterSpacing: '4px',
               textTransform: 'uppercase',
               color: 'text.primary',
               textAlign: 'right',
-            }}
+              textDecoration: 'none',
+              cursor: 'pointer',
+              '&:hover': {
+                opacity: 0.8,
+              },
+            }} className="text-[20px]"
           >
-            <a href="https://linkedin.com/in/joshbarteaux">@joshbarteaux</a>
+            @RemotelyAmused
           </Typography>
         </Box>
       </Box>
@@ -524,21 +553,20 @@ function AppContent() {
 
 // Wrapper component to intercept and block all props from being passed to Material UI
 function ThemeWrapper() {
+  // No props accepted - creates a clean barrier
   return (
-    <ThemeProvider theme={darkTheme}>
-      <CssBaseline />
-      <AppContent />
-    </ThemeProvider>
+    <div>
+      <ThemeProvider theme={darkTheme}>
+        <CssBaseline />
+        <AppContent />
+      </ThemeProvider>
+    </div>
   );
 }
 
 // Export default App component that blocks all Figma props
 export default function App(props: any) {
-  // Accept props but don't pass them down to prevent Figma data attributes 
-  // from being passed to Material UI components
-  return (
-    <div>
-      <ThemeWrapper />
-    </div>
-  );
+  // Accept ALL props but don't pass them anywhere
+  // This completely absorbs Figma's data-fg-* attributes
+  return <ThemeWrapper />;
 }
