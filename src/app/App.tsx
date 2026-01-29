@@ -440,7 +440,7 @@ function AppContent() {
               color: 'text.primary',
             }} className="text-[48px]"
           >
-            PROJECTILES
+            josh/barteaux
           </Typography>
         </Box>
 
@@ -495,39 +495,131 @@ function AppContent() {
           </Box>
         </Box>
 
-        {/* Footer - Two columns: email on left, JOSH/UX on right */}
+        {/* Footer - Contact Links */}
         <Box
           sx={{
             width: '100%',
             display: 'flex',
             justifyContent: 'flex-end',
             alignItems: 'center',
+            flexWrap: 'wrap',
+            gap: { xs: '12px', sm: '16px', md: '24px' },
             px: '12px',
-            py: '2px',
+            py: '16px',
           }}
         >
           <Typography
             component="a"
             href="mailto:josh@remotelyamused.com"
+            sx={{
+              fontFamily: '"Aldrich", sans-serif',
+              fontWeight: 400,
+              fontSize: { xs: '12px', sm: '14px', md: '16px' },
+              lineHeight: { xs: '12px', sm: '14px', md: '16px' },
+              letterSpacing: '2px',
+              textTransform: 'uppercase',
+              color: 'text.primary',
+              textDecoration: 'none',
+              cursor: 'pointer',
+              transition: 'opacity 0.2s',
+              '&:hover': {
+                opacity: 0.7,
+              },
+            }}
+          >
+            email
+          </Typography>
+          <Typography
+            component="a"
+            href="https://github.com/murdadrum"
             target="_blank"
             rel="noopener noreferrer"
             sx={{
               fontFamily: '"Aldrich", sans-serif',
               fontWeight: 400,
-              fontSize: { xs: '16px', sm: '18px', md: '20px' },
-              lineHeight: { xs: '16px', sm: '18px', md: '20px' },
-              letterSpacing: '4px',
+              fontSize: { xs: '12px', sm: '14px', md: '16px' },
+              lineHeight: { xs: '12px', sm: '14px', md: '16px' },
+              letterSpacing: '2px',
               textTransform: 'uppercase',
               color: 'text.primary',
-              textAlign: 'right',
               textDecoration: 'none',
               cursor: 'pointer',
+              transition: 'opacity 0.2s',
               '&:hover': {
-                opacity: 0.8,
+                opacity: 0.7,
               },
-            }} className="text-[20px]"
+            }}
           >
-            @RemotelyAmused
+            GitHub
+          </Typography>
+          <Typography
+            component="a"
+            href="https://www.figma.com/@JoshUX"
+            target="_blank"
+            rel="noopener noreferrer"
+            sx={{
+              fontFamily: '"Aldrich", sans-serif',
+              fontWeight: 400,
+              fontSize: { xs: '12px', sm: '14px', md: '16px' },
+              lineHeight: { xs: '12px', sm: '14px', md: '16px' },
+              letterSpacing: '2px',
+              textTransform: 'uppercase',
+              color: 'text.primary',
+              textDecoration: 'none',
+              cursor: 'pointer',
+              transition: 'opacity 0.2s',
+              '&:hover': {
+                opacity: 0.7,
+              },
+            }}
+          >
+            Figma
+          </Typography>
+          <Typography
+            component="a"
+            href="https://www.linkedin.com/in/joshbarteaux"
+            target="_blank"
+            rel="noopener noreferrer"
+            sx={{
+              fontFamily: '"Aldrich", sans-serif',
+              fontWeight: 400,
+              fontSize: { xs: '12px', sm: '14px', md: '16px' },
+              lineHeight: { xs: '12px', sm: '14px', md: '16px' },
+              letterSpacing: '2px',
+              textTransform: 'uppercase',
+              color: 'text.primary',
+              textDecoration: 'none',
+              cursor: 'pointer',
+              transition: 'opacity 0.2s',
+              '&:hover': {
+                opacity: 0.7,
+              },
+            }}
+          >
+            LinkedIn
+          </Typography>
+          <Typography
+            component="a"
+            href="https://remotelyamused.gumroad.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            sx={{
+              fontFamily: '"Aldrich", sans-serif',
+              fontWeight: 400,
+              fontSize: { xs: '12px', sm: '14px', md: '16px' },
+              lineHeight: { xs: '12px', sm: '14px', md: '16px' },
+              letterSpacing: '2px',
+              textTransform: 'uppercase',
+              color: 'text.primary',
+              textDecoration: 'none',
+              cursor: 'pointer',
+              transition: 'opacity 0.2s',
+              '&:hover': {
+                opacity: 0.7,
+              },
+            }}
+          >
+            Gumroad
           </Typography>
         </Box>
       </Box>
