@@ -500,12 +500,13 @@ function AppContent() {
           sx={{
             width: '100%',
             display: 'flex',
-            justifyContent: 'flex-end',
+            justifyContent: { xs: 'space-between', md: 'flex-end' },
             alignItems: 'center',
-            flexWrap: 'wrap',
-            gap: { xs: '12px', sm: '16px', md: '24px' },
+            flexWrap: 'nowrap',
+            gap: { xs: '8px', sm: '16px', md: '24px' },
             px: '12px',
             py: '16px',
+            overflow: 'auto',
           }}
         >
           <Typography
@@ -522,6 +523,7 @@ function AppContent() {
               textDecoration: 'none',
               cursor: 'pointer',
               transition: 'opacity 0.2s',
+              whiteSpace: 'nowrap',
               '&:hover': {
                 opacity: 0.7,
               },
@@ -545,6 +547,7 @@ function AppContent() {
               textDecoration: 'none',
               cursor: 'pointer',
               transition: 'opacity 0.2s',
+              whiteSpace: 'nowrap',
               '&:hover': {
                 opacity: 0.7,
               },
@@ -568,6 +571,7 @@ function AppContent() {
               textDecoration: 'none',
               cursor: 'pointer',
               transition: 'opacity 0.2s',
+              whiteSpace: 'nowrap',
               '&:hover': {
                 opacity: 0.7,
               },
@@ -591,6 +595,7 @@ function AppContent() {
               textDecoration: 'none',
               cursor: 'pointer',
               transition: 'opacity 0.2s',
+              whiteSpace: 'nowrap',
               '&:hover': {
                 opacity: 0.7,
               },
@@ -614,6 +619,7 @@ function AppContent() {
               textDecoration: 'none',
               cursor: 'pointer',
               transition: 'opacity 0.2s',
+              whiteSpace: 'nowrap',
               '&:hover': {
                 opacity: 0.7,
               },
@@ -643,22 +649,14 @@ function AppContent() {
   );
 }
 
-// Wrapper component to intercept and block all props from being passed to Material UI
-function ThemeWrapper() {
-  // No props accepted - creates a clean barrier
-  return (
-    <div>
-      <ThemeProvider theme={darkTheme}>
-        <CssBaseline />
-        <AppContent />
-      </ThemeProvider>
-    </div>
-  );
-}
-
 // Export default App component that blocks all Figma props
 export default function App(props: any) {
   // Accept ALL props but don't pass them anywhere
   // This completely absorbs Figma's data-fg-* attributes
-  return <ThemeWrapper />;
+  return (
+    <ThemeProvider theme={darkTheme}>
+      <CssBaseline />
+      <AppContent />
+    </ThemeProvider>
+  );
 }
