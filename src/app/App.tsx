@@ -440,7 +440,7 @@ function AppContent() {
               color: 'text.primary',
             }} className="text-[48px]"
           >
-            josh/ux
+            josh/barteaux
           </Typography>
         </Box>
 
@@ -651,13 +651,13 @@ function AppContent() {
 
 // Export default App component that blocks all Figma props
 export default function App(props: any) {
-  // Render a div with all Figma props to consume them, preventing them from reaching ThemeProvider
+  // Accept props but don't pass them anywhere - creates complete isolation
+  const _ = props; // Consume props to satisfy linter
+  
   return (
-    <div {...props} style={{ width: '100%', height: '100%', position: 'relative' }}>
-      <ThemeProvider theme={darkTheme}>
-        <CssBaseline />
-        <AppContent />
-      </ThemeProvider>
-    </div>
+    <ThemeProvider theme={darkTheme}>
+      <CssBaseline />
+      <AppContent />
+    </ThemeProvider>
   );
 }
