@@ -500,7 +500,7 @@ function AppContent() {
           sx={{
             width: '100%',
             display: 'flex',
-            justifyContent: { xs: 'space-between', md: 'flex-end' },
+            justifyContent: 'flex-end',
             alignItems: 'center',
             flexWrap: 'nowrap',
             gap: { xs: '8px', sm: '16px', md: '24px' },
