@@ -15,6 +15,10 @@ Run `npm run dev` to start the development server.
 - E2E: `npm run test:e2e`
 - First-time Playwright setup: `npx playwright install --with-deps`
 
+## QA Documentation
+
+- RTM (Traceability Matrix): `../rtm_porto_project.csv`
+
 ## UI sync on build
 
 This project syncs UI assets from `https://github.com/murdadrum/Ptlive` before every build.

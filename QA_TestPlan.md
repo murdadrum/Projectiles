@@ -10,6 +10,7 @@
 - Unit: component rendering and core UI logic
 - Integration: modal content wiring and link behavior
 - E2E: smoke tests for page load and modal flow
+- Visual: Playwright snapshot tests for key screens
 
 ### Tooling
 - Unit/Integration: Vitest + Testing Library
@@ -30,8 +31,13 @@
 - Coverage thresholds met
 - No critical/serious accessibility violations in smoke flows
 
+### Visual Regression
+- Baselines stored in `Ptlive/src/app/visual.e2e.spec.ts-snapshots`
+- Update snapshots: `npm run test:e2e -- --update-snapshots`
+
 ### Current Status (January 30, 2026)
 - Playwright and Vitest configured
 - Smoke E2E tests implemented and passing
 - CI workflow added to run tests
-- Visual regression and scheduled regression pending
+- Visual regression baselines captured
+- Scheduled regression pending
