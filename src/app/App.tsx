@@ -1,6 +1,6 @@
 import { Tile } from "./components/Tile";
 import { TileModal } from "./components/TileModal";
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { AnimatePresence } from "motion/react";
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -295,6 +295,7 @@ function AppContent() {
   const [prevMousePosition, setPrevMousePosition] = useState<{ x: number; y: number } | null>(null);
   const [hoveredTileIndex, setHoveredTileIndex] = useState<number | null>(null);
   const [initialAnimationComplete, setInitialAnimationComplete] = useState(false);
+  const [initialDelayComplete, setInitialDelayComplete] = useState(false);
   const [touchFlippedTiles, setTouchFlippedTiles] = useState<Set<number>>(new Set());
   const [randomlyFlippedTiles, setRandomlyFlippedTiles] = useState<Set<number>>(new Set());
   const gridRef = useRef<HTMLDivElement>(null);
@@ -302,6 +303,15 @@ function AppContent() {
 
   // Detect if device supports touch
   const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+
+  // Wait 600ms before starting tile animations
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setInitialDelayComplete(true);
+    }, 600);
+    
+    return () => clearTimeout(timer);
+  }, []);
 
   const handleNext = () => {
     if (selectedTile) {
@@ -479,7 +489,7 @@ function AppContent() {
                   isActiveHover={isTouchDevice ? false : hoveredTileIndex === index}
                   onTileHoverChange={(isHovering) => !isTouchDevice && setHoveredTileIndex(isHovering ? index : null)}
                   prevMousePosition={prevMousePosition}
-                  initialFlipped={!initialAnimationComplete}
+                  initialFlipped={initialDelayComplete && !initialAnimationComplete}
                   cascadeDelay={cascadeDelay}
                   onInitialFlipComplete={() => {
                     // When the last tile finishes, mark animation as complete
@@ -655,9 +665,11 @@ export default function App(props: any) {
   const _ = props; // Consume props to satisfy linter
   
   return (
-    <ThemeProvider theme={darkTheme}>
-      <CssBaseline />
-      <AppContent />
-    </ThemeProvider>
+    <div>
+      <ThemeProvider theme={darkTheme}>
+        <CssBaseline />
+        <AppContent />
+      </ThemeProvider>
+    </div>
   );
 }
