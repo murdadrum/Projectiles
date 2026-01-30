@@ -405,7 +405,7 @@ function AppContent() {
         alignItems: { xs: 'flex-start', md: 'center' },
         justifyContent: 'center',
         px: { xs: '16px', sm: '32px', md: '96px' },
-        py: { xs: '60px', sm: '32px', md: '48px' },
+        py: { xs: '60px', sm: '48px', md: '48px' },
       }} className="bg-[rgb(0,0,0)]"
     >
       <Box
@@ -440,7 +440,7 @@ function AppContent() {
               color: 'text.primary',
             }} className="text-[48px]"
           >
-            PROJECTILES
+            josh/barteaux
           </Typography>
         </Box>
 
@@ -495,39 +495,137 @@ function AppContent() {
           </Box>
         </Box>
 
-        {/* Footer - Two columns: email on left, JOSH/UX on right */}
+        {/* Footer - Contact Links */}
         <Box
           sx={{
             width: '100%',
             display: 'flex',
             justifyContent: 'flex-end',
             alignItems: 'center',
+            flexWrap: 'nowrap',
+            gap: { xs: '8px', sm: '16px', md: '24px' },
             px: '12px',
-            py: '2px',
+            py: '16px',
+            overflow: 'auto',
           }}
         >
           <Typography
             component="a"
             href="mailto:josh@remotelyamused.com"
+            sx={{
+              fontFamily: '"Aldrich", sans-serif',
+              fontWeight: 400,
+              fontSize: { xs: '12px', sm: '14px', md: '16px' },
+              lineHeight: { xs: '12px', sm: '14px', md: '16px' },
+              letterSpacing: '2px',
+              textTransform: 'uppercase',
+              color: 'text.primary',
+              textDecoration: 'none',
+              cursor: 'pointer',
+              transition: 'opacity 0.2s',
+              whiteSpace: 'nowrap',
+              '&:hover': {
+                opacity: 0.7,
+              },
+            }}
+          >
+            email
+          </Typography>
+          <Typography
+            component="a"
+            href="https://github.com/murdadrum"
             target="_blank"
             rel="noopener noreferrer"
             sx={{
               fontFamily: '"Aldrich", sans-serif',
               fontWeight: 400,
-              fontSize: { xs: '16px', sm: '18px', md: '20px' },
-              lineHeight: { xs: '16px', sm: '18px', md: '20px' },
-              letterSpacing: '4px',
+              fontSize: { xs: '12px', sm: '14px', md: '16px' },
+              lineHeight: { xs: '12px', sm: '14px', md: '16px' },
+              letterSpacing: '2px',
               textTransform: 'uppercase',
               color: 'text.primary',
-              textAlign: 'right',
               textDecoration: 'none',
               cursor: 'pointer',
+              transition: 'opacity 0.2s',
+              whiteSpace: 'nowrap',
               '&:hover': {
-                opacity: 0.8,
+                opacity: 0.7,
               },
-            }} className="text-[20px]"
+            }}
           >
-            @RemotelyAmused
+            GitHub
+          </Typography>
+          <Typography
+            component="a"
+            href="https://www.figma.com/@JoshUX"
+            target="_blank"
+            rel="noopener noreferrer"
+            sx={{
+              fontFamily: '"Aldrich", sans-serif',
+              fontWeight: 400,
+              fontSize: { xs: '12px', sm: '14px', md: '16px' },
+              lineHeight: { xs: '12px', sm: '14px', md: '16px' },
+              letterSpacing: '2px',
+              textTransform: 'uppercase',
+              color: 'text.primary',
+              textDecoration: 'none',
+              cursor: 'pointer',
+              transition: 'opacity 0.2s',
+              whiteSpace: 'nowrap',
+              '&:hover': {
+                opacity: 0.7,
+              },
+            }}
+          >
+            Figma
+          </Typography>
+          <Typography
+            component="a"
+            href="https://www.linkedin.com/in/joshbarteaux"
+            target="_blank"
+            rel="noopener noreferrer"
+            sx={{
+              fontFamily: '"Aldrich", sans-serif',
+              fontWeight: 400,
+              fontSize: { xs: '12px', sm: '14px', md: '16px' },
+              lineHeight: { xs: '12px', sm: '14px', md: '16px' },
+              letterSpacing: '2px',
+              textTransform: 'uppercase',
+              color: 'text.primary',
+              textDecoration: 'none',
+              cursor: 'pointer',
+              transition: 'opacity 0.2s',
+              whiteSpace: 'nowrap',
+              '&:hover': {
+                opacity: 0.7,
+              },
+            }}
+          >
+            LinkedIn
+          </Typography>
+          <Typography
+            component="a"
+            href="https://remotelyamused.gumroad.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            sx={{
+              fontFamily: '"Aldrich", sans-serif',
+              fontWeight: 400,
+              fontSize: { xs: '12px', sm: '14px', md: '16px' },
+              lineHeight: { xs: '12px', sm: '14px', md: '16px' },
+              letterSpacing: '2px',
+              textTransform: 'uppercase',
+              color: 'text.primary',
+              textDecoration: 'none',
+              cursor: 'pointer',
+              transition: 'opacity 0.2s',
+              whiteSpace: 'nowrap',
+              '&:hover': {
+                opacity: 0.7,
+              },
+            }}
+          >
+            Gumroad
           </Typography>
         </Box>
       </Box>
@@ -551,22 +649,15 @@ function AppContent() {
   );
 }
 
-// Wrapper component to intercept and block all props from being passed to Material UI
-function ThemeWrapper() {
-  // No props accepted - creates a clean barrier
-  return (
-    <div>
-      <ThemeProvider theme={darkTheme}>
-        <CssBaseline />
-        <AppContent />
-      </ThemeProvider>
-    </div>
-  );
-}
-
 // Export default App component that blocks all Figma props
-export default function App(props: any) {
-  // Accept ALL props but don't pass them anywhere
-  // This completely absorbs Figma's data-fg-* attributes
-  return <ThemeWrapper />;
+export default function App(_props: any) {
+  // Accept props with underscore prefix to indicate they're intentionally unused
+  // This prevents Figma's data-fg-* attributes from being passed to Material UI components
+  
+  return (
+    <ThemeProvider theme={darkTheme}>
+      <CssBaseline />
+      <AppContent />
+    </ThemeProvider>
+  );
 }

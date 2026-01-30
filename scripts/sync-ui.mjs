@@ -3,6 +3,11 @@ import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
 
+if (process.env.PTLIVE_SKIP_SYNC === "1") {
+  console.log("[sync-ui] PTLIVE_SKIP_SYNC=1 detected. Skipping UI sync.");
+  process.exit(0);
+}
+
 const repo = process.env.PTLIVE_UI_REPO ?? "https://github.com/murdadrum/Ptlive";
 const ref = process.env.PTLIVE_UI_REF ?? "main";
 const cacheDir = path.join(os.tmpdir(), "ptlive-ui-sync");
