@@ -600,7 +600,7 @@ export function TileModal({ color, index, totalTiles, onClose, onNext, onPrev, p
               )}
 
               {/* Contact Form */}
-              {/* REMOVED - Contact form section */}
+              {/* REMOVED - Contact section no longer needed */}
 
               {/* Padding at bottom for mobile scrolling */}
               <Box sx={{ height: { xs: 4, sm: 5, md: 6 } }} />
