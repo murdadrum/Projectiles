@@ -440,7 +440,7 @@ function AppContent() {
               color: 'text.primary',
             }} className="text-[48px]"
           >
-            josh/barteaux
+            josh/ux
           </Typography>
         </Box>
 
@@ -650,14 +650,14 @@ function AppContent() {
 }
 
 // Export default App component that blocks all Figma props
-export default function App(_props: any) {
-  // Accept props with underscore prefix to indicate they're intentionally unused
-  // This prevents Figma's data-fg-* attributes from being passed to Material UI components
-  
+export default function App(props: any) {
+  // Render a div with all Figma props to consume them, preventing them from reaching ThemeProvider
   return (
-    <ThemeProvider theme={darkTheme}>
-      <CssBaseline />
-      <AppContent />
-    </ThemeProvider>
+    <div {...props} style={{ width: '100%', height: '100%', position: 'relative' }}>
+      <ThemeProvider theme={darkTheme}>
+        <CssBaseline />
+        <AppContent />
+      </ThemeProvider>
+    </div>
   );
 }

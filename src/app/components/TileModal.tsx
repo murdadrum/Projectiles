@@ -186,7 +186,16 @@ export function TileModal({ color, index, totalTiles, onClose, onNext, onPrev, p
                       position: 'relative',
                     }}
                   >
-                    {tileInfo.embedUrl ? (
+                    {index === 14 ? (
+                      <iframe
+                        src="https://joshbarteaux.atlassian.net/jira/software/projects/PORTO/summary"
+                        className="w-full h-full border-0"
+                        title="Jira Board"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        sandbox="allow-same-origin allow-scripts allow-forms allow-popups allow-modals"
+                        style={{ border: 0, width: '100%', height: '100%' }}
+                      />
+                    ) : tileInfo.embedUrl ? (
                       <iframe
                         src={tileInfo.embedUrl}
                         className="w-full h-full border-0"
@@ -600,7 +609,75 @@ export function TileModal({ color, index, totalTiles, onClose, onNext, onPrev, p
               )}
 
               {/* Contact Form */}
-              {/* REMOVED - Contact section no longer needed */}
+              {tileInfo.contactLinks && (
+                <Box sx={{ mt: { xs: 2.5, sm: 3, md: 3.5, lg: 4 } }}>
+                  <Typography
+                    variant="overline"
+                    sx={{
+                      color: 'text.secondary',
+                      opacity: 0.4,
+                      letterSpacing: '0.15em',
+                      display: 'block',
+                      mb: { xs: 1.25, sm: 1.5, md: 2 },
+                      fontSize: { xs: '0.625rem', sm: '0.6875rem', md: '0.75rem' },
+                    }}
+                  >
+                    Contact
+                  </Typography>
+                  <form onSubmit={handleSubmit(onSubmit)}>
+                    <TextField
+                      label="Name"
+                      variant="outlined"
+                      fullWidth
+                      margin="normal"
+                      {...register('name', { required: 'Name is required' })}
+                      error={!!errors.name}
+                      helperText={errors.name?.message}
+                    />
+                    <TextField
+                      label="Email"
+                      variant="outlined"
+                      fullWidth
+                      margin="normal"
+                      {...register('email', { required: 'Email is required', pattern: { value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/, message: 'Invalid email address' } })}
+                      error={!!errors.email}
+                      helperText={errors.email?.message}
+                    />
+                    <TextField
+                      label="Message"
+                      variant="outlined"
+                      fullWidth
+                      margin="normal"
+                      multiline
+                      rows={4}
+                      {...register('message', { required: 'Message is required' })}
+                      error={!!errors.message}
+                      helperText={errors.message?.message}
+                    />
+                    <Button
+                      type="submit"
+                      variant="contained"
+                      color="primary"
+                      fullWidth
+                      sx={{
+                        mt: 2,
+                        py: 1.5,
+                        textTransform: 'uppercase',
+                        letterSpacing: '0.1em',
+                        fontWeight: 500,
+                        fontSize: { xs: '0.75rem', sm: '0.8125rem', md: '0.875rem' },
+                      }}
+                    >
+                      Send Message
+                    </Button>
+                  </form>
+                  {formSubmitted && (
+                    <Alert severity="success" sx={{ mt: 2 }}>
+                      Message sent successfully!
+                    </Alert>
+                  )}
+                </Box>
+              )}
 
               {/* Padding at bottom for mobile scrolling */}
               <Box sx={{ height: { xs: 4, sm: 5, md: 6 } }} />
