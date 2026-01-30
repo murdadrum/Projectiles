@@ -405,7 +405,7 @@ function AppContent() {
         alignItems: { xs: 'flex-start', md: 'center' },
         justifyContent: 'center',
         px: { xs: '16px', sm: '32px', md: '96px' },
-        py: { xs: '60px', sm: '32px', md: '48px' },
+        py: { xs: '60px', sm: '48px', md: '48px' },
       }} className="bg-[rgb(0,0,0)]"
     >
       <Box
