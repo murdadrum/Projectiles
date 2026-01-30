@@ -1,6 +1,6 @@
 import { Tile } from "./components/Tile";
 import { TileModal } from "./components/TileModal";
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { AnimatePresence } from "motion/react";
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -650,14 +650,16 @@ function AppContent() {
 }
 
 // Export default App component that blocks all Figma props
-export default function App(_props: any) {
-  // Accept props with underscore prefix to indicate they're intentionally unused
-  // This prevents Figma's data-fg-* attributes from being passed to Material UI components
+export default function App(props: any) {
+  // Accept props but don't pass them anywhere - creates complete isolation
+  const _ = props; // Consume props to satisfy linter
   
   return (
-    <ThemeProvider theme={darkTheme}>
-      <CssBaseline />
-      <AppContent />
-    </ThemeProvider>
+    <div>
+      <ThemeProvider theme={darkTheme}>
+        <CssBaseline />
+        <AppContent />
+      </ThemeProvider>
+    </div>
   );
 }

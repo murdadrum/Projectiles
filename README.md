@@ -8,6 +8,13 @@ Run `npm i` to install the dependencies.
 
 Run `npm run dev` to start the development server.
 
+## Testing
+
+- Unit/Integration: `npm run test`
+- CI run: `npm run test:ci`
+- E2E: `npm run test:e2e`
+- First-time Playwright setup: `npx playwright install --with-deps`
+
 ## UI sync on build
 
 This project syncs UI assets from `https://github.com/murdadrum/Ptlive` before every build.

@@ -9,6 +9,8 @@ import {
   Button,
   Paper,
   Divider,
+  TextField,
+  Alert,
   Link,
 } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
@@ -19,7 +21,7 @@ import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 import EmailIcon from '@mui/icons-material/Email';
 import GitHubIcon from '@mui/icons-material/GitHub';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
-import { externalLinkProps, sanitizeExternalUrl } from "../utils/externalLinks";
+import { useForm } from 'react-hook-form';
 
 interface TileModalProps {
   color: string;
@@ -46,19 +48,16 @@ interface TileModalProps {
   };
 }
 
+interface ContactFormData {
+  name: string;
+  email: string;
+  message: string;
+}
+
 export function TileModal({ color, index, totalTiles, onClose, onNext, onPrev, previewImage, tileInfo }: TileModalProps) {
   const [isVisible, setIsVisible] = useState(false);
+  const [formSubmitted, setFormSubmitted] = useState(false);
   const theme = useTheme();
-  const safeEmbedUrl = sanitizeExternalUrl(tileInfo?.embedUrl);
-  const safeContactLinks = tileInfo?.contactLinks
-    ? {
-        email: tileInfo.contactLinks.email,
-        github: sanitizeExternalUrl(tileInfo.contactLinks.github),
-        figma: sanitizeExternalUrl(tileInfo.contactLinks.figma),
-        linkedin: sanitizeExternalUrl(tileInfo.contactLinks.linkedin),
-        gumroad: sanitizeExternalUrl(tileInfo.contactLinks.gumroad),
-      }
-    : undefined;
 
   useEffect(() => {
     // Trigger entrance animation
@@ -90,6 +89,14 @@ export function TileModal({ color, index, totalTiles, onClose, onNext, onPrev, p
   const handleClose = () => {
     setIsVisible(false);
     setTimeout(onClose, 300); // Wait for exit animation
+  };
+
+  const { register, handleSubmit, formState: { errors } } = useForm<ContactFormData>();
+
+  const onSubmit = (data: ContactFormData) => {
+    console.log(data);
+    setFormSubmitted(true);
+    // Add your form submission logic here
   };
 
   return (
@@ -165,7 +172,7 @@ export function TileModal({ color, index, totalTiles, onClose, onNext, onPrev, p
                 position: 'relative',
               }}
             >
-              {safeEmbedUrl || previewImage ? (
+              {tileInfo.embedUrl || previewImage ? (
                 <Box sx={{ position: 'relative', flex: 1, p: 4, display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden' }} className="bg-[rgba(0,0,0,0)]">
                   {/* Inner Container */}
                   <Paper
@@ -179,13 +186,21 @@ export function TileModal({ color, index, totalTiles, onClose, onNext, onPrev, p
                       position: 'relative',
                     }}
                   >
-                    {safeEmbedUrl ? (
+                    {index === 14 ? (
                       <iframe
-                        src={safeEmbedUrl}
+                        src="https://joshbarteaux.atlassian.net/jira/software/projects/PORTO/summary"
+                        className="w-full h-full border-0"
+                        title="Jira Board"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        sandbox="allow-same-origin allow-scripts allow-forms allow-popups allow-modals"
+                        style={{ border: 0, width: '100%', height: '100%' }}
+                      />
+                    ) : tileInfo.embedUrl ? (
+                      <iframe
+                        src={tileInfo.embedUrl}
                         className="w-full h-full border-0"
                         title={tileInfo.title}
                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                        referrerPolicy="no-referrer"
                         sandbox="allow-same-origin allow-scripts allow-forms allow-popups allow-modals"
                         style={{ border: 0, width: '100%', height: '100%' }}
                       />
@@ -318,10 +333,11 @@ export function TileModal({ color, index, totalTiles, onClose, onNext, onPrev, p
               </Box>
 
               {/* Mobile: Link to open app */}
-              {safeEmbedUrl && (
+              {tileInfo.embedUrl && (
                 <Button
-                  href={safeEmbedUrl}
-                  {...externalLinkProps("Launch App")}
+                  href={tileInfo.embedUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   variant="contained"
                   color="primary"
                   endIcon={<OpenInNewIcon />}
@@ -400,7 +416,7 @@ export function TileModal({ color, index, totalTiles, onClose, onNext, onPrev, p
               <Divider sx={{ my: { xs: 2, sm: 2.5, md: 3 }, borderColor: 'rgba(255, 255, 255, 0.05)' }} />
 
               {/* Contact Links - Show only for About Me tile */}
-              {safeContactLinks && (
+              {tileInfo.contactLinks && (
                 <>
                   <Box sx={{ mb: { xs: 2.5, sm: 3, md: 3.5, lg: 4 } }}>
                     <Typography
@@ -418,7 +434,7 @@ export function TileModal({ color, index, totalTiles, onClose, onNext, onPrev, p
                     </Typography>
                     <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1.5 }}>
                       <Link
-                        href={`mailto:${safeContactLinks.email}`}
+                        href={`mailto:${tileInfo.contactLinks.email}`}
                         sx={{
                           display: 'flex',
                           alignItems: 'center',
@@ -434,113 +450,109 @@ export function TileModal({ color, index, totalTiles, onClose, onNext, onPrev, p
                       >
                         <EmailIcon sx={{ fontSize: '1.25rem' }} />
                         <Typography variant="body2" sx={{ fontSize: { xs: '0.8125rem', sm: '0.8438rem', md: '0.875rem' } }}>
-                          {safeContactLinks.email}
+                          {tileInfo.contactLinks.email}
                         </Typography>
                       </Link>
-                      {safeContactLinks.github && (
-                        <Link
-                          href={safeContactLinks.github}
-                          {...externalLinkProps("GitHub")}
-                          sx={{
-                            display: 'flex',
-                            alignItems: 'center',
-                            gap: 1.5,
-                            color: 'text.secondary',
-                            textDecoration: 'none',
-                            opacity: 0.7,
-                            transition: 'opacity 0.2s',
-                            '&:hover': {
-                              opacity: 1,
-                            },
-                          }}
+                      <Link
+                        href={tileInfo.contactLinks.github}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        sx={{
+                          display: 'flex',
+                          alignItems: 'center',
+                          gap: 1.5,
+                          color: 'text.secondary',
+                          textDecoration: 'none',
+                          opacity: 0.7,
+                          transition: 'opacity 0.2s',
+                          '&:hover': {
+                            opacity: 1,
+                          },
+                        }}
+                      >
+                        <GitHubIcon sx={{ fontSize: '1.25rem' }} />
+                        <Typography variant="body2" sx={{ fontSize: { xs: '0.8125rem', sm: '0.8438rem', md: '0.875rem' } }}>
+                          GitHub
+                        </Typography>
+                      </Link>
+                      <Link
+                        href={tileInfo.contactLinks.figma}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        sx={{
+                          display: 'flex',
+                          alignItems: 'center',
+                          gap: 1.5,
+                          color: 'text.secondary',
+                          textDecoration: 'none',
+                          opacity: 0.7,
+                          transition: 'opacity 0.2s',
+                          '&:hover': {
+                            opacity: 1,
+                          },
+                        }}
+                      >
+                        <Box
+                          component="svg"
+                          viewBox="0 0 24 24"
+                          sx={{ width: '1.25rem', height: '1.25rem', fill: 'currentColor' }}
                         >
-                          <GitHubIcon sx={{ fontSize: '1.25rem' }} />
-                          <Typography variant="body2" sx={{ fontSize: { xs: '0.8125rem', sm: '0.8438rem', md: '0.875rem' } }}>
-                            GitHub
-                          </Typography>
-                        </Link>
-                      )}
-                      {safeContactLinks.figma && (
-                        <Link
-                          href={safeContactLinks.figma}
-                          {...externalLinkProps("Figma")}
-                          sx={{
-                            display: 'flex',
-                            alignItems: 'center',
-                            gap: 1.5,
-                            color: 'text.secondary',
-                            textDecoration: 'none',
-                            opacity: 0.7,
-                            transition: 'opacity 0.2s',
-                            '&:hover': {
-                              opacity: 1,
-                            },
-                          }}
+                          <path d="M6 6h6v6H6zm0 6h6v6H6zm6-6h6v6h-6z" />
+                        </Box>
+                        <Typography variant="body2" sx={{ fontSize: { xs: '0.8125rem', sm: '0.8438rem', md: '0.875rem' } }}>
+                          Figma
+                        </Typography>
+                      </Link>
+                      <Link
+                        href={tileInfo.contactLinks.linkedin}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        sx={{
+                          display: 'flex',
+                          alignItems: 'center',
+                          gap: 1.5,
+                          color: 'text.secondary',
+                          textDecoration: 'none',
+                          opacity: 0.7,
+                          transition: 'opacity 0.2s',
+                          '&:hover': {
+                            opacity: 1,
+                          },
+                        }}
+                      >
+                        <LinkedInIcon sx={{ fontSize: '1.25rem' }} />
+                        <Typography variant="body2" sx={{ fontSize: { xs: '0.8125rem', sm: '0.8438rem', md: '0.875rem' } }}>
+                          LinkedIn
+                        </Typography>
+                      </Link>
+                      <Link
+                        href={tileInfo.contactLinks.gumroad}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        sx={{
+                          display: 'flex',
+                          alignItems: 'center',
+                          gap: 1.5,
+                          color: 'text.secondary',
+                          textDecoration: 'none',
+                          opacity: 0.7,
+                          transition: 'opacity 0.2s',
+                          '&:hover': {
+                            opacity: 1,
+                          },
+                        }}
+                      >
+                        <Box
+                          component="svg"
+                          viewBox="0 0 24 24"
+                          sx={{ width: '1.25rem', height: '1.25rem', fill: 'currentColor' }}
                         >
-                          <Box
-                            component="svg"
-                            viewBox="0 0 24 24"
-                            sx={{ width: '1.25rem', height: '1.25rem', fill: 'currentColor' }}
-                          >
-                            <path d="M6 6h6v6H6zm0 6h6v6H6zm6-6h6v6h-6z" />
-                          </Box>
-                          <Typography variant="body2" sx={{ fontSize: { xs: '0.8125rem', sm: '0.8438rem', md: '0.875rem' } }}>
-                            Figma
-                          </Typography>
-                        </Link>
-                      )}
-                      {safeContactLinks.linkedin && (
-                        <Link
-                          href={safeContactLinks.linkedin}
-                          {...externalLinkProps("LinkedIn")}
-                          sx={{
-                            display: 'flex',
-                            alignItems: 'center',
-                            gap: 1.5,
-                            color: 'text.secondary',
-                            textDecoration: 'none',
-                            opacity: 0.7,
-                            transition: 'opacity 0.2s',
-                            '&:hover': {
-                              opacity: 1,
-                            },
-                          }}
-                        >
-                          <LinkedInIcon sx={{ fontSize: '1.25rem' }} />
-                          <Typography variant="body2" sx={{ fontSize: { xs: '0.8125rem', sm: '0.8438rem', md: '0.875rem' } }}>
-                            LinkedIn
-                          </Typography>
-                        </Link>
-                      )}
-                      {safeContactLinks.gumroad && (
-                        <Link
-                          href={safeContactLinks.gumroad}
-                          {...externalLinkProps("Gumroad")}
-                          sx={{
-                            display: 'flex',
-                            alignItems: 'center',
-                            gap: 1.5,
-                            color: 'text.secondary',
-                            textDecoration: 'none',
-                            opacity: 0.7,
-                            transition: 'opacity 0.2s',
-                            '&:hover': {
-                              opacity: 1,
-                            },
-                          }}
-                        >
-                          <Box
-                            component="svg"
-                            viewBox="0 0 24 24"
-                            sx={{ width: '1.25rem', height: '1.25rem', fill: 'currentColor' }}
-                          >
-                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z" />
-                          </Box>
-                          <Typography variant="body2" sx={{ fontSize: { xs: '0.8125rem', sm: '0.8438rem', md: '0.875rem' } }}>
-                            Gumroad
-                          </Typography>
-                        </Link>
-                      )}
+                          <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z" />
+                        </Box>
+                        <Typography variant="body2" sx={{ fontSize: { xs: '0.8125rem', sm: '0.8438rem', md: '0.875rem' } }}>
+                          Gumroad
+                        </Typography>
+                      </Link>
                     </Box>
                   </Box>
 
@@ -549,7 +561,7 @@ export function TileModal({ color, index, totalTiles, onClose, onNext, onPrev, p
               )}
 
               {/* Engineering Context */}
-              {!safeContactLinks && (
+              {!tileInfo.contactLinks && (
                 <Box>
                   <Typography
                     variant="overline"
@@ -597,7 +609,75 @@ export function TileModal({ color, index, totalTiles, onClose, onNext, onPrev, p
               )}
 
               {/* Contact Form */}
-              {/* REMOVED - Contact section no longer needed */}
+              {tileInfo.contactLinks && (
+                <Box sx={{ mt: { xs: 2.5, sm: 3, md: 3.5, lg: 4 } }}>
+                  <Typography
+                    variant="overline"
+                    sx={{
+                      color: 'text.secondary',
+                      opacity: 0.4,
+                      letterSpacing: '0.15em',
+                      display: 'block',
+                      mb: { xs: 1.25, sm: 1.5, md: 2 },
+                      fontSize: { xs: '0.625rem', sm: '0.6875rem', md: '0.75rem' },
+                    }}
+                  >
+                    Contact
+                  </Typography>
+                  <form onSubmit={handleSubmit(onSubmit)}>
+                    <TextField
+                      label="Name"
+                      variant="outlined"
+                      fullWidth
+                      margin="normal"
+                      {...register('name', { required: 'Name is required' })}
+                      error={!!errors.name}
+                      helperText={errors.name?.message}
+                    />
+                    <TextField
+                      label="Email"
+                      variant="outlined"
+                      fullWidth
+                      margin="normal"
+                      {...register('email', { required: 'Email is required', pattern: { value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/, message: 'Invalid email address' } })}
+                      error={!!errors.email}
+                      helperText={errors.email?.message}
+                    />
+                    <TextField
+                      label="Message"
+                      variant="outlined"
+                      fullWidth
+                      margin="normal"
+                      multiline
+                      rows={4}
+                      {...register('message', { required: 'Message is required' })}
+                      error={!!errors.message}
+                      helperText={errors.message?.message}
+                    />
+                    <Button
+                      type="submit"
+                      variant="contained"
+                      color="primary"
+                      fullWidth
+                      sx={{
+                        mt: 2,
+                        py: 1.5,
+                        textTransform: 'uppercase',
+                        letterSpacing: '0.1em',
+                        fontWeight: 500,
+                        fontSize: { xs: '0.75rem', sm: '0.8125rem', md: '0.875rem' },
+                      }}
+                    >
+                      Send Message
+                    </Button>
+                  </form>
+                  {formSubmitted && (
+                    <Alert severity="success" sx={{ mt: 2 }}>
+                      Message sent successfully!
+                    </Alert>
+                  )}
+                </Box>
+              )}
 
               {/* Padding at bottom for mobile scrolling */}
               <Box sx={{ height: { xs: 4, sm: 5, md: 6 } }} />
