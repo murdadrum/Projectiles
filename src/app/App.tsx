@@ -295,7 +295,6 @@ function AppContent() {
   const [prevMousePosition, setPrevMousePosition] = useState<{ x: number; y: number } | null>(null);
   const [hoveredTileIndex, setHoveredTileIndex] = useState<number | null>(null);
   const [initialAnimationComplete, setInitialAnimationComplete] = useState(false);
-  const [initialDelayComplete, setInitialDelayComplete] = useState(false);
   const [touchFlippedTiles, setTouchFlippedTiles] = useState<Set<number>>(new Set());
   const [randomlyFlippedTiles, setRandomlyFlippedTiles] = useState<Set<number>>(new Set());
   const gridRef = useRef<HTMLDivElement>(null);
@@ -303,15 +302,6 @@ function AppContent() {
 
   // Detect if device supports touch
   const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
-
-  // Wait 600ms before starting tile animations
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setInitialDelayComplete(true);
-    }, 600);
-    
-    return () => clearTimeout(timer);
-  }, []);
 
   const handleNext = () => {
     if (selectedTile) {
@@ -489,7 +479,7 @@ function AppContent() {
                   isActiveHover={isTouchDevice ? false : hoveredTileIndex === index}
                   onTileHoverChange={(isHovering) => !isTouchDevice && setHoveredTileIndex(isHovering ? index : null)}
                   prevMousePosition={prevMousePosition}
-                  initialFlipped={initialDelayComplete && !initialAnimationComplete}
+                  initialFlipped={!initialAnimationComplete}
                   cascadeDelay={cascadeDelay}
                   onInitialFlipComplete={() => {
                     // When the last tile finishes, mark animation as complete
