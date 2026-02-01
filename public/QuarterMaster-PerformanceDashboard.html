@@ -4,6 +4,9 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>QuarterMaster</title>
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
     <style>
       :root {
         --bg: #0f1115;
@@ -252,7 +255,7 @@
       const context = document.getElementById("context");
       context.textContent = `URL: ${baseline.url} | Device: ${baseline.device} | Runs: ${baseline.runs} | Captured: ${baseline.capturedAt}`;
 
-      const banner = document.getElementById("placeholder-banner");
+      const banner = document.getElementById("placeholder-banner") || document.querySelector(".banner");
       const subtitle = document.getElementById("subtitle");
       if (baseline.capturedAt && baseline.capturedAt !== "TBD") {
         if (banner) banner.style.display = "none";
