@@ -1,18 +1,18 @@
-import imgStyledDiv from "figma:asset/e7f4d209239aa906453559f3c9d72157122359bc.png";
-import imgStyledDiv1 from "figma:asset/f9a6bb19bfd0783ff0a609bc7dc5f4eaf168913d.png";
-import imgStyledDiv2 from "figma:asset/a0f033feca22effc48fe25e752d1bf608e19be19.png";
-import imgStyledDiv3 from "figma:asset/211a6df52740c035818e4d494bffe0c1c8d6e9b6.png";
-import imgStyledDiv4 from "figma:asset/a1731673602dc60c65c2a511cab33064ca52bb4a.png";
-import imgStyledDiv5 from "figma:asset/b6eee35dfcd6556c9a1cad0bba22b81a61d0e23e.png";
-import imgStyledDiv6 from "figma:asset/139989f61001fa1248c9626e7731147f09520043.png";
-import imgStyledDiv7 from "figma:asset/535e811a44d7022bdae1e1b98488a8b98ac39536.png";
-import imgStyledDiv8 from "figma:asset/8d4c02cbc8a1f53547722fccbf6a7970a825b593.png";
-import imgStyledDiv9 from "figma:asset/f22999f701e867f15d4aeabf9f4c29760a105ea8.png";
-import imgStyledDiv10 from "figma:asset/50d6ceca728fe46911c413e6cc56072e69e8b89e.png";
-import imgStyledDiv11 from "figma:asset/6cf4f2b642a8f57792a2f325a4cef91211e940b4.png";
-import imgStyledDiv12 from "figma:asset/5263fe41ea24dd1c6b07fe35ce3749cf6dff3799.png";
-import imgStyledDiv13 from "figma:asset/70c9051db60a985c721347568f023a4add0e07d2.png";
-import imgStyledDiv14 from "figma:asset/391395dc32a58f84a9cc76c9ddc838712f3fa896.png";
+import imgStyledDiv from "../assets/e7f4d209239aa906453559f3c9d72157122359bc.png";
+import imgStyledDiv1 from "../assets/f9a6bb19bfd0783ff0a609bc7dc5f4eaf168913d.png";
+import imgStyledDiv2 from "../assets/a0f033feca22effc48fe25e752d1bf608e19be19.png";
+import imgStyledDiv3 from "../assets/211a6df52740c035818e4d494bffe0c1c8d6e9b6.png";
+import imgStyledDiv4 from "../assets/a1731673602dc60c65c2a511cab33064ca52bb4a.png";
+import imgStyledDiv5 from "../assets/b6eee35dfcd6556c9a1cad0bba22b81a61d0e23e.png";
+import imgStyledDiv6 from "../assets/139989f61001fa1248c9626e7731147f09520043.png";
+import imgStyledDiv7 from "../assets/535e811a44d7022bdae1e1b98488a8b98ac39536.png";
+import imgStyledDiv8 from "../assets/8d4c02cbc8a1f53547722fccbf6a7970a825b593.png";
+import imgStyledDiv9 from "../assets/f22999f701e867f15d4aeabf9f4c29760a105ea8.png";
+import imgStyledDiv10 from "../assets/50d6ceca728fe46911c413e6cc56072e69e8b89e.png";
+import imgStyledDiv11 from "../assets/6cf4f2b642a8f57792a2f325a4cef91211e940b4.png";
+import imgStyledDiv12 from "../assets/5263fe41ea24dd1c6b07fe35ce3749cf6dff3799.png";
+import imgStyledDiv13 from "../assets/70c9051db60a985c721347568f023a4add0e07d2.png";
+import imgStyledDiv14 from "../assets/391395dc32a58f84a9cc76c9ddc838712f3fa896.png";
 
 function MuiTypographyRoot() {
   return (
