@@ -75,4 +75,40 @@ Test Run Dashboard (CI test status):
 Embedded tiles:
 - Tile 7 embeds QuarterMaster.
 - Tile 14 embeds the Test Run Dashboard.
+
+## Best Practices, Policies & Procedures (P&P)
+
+### CI/CD Policies
+- **All merges to `main` must be green.** Do not deploy if CI or Lighthouse jobs fail.
+- **No secrets in repo.** Only use GitHub Secrets (e.g., `FIREBASE_TOKEN`).
+- **Artifacts are ephemeral.** Treat uploaded reports as transient; the source of truth is the dashboards and the repo.
+
+### Operational Best Practices
+- **Run Lighthouse from CI only.** Local Lighthouse runs are useful for debugging but should not overwrite baseline data unless explicitly intended.
+- **Use 3 runs for stability.** The workflow averages 3 runs to smooth variance.
+- **Mobile first.** The baseline is captured with Lighthouse mobile settings by default.
+- **Keep dashboards static.** Dashboards are updated by CI scripts and committed as build artifacts during deploy.
+
+### Procedures
+
+**Manual Lighthouse + Deploy**
+1) GitHub → Actions → “Lighthouse + Deploy” → Run workflow  
+2) (Optional) Override the target URL with `target_url`
+3) Confirm QuarterMaster shows a new `Captured` timestamp
+
+**Manual CI Run**
+1) GitHub → Actions → “CI” → Run workflow  
+2) Confirm Test Run Dashboard shows updated totals and captured timestamp
+
+**Local Validation (optional)**
+1) `npm install`
+2) `npx playwright install`
+3) `npm run test:e2e`
+4) `python -m pip install -r requirements-dev.txt`
+5) `pytest`
+
+### Troubleshooting
+- **Lighthouse fails with preset error:** ensure workflow uses `--preset=perf --form-factor=mobile`.
+- **Dashboards show sample values:** re-run the corresponding workflow and confirm deploy completed.
+- **QuarterMaster banner shows placeholder:** ensure the `capturedAt` field updated from `TBD`.
   
