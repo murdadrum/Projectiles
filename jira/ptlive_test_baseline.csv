@@ -1,0 +1,7 @@
+Summary,Issue Type,Description,Priority,Labels
+"Baseline E2E: landing page renders",Task,"Covers R-001/R-002/R-003 via T-001. Ensure landing page, header, and 16-tile grid render.",High,"tests,baseline,playwright"
+"Baseline E2E: modal open/close",Task,"Covers R-004/R-005 via T-002. Open modal by clicking a tile and close with Escape.",High,"tests,baseline,playwright"
+"Baseline E2E: modal navigation",Task,"Covers R-006 via T-003. Use Next tile navigation and verify content changes.",Medium,"tests,baseline,playwright"
+"Baseline E2E: footer links",Task,"Covers R-007 via T-004. Validate GitHub and LinkedIn links are present and correct.",Low,"tests,baseline,playwright"
+"Baseline Pytest: tile contract checks",Task,"Covers R-009/R-010/R-011 via T-005. Verify tile counts in App.tsx remain consistent.",Medium,"tests,baseline,pytest"
+"Baseline A11y: axe scan",Task,"Covers R-008 via T-006. Run axe scan and attach results JSON.",Medium,"tests,baseline,a11y"

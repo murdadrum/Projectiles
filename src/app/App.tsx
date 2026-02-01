@@ -13,7 +13,7 @@ import imgTile2 from "../assets/a0f033feca22effc48fe25e752d1bf608e19be19.png";
 import imgTile3 from "../assets/211a6df52740c035818e4d494bffe0c1c8d6e9b6.png";
 import imgTile4 from "../assets/Tile Images/Tile5.png";
 import imgTile5 from "../assets/b6eee35dfcd6556c9a1cad0bba22b81a61d0e23e.png";
-import imgTile6 from "../assets/139989f61001fa1248c9626e7731147f09520043.png";
+import imgTile6 from "../assets/Tile Images/Tile7.png";
 import imgTile7 from "../assets/535e811a44d7022bdae1e1b98488a8b98ac39536.png";
 import imgTile8 from "../assets/8d4c02cbc8a1f53547722fccbf6a7970a825b593.png";
 import imgTile9 from "../assets/f22999f701e867f15d4aeabf9f4c29760a105ea8.png";
@@ -257,7 +257,8 @@ const tileInfo: { [key: number]: {
       "Uses spaced repetition algorithms to optimize knowledge retention.",
       "Tracks learning progress with detailed analytics and achievement badges.",
     ],
-    techStack: ["Next.js", "PostgreSQL", "Redis"]
+    techStack: ["Next.js", "PostgreSQL", "Redis"],
+    embedUrl: "/Test-Run-Dashboard.html"
   },
   14: { // Tile 15
     title: "PixelForge",
@@ -459,6 +460,7 @@ function AppContent() {
               gap: '6px',
               width: '100%',
             }}
+            data-testid="tile-grid"
             onMouseMove={handleGridMouseMove}
             onMouseLeave={handleGridMouseLeave}
             ref={gridRef}

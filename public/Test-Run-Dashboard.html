@@ -1,0 +1,387 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Test Pulse</title>
+    <style>
+      :root {
+        --bg: #0b0e14;
+        --panel: #151924;
+        --muted: #8c95aa;
+        --text: #e7ebf3;
+        --accent: #47f0d7;
+        --accent-2: #4da3ff;
+        --warning: #f7c948;
+        --danger: #ff6b6b;
+        --success: #42e695;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background: radial-gradient(circle at top, #0e1220 0%, #0b0e14 55%),
+          linear-gradient(160deg, #0b0e14 0%, #111827 100%);
+        color: var(--text);
+      }
+
+      header {
+        padding: 32px 24px 8px;
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+
+      header h1 {
+        margin: 0 0 8px;
+        font-size: 28px;
+        letter-spacing: 0.05em;
+      }
+
+      header p {
+        margin: 4px 0;
+        color: var(--muted);
+      }
+
+      .banner {
+        margin: 16px auto 0;
+        max-width: 1200px;
+        padding: 12px 16px;
+        background: rgba(71, 240, 215, 0.12);
+        border: 1px solid rgba(71, 240, 215, 0.4);
+        border-radius: 10px;
+        color: var(--accent);
+      }
+
+      main {
+        max-width: 1200px;
+        margin: 24px auto 56px;
+        padding: 0 24px;
+        display: grid;
+        gap: 20px;
+      }
+
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 16px;
+      }
+
+      .card {
+        background: var(--panel);
+        border-radius: 14px;
+        padding: 18px;
+        border: 1px solid rgba(255, 255, 255, 0.06);
+        box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3);
+      }
+
+      .card h3 {
+        margin: 0 0 10px;
+        font-size: 13px;
+        color: var(--muted);
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+      }
+
+      .score {
+        font-size: 30px;
+        font-weight: 700;
+        margin-bottom: 6px;
+      }
+
+      .meta {
+        color: var(--muted);
+        font-size: 12px;
+      }
+
+      .status-pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 4px 10px;
+        border-radius: 999px;
+        font-size: 12px;
+        font-weight: 600;
+        background: rgba(66, 230, 149, 0.18);
+        color: var(--success);
+      }
+
+      .status-pill.warn {
+        background: rgba(247, 201, 72, 0.18);
+        color: var(--warning);
+      }
+
+      .status-pill.fail {
+        background: rgba(255, 107, 107, 0.18);
+        color: var(--danger);
+      }
+
+      .flex {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 12px;
+      }
+
+      .split {
+        display: grid;
+        grid-template-columns: 2fr 1fr;
+        gap: 18px;
+      }
+
+      .chart {
+        width: 100%;
+        height: 220px;
+        border-radius: 12px;
+        background: linear-gradient(180deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0));
+        border: 1px solid rgba(255, 255, 255, 0.06);
+        padding: 12px;
+      }
+
+      .donut {
+        width: 140px;
+        height: 140px;
+        border-radius: 50%;
+        background: conic-gradient(var(--success) var(--pass-rate), rgba(255, 255, 255, 0.1) 0);
+        display: grid;
+        place-items: center;
+        margin: 0 auto;
+      }
+
+      .donut span {
+        width: 88px;
+        height: 88px;
+        border-radius: 50%;
+        background: var(--panel);
+        display: grid;
+        place-items: center;
+        font-weight: 700;
+        font-size: 18px;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 14px;
+      }
+
+      th,
+      td {
+        text-align: left;
+        padding: 10px 12px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      }
+
+      th {
+        color: var(--muted);
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+        font-size: 12px;
+      }
+
+      .footer {
+        color: var(--muted);
+        font-size: 12px;
+        padding-top: 8px;
+      }
+
+      @media (max-width: 900px) {
+        .split {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>Test Pulse</h1>
+      <p id="subtitle">Sample values only. Replace after latest run export.</p>
+      <p id="context"></p>
+    </header>
+
+    <div class="banner">
+      Latest run summary and trendlines. Update the baseline object in this file
+      after each CI run.
+    </div>
+
+    <main>
+      <section class="grid" id="summary-cards"></section>
+
+      <section class="split">
+        <div class="card">
+          <h3>Last 7 Runs (Total Failures)</h3>
+          <div class="chart">
+            <svg id="trend-chart" width="100%" height="100%" viewBox="0 0 600 200" preserveAspectRatio="none"></svg>
+          </div>
+        </div>
+        <div class="card">
+          <h3>Pass Rate</h3>
+          <div class="donut" id="pass-rate">
+            <span id="pass-rate-label">0%</span>
+          </div>
+          <p class="meta" style="text-align:center; margin-top: 12px;">Across all suites</p>
+        </div>
+      </section>
+
+      <section class="card">
+        <h3>Suite Breakdown</h3>
+        <div class="chart">
+          <svg id="suite-chart" width="100%" height="100%" viewBox="0 0 600 200" preserveAspectRatio="none"></svg>
+        </div>
+      </section>
+
+      <section class="card">
+        <h3>Latest Failures</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>Suite</th>
+              <th>Spec</th>
+              <th>Failure</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody id="failures-table"></tbody>
+        </table>
+      </section>
+
+      <section class="card">
+        <h3>Notes</h3>
+        <p class="meta" id="notes"></p>
+        <div class="footer">
+          Update values in this file after each CI run.
+        </div>
+      </section>
+    </main>
+
+    <script>
+      const latest = {
+        capturedAt: "TBD",
+        branch: "main",
+        commit: "abc1234",
+        pipeline: "CI / build-and-test",
+        duration: "8m 42s",
+        notes: "Run on Ubuntu, Node 20. Replace with latest CI export.",
+        summary: {
+          total: 142,
+          passed: 136,
+          failed: 4,
+          skipped: 2,
+          status: "warn",
+        },
+        suites: [
+          { name: "Playwright E2E", total: 24, passed: 22, failed: 2, duration: "3m 10s" },
+          { name: "Pytest Contracts", total: 6, passed: 6, failed: 0, duration: "0m 08s" },
+          { name: "Accessibility", total: 6, passed: 5, failed: 1, duration: "0m 30s" },
+          { name: "Visual", total: 8, passed: 8, failed: 0, duration: "1m 12s" },
+        ],
+        trend: [6, 5, 4, 3, 2, 4, 4],
+        failures: [
+          { suite: "Playwright E2E", spec: "tile modal navigation", failure: "Expected text mismatch", status: "Investigate" },
+          { suite: "Playwright E2E", spec: "footer links", failure: "Link target change", status: "Investigate" },
+          { suite: "Accessibility", spec: "landing page", failure: "Color contrast warning", status: "Queued" },
+          { suite: "Accessibility", spec: "modal close", failure: "Missing label", status: "Queued" },
+        ],
+      };
+
+      const context = document.getElementById("context");
+      context.textContent = `Branch: ${latest.branch} | Commit: ${latest.commit} | Pipeline: ${latest.pipeline} | Duration: ${latest.duration} | Captured: ${latest.capturedAt}`;
+
+      document.getElementById("notes").textContent = latest.notes;
+
+      const summaryCards = document.getElementById("summary-cards");
+      const summaryItems = [
+        { label: "Total Tests", value: latest.summary.total, meta: "All suites" },
+        { label: "Passed", value: latest.summary.passed, meta: "Healthy" },
+        { label: "Failed", value: latest.summary.failed, meta: "Needs attention" },
+        { label: "Skipped", value: latest.summary.skipped, meta: "Quarantined" },
+      ];
+
+      summaryItems.forEach((item) => {
+        const card = document.createElement("div");
+        card.className = "card";
+
+        const label = document.createElement("h3");
+        label.textContent = item.label;
+
+        const score = document.createElement("div");
+        score.className = "score";
+        score.textContent = item.value;
+
+        const meta = document.createElement("div");
+        meta.className = "meta";
+        meta.textContent = item.meta;
+
+        card.appendChild(label);
+        card.appendChild(score);
+        card.appendChild(meta);
+        summaryCards.appendChild(card);
+      });
+
+      const passRate = Math.round((latest.summary.passed / latest.summary.total) * 100);
+      const passRateEl = document.getElementById("pass-rate");
+      passRateEl.style.setProperty("--pass-rate", `${passRate}%`);
+      document.getElementById("pass-rate-label").textContent = `${passRate}%`;
+
+      const trendChart = document.getElementById("trend-chart");
+      const trendMax = Math.max(...latest.trend, 1);
+      const chartWidth = 600;
+      const chartHeight = 200;
+
+      const trendPoints = latest.trend.map((value, index) => {
+        const x = (index / (latest.trend.length - 1)) * chartWidth;
+        const y = chartHeight - (value / trendMax) * (chartHeight - 30) - 10;
+        return `${x},${y}`;
+      });
+
+      trendChart.innerHTML = `
+        <polyline
+          fill="none"
+          stroke="${getComputedStyle(document.documentElement).getPropertyValue('--accent-2')}"
+          stroke-width="4"
+          points="${trendPoints.join(" ")}" />
+        ${trendPoints
+          .map(
+            (point) =>
+              `<circle cx="${point.split(",")[0]}" cy="${point.split(",")[1]}" r="5" fill="${getComputedStyle(document.documentElement).getPropertyValue('--accent-2')}" />`
+          )
+          .join("")}
+      `;
+
+      const suiteChart = document.getElementById("suite-chart");
+      const barMax = Math.max(...latest.suites.map((s) => s.total), 1);
+      const barWidth = 90;
+      const gap = 24;
+      const startX = 30;
+
+      suiteChart.innerHTML = latest.suites
+        .map((suite, index) => {
+          const height = (suite.total / barMax) * 150;
+          const x = startX + index * (barWidth + gap);
+          const y = 180 - height;
+          return `
+            <rect x="${x}" y="${y}" width="${barWidth}" height="${height}" fill="${suite.failed ? 'rgba(255,107,107,0.8)' : 'rgba(66,230,149,0.8)'}" rx="6" />
+            <text x="${x + barWidth / 2}" y="196" fill="${getComputedStyle(document.documentElement).getPropertyValue('--muted')}" font-size="12" text-anchor="middle">${suite.name.split(' ')[0]}</text>
+            <text x="${x + barWidth / 2}" y="${y - 6}" fill="${getComputedStyle(document.documentElement).getPropertyValue('--text')}" font-size="12" text-anchor="middle">${suite.passed}/${suite.total}</text>
+          `;
+        })
+        .join("");
+
+      const failuresTable = document.getElementById("failures-table");
+      latest.failures.forEach((failure) => {
+        const row = document.createElement("tr");
+        row.innerHTML = `
+          <td>${failure.suite}</td>
+          <td>${failure.spec}</td>
+          <td>${failure.failure}</td>
+          <td><span class="status-pill ${failure.status === 'Investigate' ? 'warn' : failure.status === 'Queued' ? '' : ''}">${failure.status}</span></td>
+        `;
+        failuresTable.appendChild(row);
+      });
+    </script>
+  </body>
+</html>

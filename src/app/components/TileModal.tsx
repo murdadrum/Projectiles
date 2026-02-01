@@ -108,6 +108,7 @@ export function TileModal({ color, index, totalTiles, onClose, onNext, onPrev, p
       fullScreen={false}
       PaperProps={{
         elevation: 24, // Material Design maximum elevation
+        'data-testid': 'tile-modal',
         sx: {
           bgcolor: theme.palette.background.default,
           backgroundImage: 'none',
@@ -131,6 +132,8 @@ export function TileModal({ color, index, totalTiles, onClose, onNext, onPrev, p
       {/* Close Button */}
       <IconButton
         onClick={handleClose}
+        aria-label="Close modal"
+        data-testid="tile-modal-close"
         sx={{
           position: 'absolute',
           top: { xs: 8, md: 16 },
@@ -237,6 +240,7 @@ export function TileModal({ color, index, totalTiles, onClose, onNext, onPrev, p
                   <IconButton
                     onClick={onPrev}
                     size="small"
+                    aria-label="Previous tile"
                     sx={{
                       color: 'rgba(255, 255, 255, 0.5)',
                       bgcolor: 'rgba(0, 0, 0, 0.3)',
@@ -254,6 +258,7 @@ export function TileModal({ color, index, totalTiles, onClose, onNext, onPrev, p
                   <IconButton
                     onClick={onNext}
                     size="small"
+                    aria-label="Next tile"
                     sx={{
                       color: 'rgba(255, 255, 255, 0.5)',
                       bgcolor: 'rgba(0, 0, 0, 0.3)',
@@ -758,6 +763,7 @@ export function TileModal({ color, index, totalTiles, onClose, onNext, onPrev, p
                   <IconButton
                     onClick={onPrev}
                     size="small"
+                    aria-label="Previous tile"
                     sx={{
                       color: 'rgba(255, 255, 255, 0.5)',
                       bgcolor: 'rgba(0, 0, 0, 0.3)',
@@ -775,6 +781,7 @@ export function TileModal({ color, index, totalTiles, onClose, onNext, onPrev, p
                   <IconButton
                     onClick={onNext}
                     size="small"
+                    aria-label="Next tile"
                     sx={{
                       color: 'rgba(255, 255, 255, 0.5)',
                       bgcolor: 'rgba(0, 0, 0, 0.3)',
