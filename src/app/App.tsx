@@ -178,14 +178,15 @@ const tileInfo: { [key: number]: {
     embedUrl: "https://musebox-779175721635.us-west1.run.app/"
   },
   6: { // Tile 7
-    title: "TaskFlow",
-    subtitle: "Project Management",
-    description: "Collaborative task management with visual workflow automation.",
+    title: "QuarterMaster",
+    subtitle: "Performance Dashboard",
+    description: "Live status board for Lighthouse baseline metrics and QA performance reporting.",
     details: [
-      "Integrates with Slack, Jira, and GitHub for unified project tracking.",
-      "Automates repetitive workflows with custom trigger-action rules.",
+      "Tracks Core Web Vitals and performance score targets per release.",
+      "Designed as a lightweight snapshot for audit-ready reporting.",
     ],
-    techStack: ["Vue.js", "GraphQL", "PostgreSQL"]
+    techStack: ["HTML", "CSS", "JavaScript", "Lighthouse"],
+    embedUrl: "/QuarterMaster-PerformanceDashboard.html"
   },
   7: { // Tile 8
     title: "MuseBox",

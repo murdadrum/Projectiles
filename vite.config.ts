@@ -14,6 +14,22 @@ export default defineConfig({
     alias: {
       // Alias @ to the src directory
       '@': path.resolve(__dirname, './src'),
+      // Map Figma asset imports to local assets folder
+      'figma:asset': path.resolve(__dirname, './src/assets'),
+    },
+  },
+  test: {
+    environment: 'jsdom',
+    globals: true,
+    setupFiles: './src/setupTests.ts',
+    exclude: ['**/*.e2e.spec.ts', '**/node_modules/**', '**/dist/**'],
+    coverage: {
+      provider: 'v8',
+      reporter: ['text', 'html'],
+      statements: 60,
+      branches: 50,
+      functions: 60,
+      lines: 60,
     },
   },
 })

@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://remotelyamused.com/sitemap.xml
