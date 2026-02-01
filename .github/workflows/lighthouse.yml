@@ -35,7 +35,8 @@ jobs:
             npx lighthouse "$TARGET_URL" \
               --output=json \
               --output-path=reports/lh-$i.json \
-              --preset=mobile \
+              --preset=perf \
+              --form-factor=mobile \
               --chrome-path="$(which google-chrome)" \
               --chrome-flags="--headless --no-sandbox --disable-gpu" \
               --quiet
