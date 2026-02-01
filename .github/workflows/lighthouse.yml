@@ -1,0 +1,66 @@
+name: Lighthouse + Deploy
+
+on:
+  schedule:
+    - cron: '0 6 * * *'
+  workflow_dispatch:
+    inputs:
+      target_url:
+        description: 'URL to audit'
+        required: false
+        default: 'https://remotelyamused.com/'
+
+jobs:
+  lighthouse-deploy:
+    runs-on: ubuntu-latest
+    env:
+      LIGHTHOUSE_URL: ${{ inputs.target_url || 'https://remotelyamused.com/' }}
+      LIGHTHOUSE_RUNS: 3
+      LIGHTHOUSE_DEVICE: 'Mobile (Lighthouse default throttling)'
+      LIGHTHOUSE_NOTES: 'CI run on GitHub Actions using Lighthouse CLI.'
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install Chrome
+        uses: browser-actions/setup-chrome@v1
+
+      - name: Run Lighthouse (3 runs)
+        run: |
+          mkdir -p reports
+          for i in 1 2 3; do
+            npx lighthouse "$LIGHTHOUSE_URL" \
+              --output=json \
+              --output-path=reports/lh-$i.json \
+              --preset=mobile \
+              --chrome-flags="--headless --no-sandbox --disable-gpu" \
+              --quiet
+          done
+
+      - name: Update QuarterMaster dashboard
+        run: |
+          node scripts/update-quartermaster.mjs \
+            --reportsDir=reports \
+            --url="$LIGHTHOUSE_URL" \
+            --device="$LIGHTHOUSE_DEVICE" \
+            --runs=$LIGHTHOUSE_RUNS \
+            --notes="$LIGHTHOUSE_NOTES"
+
+      - name: Build
+        run: npm run build
+
+      - name: Deploy to Firebase Hosting
+        run: npx firebase-tools deploy --only hosting --token "${{ secrets.FIREBASE_TOKEN }}"
+
+      - name: Upload Lighthouse reports
+        uses: actions/upload-artifact@v4
+        with:
+          name: lighthouse-reports
+          path: reports/*.json
