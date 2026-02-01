@@ -1,2 +1,8 @@
 reports/
 playwright-report/
+node_modules/
+dist/
+.firebase/
+.pytest_cache/
+.venv/
+__pycache__/
