@@ -7,22 +7,22 @@ import CssBaseline from '@mui/material/CssBaseline';
 import { Typography, Box } from '@mui/material';
 
 // Import tile images from Figma
-import imgTile0 from "figma:asset/e7f4d209239aa906453559f3c9d72157122359bc.png";
-import imgTile1 from "figma:asset/f9a6bb19bfd0783ff0a609bc7dc5f4eaf168913d.png";
-import imgTile2 from "figma:asset/a0f033feca22effc48fe25e752d1bf608e19be19.png";
-import imgTile3 from "figma:asset/211a6df52740c035818e4d494bffe0c1c8d6e9b6.png";
-import imgTile4 from "figma:asset/a1731673602dc60c65c2a511cab33064ca52bb4a.png";
-import imgTile5 from "figma:asset/b6eee35dfcd6556c9a1cad0bba22b81a61d0e23e.png";
-import imgTile6 from "figma:asset/139989f61001fa1248c9626e7731147f09520043.png";
-import imgTile7 from "figma:asset/535e811a44d7022bdae1e1b98488a8b98ac39536.png";
-import imgTile8 from "figma:asset/8d4c02cbc8a1f53547722fccbf6a7970a825b593.png";
-import imgTile9 from "figma:asset/f22999f701e867f15d4aeabf9f4c29760a105ea8.png";
-import imgTile10 from "figma:asset/50d6ceca728fe46911c413e6cc56072e69e8b89e.png";
-import imgTile11 from "figma:asset/6cf4f2b642a8f57792a2f325a4cef91211e940b4.png";
-import imgTile12 from "figma:asset/5263fe41ea24dd1c6b07fe35ce3749cf6dff3799.png";
-import imgTile13 from "figma:asset/70c9051db60a985c721347568f023a4add0e07d2.png";
-import imgTile14 from "../assets/RemotelyAmused-logo.png";
-import imgTile15 from "figma:asset/70c9051db60a985c721347568f023a4add0e07d2.png";
+import imgTile0 from "../assets/Tile Images/Tile1.png";
+import imgTile1 from "../assets/f9a6bb19bfd0783ff0a609bc7dc5f4eaf168913d.png";
+import imgTile2 from "../assets/a0f033feca22effc48fe25e752d1bf608e19be19.png";
+import imgTile3 from "../assets/211a6df52740c035818e4d494bffe0c1c8d6e9b6.png";
+import imgTile4 from "../assets/Tile Images/Tile5.png";
+import imgTile5 from "../assets/b6eee35dfcd6556c9a1cad0bba22b81a61d0e23e.png";
+import imgTile6 from "../assets/139989f61001fa1248c9626e7731147f09520043.png";
+import imgTile7 from "../assets/535e811a44d7022bdae1e1b98488a8b98ac39536.png";
+import imgTile8 from "../assets/8d4c02cbc8a1f53547722fccbf6a7970a825b593.png";
+import imgTile9 from "../assets/f22999f701e867f15d4aeabf9f4c29760a105ea8.png";
+import imgTile10 from "../assets/50d6ceca728fe46911c413e6cc56072e69e8b89e.png";
+import imgTile11 from "../assets/6cf4f2b642a8f57792a2f325a4cef91211e940b4.png";
+import imgTile12 from "../assets/5263fe41ea24dd1c6b07fe35ce3749cf6dff3799.png";
+import imgTile13 from "../assets/70c9051db60a985c721347568f023a4add0e07d2.png";
+import imgTile14 from "../assets/Tile Images/Tile15.png";
+import imgTile15 from "../assets/Tile Images/Tile16.png";
 
 // Material Design dark theme
 const darkTheme = createTheme({
