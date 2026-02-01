@@ -9,8 +9,8 @@ test('home renders and grid is complete', async ({ page }) => {
   await expect(page.getByRole('heading', { name: 'josh/barteaux' })).toBeVisible();
   await expect(page.getByTestId('tile-grid')).toBeVisible();
 
-  const tiles = page.getByRole('button', { name: /Tile \\d+ back/ });
-  await expect(tiles).toHaveCount(16);
+  const tileImages = page.getByRole('img', { name: /Tile \\d+ back/ });
+  await expect(tileImages).toHaveCount(16);
 });
 
 test('tile modal opens and closes', async ({ page }) => {
