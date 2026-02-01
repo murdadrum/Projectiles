@@ -1,0 +1,334 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>QuarterMaster</title>
+    <style>
+      :root {
+        --bg: #0f1115;
+        --panel: #171a21;
+        --muted: #8b93a7;
+        --text: #e6e9f2;
+        --accent: #00d4ff;
+        --warning: #f7c948;
+        --danger: #ff6b6b;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background: linear-gradient(160deg, #0b0d12 0%, #111522 100%);
+        color: var(--text);
+      }
+
+      header {
+        padding: 32px 24px 8px;
+        max-width: 1100px;
+        margin: 0 auto;
+      }
+
+      header h1 {
+        margin: 0 0 8px;
+        font-size: 28px;
+        letter-spacing: 0.04em;
+      }
+
+      header p {
+        margin: 4px 0;
+        color: var(--muted);
+      }
+
+      .banner {
+        margin: 16px auto 0;
+        max-width: 1100px;
+        padding: 12px 16px;
+        background: rgba(247, 201, 72, 0.15);
+        border: 1px solid rgba(247, 201, 72, 0.45);
+        border-radius: 8px;
+        color: var(--warning);
+      }
+
+      main {
+        max-width: 1100px;
+        margin: 24px auto 48px;
+        padding: 0 24px;
+        display: grid;
+        gap: 20px;
+      }
+
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 16px;
+      }
+
+      .card {
+        background: var(--panel);
+        border-radius: 12px;
+        padding: 16px;
+        border: 1px solid rgba(255, 255, 255, 0.06);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.25);
+      }
+
+      .card h3 {
+        margin: 0 0 8px;
+        font-size: 15px;
+        color: var(--muted);
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+      }
+
+      .score {
+        font-size: 34px;
+        font-weight: 700;
+        margin-bottom: 8px;
+      }
+
+      .meta {
+        color: var(--muted);
+        font-size: 12px;
+      }
+
+      .bar {
+        height: 8px;
+        background: rgba(255, 255, 255, 0.08);
+        border-radius: 999px;
+        overflow: hidden;
+        margin-top: 12px;
+      }
+
+      .bar span {
+        display: block;
+        height: 100%;
+        width: 0;
+        background: linear-gradient(90deg, var(--accent), #7cf5ff);
+        border-radius: 999px;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 14px;
+      }
+
+      th,
+      td {
+        text-align: left;
+        padding: 10px 12px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      }
+
+      th {
+        color: var(--muted);
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+        font-size: 12px;
+      }
+
+      .status {
+        display: inline-block;
+        padding: 2px 8px;
+        border-radius: 999px;
+        font-size: 12px;
+        background: rgba(0, 212, 255, 0.15);
+        color: var(--accent);
+      }
+
+      .status.warn {
+        background: rgba(247, 201, 72, 0.15);
+        color: var(--warning);
+      }
+
+      .status.fail {
+        background: rgba(255, 107, 107, 0.15);
+        color: var(--danger);
+      }
+
+      .footer {
+        color: var(--muted);
+        font-size: 12px;
+        padding-top: 8px;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>QuarterMaster</h1>
+      <p id="subtitle">Sample values only. Replace after running Lighthouse.</p>
+      <p id="context"></p>
+    </header>
+
+    <div class="banner">
+      This dashboard currently shows placeholder values. Update after capturing
+      the baseline.
+    </div>
+
+    <main>
+      <section class="grid" id="metric-cards"></section>
+
+      <section class="card">
+        <h3>Baseline Metrics</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>Metric</th>
+              <th>Result</th>
+              <th>Target</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody id="metrics-table"></tbody>
+        </table>
+      </section>
+
+      <section class="card">
+        <h3>Notes</h3>
+        <p class="meta" id="notes"></p>
+        <div class="footer">
+          Update values in this file when a new baseline is captured.
+        </div>
+      </section>
+    </main>
+
+    <script>
+      const baseline = {
+        capturedAt: "TBD",
+        url: "https://remotelyamused.com/",
+        device: "Mobile (Lighthouse default throttling)",
+        runs: 3,
+        notes: "Run in Incognito, cache cleared, no extensions.",
+        metrics: {
+          performance: {
+            label: "Performance",
+            value: 85,
+            unit: "score",
+            target: ">= 90",
+            range: 100,
+          },
+          lcp: {
+            label: "LCP",
+            value: 2.6,
+            unit: "s",
+            target: "<= 2.5",
+            range: 4,
+          },
+          fcp: {
+            label: "FCP",
+            value: 1.4,
+            unit: "s",
+            target: "<= 1.8",
+            range: 3,
+          },
+          tbt: {
+            label: "TBT",
+            value: 120,
+            unit: "ms",
+            target: "<= 200",
+            range: 400,
+          },
+          cls: {
+            label: "CLS",
+            value: 0.04,
+            unit: "",
+            target: "<= 0.10",
+            range: 0.25,
+          },
+          si: {
+            label: "Speed Index",
+            value: 3.1,
+            unit: "s",
+            target: "<= 3.4",
+            range: 6,
+          },
+        },
+      };
+
+      const context = document.getElementById("context");
+      context.textContent = `URL: ${baseline.url} | Device: ${baseline.device} | Runs: ${baseline.runs} | Captured: ${baseline.capturedAt}`;
+
+      const notes = document.getElementById("notes");
+      notes.textContent = baseline.notes;
+
+      const metricCards = document.getElementById("metric-cards");
+      const metricsTable = document.getElementById("metrics-table");
+
+      const statusFor = (metricKey, value) => {
+        switch (metricKey) {
+          case "performance":
+            return value >= 90 ? "pass" : value >= 80 ? "warn" : "fail";
+          case "lcp":
+            return value <= 2.5 ? "pass" : value <= 3.0 ? "warn" : "fail";
+          case "fcp":
+            return value <= 1.8 ? "pass" : value <= 2.5 ? "warn" : "fail";
+          case "tbt":
+            return value <= 200 ? "pass" : value <= 400 ? "warn" : "fail";
+          case "cls":
+            return value <= 0.1 ? "pass" : value <= 0.25 ? "warn" : "fail";
+          case "si":
+            return value <= 3.4 ? "pass" : value <= 4.3 ? "warn" : "fail";
+          default:
+            return "warn";
+        }
+      };
+
+      const formatValue = (value, unit) => {
+        if (unit === "score") return `${value}`;
+        if (!unit) return `${value}`;
+        return `${value}${unit}`;
+      };
+
+      Object.entries(baseline.metrics).forEach(([key, metric]) => {
+        const card = document.createElement("div");
+        card.className = "card";
+        const status = statusFor(key, metric.value);
+
+        const score = document.createElement("div");
+        score.className = "score";
+        score.textContent = formatValue(metric.value, metric.unit);
+
+        const label = document.createElement("h3");
+        label.textContent = metric.label;
+
+        const meta = document.createElement("div");
+        meta.className = "meta";
+        meta.textContent = `Target ${metric.target}`;
+
+        const bar = document.createElement("div");
+        bar.className = "bar";
+        const barFill = document.createElement("span");
+        const ratio = metric.range
+          ? Math.min(metric.value / metric.range, 1)
+          : 0;
+        barFill.style.width = `${Math.max(ratio * 100, 6)}%`;
+        if (status === "warn") {
+          barFill.style.background = "linear-gradient(90deg, #f7c948, #ffe58f)";
+        }
+        if (status === "fail") {
+          barFill.style.background = "linear-gradient(90deg, #ff6b6b, #ff8f8f)";
+        }
+        bar.appendChild(barFill);
+
+        card.appendChild(label);
+        card.appendChild(score);
+        card.appendChild(meta);
+        card.appendChild(bar);
+        metricCards.appendChild(card);
+
+        const row = document.createElement("tr");
+        row.innerHTML = `
+          <td>${metric.label}</td>
+          <td>${formatValue(metric.value, metric.unit)}</td>
+          <td>${metric.target}</td>
+          <td><span class="status ${status === "pass" ? "" : status}">${status.toUpperCase()}</span></td>
+        `;
+        metricsTable.appendChild(row);
+      });
+    </script>
+  </body>
+</html>
