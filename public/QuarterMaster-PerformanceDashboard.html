@@ -164,7 +164,7 @@
       <p id="context"></p>
     </header>
 
-    <div class="banner">
+    <div class="banner" id="placeholder-banner">
       This dashboard currently shows placeholder values. Update after capturing
       the baseline.
     </div>
@@ -251,6 +251,13 @@
 
       const context = document.getElementById("context");
       context.textContent = `URL: ${baseline.url} | Device: ${baseline.device} | Runs: ${baseline.runs} | Captured: ${baseline.capturedAt}`;
+
+      const banner = document.getElementById("placeholder-banner");
+      const subtitle = document.getElementById("subtitle");
+      if (baseline.capturedAt && baseline.capturedAt !== "TBD") {
+        if (banner) banner.style.display = "none";
+        if (subtitle) subtitle.textContent = "Live values pulled from latest Lighthouse runs.";
+      }
 
       const notes = document.getElementById("notes");
       notes.textContent = baseline.notes;
