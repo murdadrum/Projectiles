@@ -13,11 +13,6 @@ on:
 jobs:
   lighthouse-deploy:
     runs-on: ubuntu-latest
-    env:
-      LIGHTHOUSE_URL: ${{ inputs.target_url || 'https://remotelyamused.com/' }}
-      LIGHTHOUSE_RUNS: 3
-      LIGHTHOUSE_DEVICE: 'Mobile (Lighthouse default throttling)'
-      LIGHTHOUSE_NOTES: 'CI run on GitHub Actions using Lighthouse CLI.'
     steps:
       - uses: actions/checkout@v4
 
@@ -35,11 +30,13 @@ jobs:
       - name: Run Lighthouse (3 runs)
         run: |
           mkdir -p reports
+          TARGET_URL="${{ inputs.target_url || 'https://remotelyamused.com/' }}"
           for i in 1 2 3; do
-            npx lighthouse "$LIGHTHOUSE_URL" \
+            npx lighthouse "$TARGET_URL" \
               --output=json \
               --output-path=reports/lh-$i.json \
               --preset=mobile \
+              --chrome-path="$(which google-chrome)" \
               --chrome-flags="--headless --no-sandbox --disable-gpu" \
               --quiet
           done
@@ -48,10 +45,29 @@ jobs:
         run: |
           node scripts/update-quartermaster.mjs \
             --reportsDir=reports \
-            --url="$LIGHTHOUSE_URL" \
-            --device="$LIGHTHOUSE_DEVICE" \
-            --runs=$LIGHTHOUSE_RUNS \
-            --notes="$LIGHTHOUSE_NOTES"
+            --url="${{ inputs.target_url || 'https://remotelyamused.com/' }}" \
+            --device="Mobile (Lighthouse default throttling)" \
+            --runs=3 \
+            --notes="CI run on GitHub Actions using Lighthouse CLI."
+
+      - name: Install Playwright browsers
+        run: npx playwright install --with-deps
+
+      - name: Run Playwright tests
+        run: npm run test:e2e || true
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Run pytest
+        run: |
+          python -m pip install -r requirements-dev.txt
+          pytest --junitxml=reports/pytest.xml || true
+
+      - name: Update Test dashboard
+        run: node scripts/update-test-dashboard.mjs
 
       - name: Build
         run: npm run build

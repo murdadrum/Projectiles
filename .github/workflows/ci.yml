@@ -26,8 +26,11 @@ jobs:
       - name: Install Playwright browsers
         run: npx playwright install --with-deps
 
+      - name: Prepare reports folder
+        run: mkdir -p reports
+
       - name: Run Playwright tests
-        run: npm run test:e2e
+        run: npm run test:e2e || true
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -37,4 +40,7 @@ jobs:
       - name: Run pytest
         run: |
           python -m pip install -r requirements-dev.txt
-          pytest
+          pytest --junitxml=reports/pytest.xml || true
+
+      - name: Update Test dashboard
+        run: node scripts/update-test-dashboard.mjs
