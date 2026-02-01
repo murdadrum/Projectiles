@@ -1,5 +1,8 @@
 import { test, expect } from '@playwright/test';
-import { injectAxe } from '@axe-core/playwright';
+import { createRequire } from 'module';
+
+const require = createRequire(import.meta.url);
+const axePath = require.resolve('axe-core/axe.min.js');
 
 test('home renders and grid is complete', async ({ page }) => {
   await page.goto('/');
@@ -40,7 +43,7 @@ test('footer links are present', async ({ page }) => {
 
 test('a11y baseline scan', async ({ page }) => {
   await page.goto('/');
-  await injectAxe(page);
+  await page.addScriptTag({ path: axePath });
 
   const results = await page.evaluate(async () => {
     // @ts-expect-error - axe injected at runtime
