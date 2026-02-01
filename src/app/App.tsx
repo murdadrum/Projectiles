@@ -21,7 +21,7 @@ import imgTile10 from "figma:asset/50d6ceca728fe46911c413e6cc56072e69e8b89e.png"
 import imgTile11 from "figma:asset/6cf4f2b642a8f57792a2f325a4cef91211e940b4.png";
 import imgTile12 from "figma:asset/5263fe41ea24dd1c6b07fe35ce3749cf6dff3799.png";
 import imgTile13 from "figma:asset/70c9051db60a985c721347568f023a4add0e07d2.png";
-import imgTile14 from "figma:asset/391395dc32a58f84a9cc76c9ddc838712f3fa896.png";
+import imgTile14 from "../assets/RemotelyAmused-logo.png";
 import imgTile15 from "figma:asset/70c9051db60a985c721347568f023a4add0e07d2.png";
 
 // Material Design dark theme
@@ -178,14 +178,15 @@ const tileInfo: { [key: number]: {
     embedUrl: "https://musebox-779175721635.us-west1.run.app/"
   },
   6: { // Tile 7
-    title: "TaskFlow",
-    subtitle: "Project Management",
-    description: "Collaborative task management with visual workflow automation.",
+    title: "QuarterMaster",
+    subtitle: "Performance Dashboard",
+    description: "Live status board for Lighthouse baseline metrics and QA performance reporting.",
     details: [
-      "Integrates with Slack, Jira, and GitHub for unified project tracking.",
-      "Automates repetitive workflows with custom trigger-action rules.",
+      "Tracks Core Web Vitals and performance score targets per release.",
+      "Designed as a lightweight snapshot for audit-ready reporting.",
     ],
-    techStack: ["Vue.js", "GraphQL", "PostgreSQL"]
+    techStack: ["HTML", "CSS", "JavaScript", "Lighthouse"],
+    embedUrl: "/QuarterMaster-PerformanceDashboard.html"
   },
   7: { // Tile 8
     title: "MuseBox",
