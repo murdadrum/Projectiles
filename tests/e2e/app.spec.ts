@@ -9,7 +9,7 @@ test('home renders and grid is complete', async ({ page }) => {
   await expect(page.getByRole('heading', { name: 'josh/barteaux' })).toBeVisible();
   await expect(page.getByTestId('tile-grid')).toBeVisible();
 
-  const tiles = page.locator('[data-testid^="tile-"]');
+  const tiles = page.locator('[data-testid^="tile-"][data-testid!="tile-grid"]');
   await expect(tiles).toHaveCount(16);
 });
 
