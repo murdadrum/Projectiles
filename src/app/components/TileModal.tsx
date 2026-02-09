@@ -608,6 +608,8 @@ export function TileModal({ color, index, totalTiles, onClose, onNext, onPrev, p
                       ? "Built with Web Audio API for low-latency real-time sound processing. Features MIDI support and customizable synthesizer parameters for creative music production."
                       : index === 2
                       ? "Promptly uses multimodal AI models to analyze uploaded assets and construct detailed, structurally sound prompts for creative workflows."
+                      : index === 3
+                      ? "QADMS keeps QA metrics, test run histories, and investigative context centralized so engineering teams can trace regressions with clarity."
                       : "Advanced architecture leveraging modern frameworks and best practices for optimal performance, scalability, and user experience."}
                   </Typography>
                 </Box>

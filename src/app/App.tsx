@@ -9,8 +9,8 @@ import { Typography, Box } from '@mui/material';
 // Import tile images from Figma
 import imgTile0 from "../assets/Tile Images/Tile1.png";
 import imgTile1 from "../assets/f9a6bb19bfd0783ff0a609bc7dc5f4eaf168913d.png";
-import imgTile2 from "../assets/a0f033feca22effc48fe25e752d1bf608e19be19.png";
-import imgTile3 from "../assets/211a6df52740c035818e4d494bffe0c1c8d6e9b6.png";
+import imgTile2 from "../assets/Tile Images/Tile3promptly.png";
+import imgTile3 from "../assets/Tile Images/Tile4lvble.png";
 import imgTile4 from "../assets/Tile Images/Tile5.png";
 import imgTile5 from "../assets/b6eee35dfcd6556c9a1cad0bba22b81a61d0e23e.png";
 import imgTile6 from "../assets/Tile Images/Tile7.png";
@@ -147,14 +147,15 @@ const tileInfo: { [key: number]: {
     embedUrl: "https://promptly-779175721635.us-west1.run.app"
   },
   3: { // Tile 4
-    title: "CodeReview AI",
-    subtitle: "Developer Tools",
-    description: "Automated code review assistant with AI-powered suggestions.",
+    title: "QADMS",
+    subtitle: "Quality Assurance Platform",
+    description: "Lovable's QA Data Management System aggregates tests, metrics, and diagnostics into a single, shareable workspace.",
     details: [
-      "Analyzes pull requests for potential bugs, security issues, and style violations.",
-      "Learns from team patterns to provide contextual recommendations.",
+      "Surfaces cross-project test runs, auto-linking failures to builds and investigations.",
+      "Highlights triaged bugs and stabilizes QA handoffs with contextual notes and status tracking.",
     ],
-    techStack: ["TypeScript", "OpenAI", "GitHub API"]
+    techStack: ["TypeScript", "React", "PostgreSQL"],
+    embedUrl: "https://qadms.lovable.app/"
   },
   4: { // Tile 5
     title: "Sidenote",
@@ -512,6 +513,7 @@ function AppContent() {
             overflow: 'auto',
           }}
         >
+          {/*
           <Typography
             component="a"
             href="mailto:josh@remotelyamused.com"
@@ -534,6 +536,7 @@ function AppContent() {
           >
             email
           </Typography>
+          */}
           <Typography
             component="a"
             href="https://github.com/murdadrum"
