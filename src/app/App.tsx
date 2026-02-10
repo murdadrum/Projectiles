@@ -8,7 +8,7 @@ import { Typography, Box } from '@mui/material';
 
 // Import tile images from Figma
 import imgTile0 from "../assets/Tile Images/Tile1.png";
-import imgTile1 from "../assets/f9a6bb19bfd0783ff0a609bc7dc5f4eaf168913d.png";
+import imgTile1 from "../assets/Tile Images/Tile2Docker.png";
 import imgTile2 from "../assets/Tile Images/Tile3promptly.png";
 import imgTile3 from "../assets/Tile Images/Tile4lvble.png";
 import imgTile4 from "../assets/Tile Images/Tile5.png";
@@ -126,14 +126,14 @@ const tileInfo: { [key: number]: {
     embedUrl: "https://venndiachrome.figma.site/"
   },
   1: { // Tile 2
-    title: "NeuralCanvas",
-    subtitle: "AI Art Studio",
-    description: "Generative art platform powered by machine learning for creative exploration.",
+    title: "GeoLogic",
+    subtitle: "Geospatial Operations Platform",
+    description: "Intelligence workspace that blends satellite, sensor, and on-the-ground telemetry for terrain-aware decision making.",
     details: [
-      "Integrates multiple AI models for style transfer and image generation.",
-      "Supports batch processing with preset templates and custom parameters.",
+      "Surfaces layered map insights with historical context, live sensor feeds, and forecast overlays.",
+      "Empowers teams to build collaborative scenarios, assign regional actions, and push guided alerts.",
     ],
-    techStack: ["Python", "TensorFlow", "React"]
+    techStack: ["React", "Mapbox GL JS", "PostGIS", "Node.js"]
   },
   2: { // Tile 3
     title: "Promptly",
