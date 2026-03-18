@@ -6,6 +6,85 @@ import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import { Typography, Box } from '@mui/material';
 
+const maintenanceMode = String(import.meta.env.VITE_MAINTENANCE_MODE).toLowerCase() === 'true';
+
+function MaintenanceScreen() {
+  return (
+    <Box
+      sx={{
+        minHeight: '100vh',
+        width: '100%',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        px: 3,
+        background:
+          'radial-gradient(circle at 20% 20%, rgba(0,229,255,0.12), transparent 50%), radial-gradient(circle at 80% 10%, rgba(255,255,255,0.08), transparent 40%), #0A0A0A',
+      }}
+    >
+      <Box
+        sx={{
+          width: '100%',
+          maxWidth: 760,
+          border: '1px solid rgba(255,255,255,0.14)',
+          borderRadius: '16px',
+          p: { xs: 3, md: 6 },
+          background: 'rgba(8, 8, 8, 0.82)',
+          backdropFilter: 'blur(8px)',
+          textAlign: 'left',
+        }}
+      >
+        <Typography
+          sx={{
+            fontFamily: '"Aldrich", sans-serif',
+            textTransform: 'uppercase',
+            letterSpacing: '3px',
+            fontSize: { xs: '12px', md: '14px' },
+            color: '#00E5FF',
+            mb: 2,
+          }}
+        >
+          Planned Maintenance
+        </Typography>
+        <Typography
+          sx={{
+            fontFamily: '"Aldrich", sans-serif',
+            fontSize: { xs: '28px', md: '44px' },
+            lineHeight: 1.1,
+            letterSpacing: '1.5px',
+            color: '#FFFFFF',
+            mb: 2,
+          }}
+        >
+          ProjecTiles is temporarily unavailable
+        </Typography>
+        <Typography
+          sx={{
+            color: 'rgba(255,255,255,0.72)',
+            fontSize: { xs: '15px', md: '18px' },
+            lineHeight: 1.6,
+            mb: 3,
+          }}
+        >
+          We are performing an infrastructure update and will be back shortly.
+          Thank you for your patience.
+        </Typography>
+        <Typography
+          sx={{
+            color: 'rgba(255,255,255,0.55)',
+            fontFamily: '"Abel", sans-serif',
+            letterSpacing: '1.2px',
+            textTransform: 'uppercase',
+            fontSize: { xs: '11px', md: '13px' },
+          }}
+        >
+          Contact: josh@remotelyamused.com
+        </Typography>
+      </Box>
+    </Box>
+  );
+}
+
 // Import tile images from Figma
 import imgTile0 from "../assets/Tile Images/Tile1.png";
 import imgTile1 from "../assets/Tile Images/Frame 2 Docker.png";
@@ -664,7 +743,7 @@ export default function App(props: any) {
     <div>
       <ThemeProvider theme={darkTheme}>
         <CssBaseline />
-        <AppContent />
+        {maintenanceMode ? <MaintenanceScreen /> : <AppContent />}
       </ThemeProvider>
     </div>
   );
