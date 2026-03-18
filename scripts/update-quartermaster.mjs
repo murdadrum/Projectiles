@@ -8,7 +8,7 @@ for (const arg of process.argv.slice(2)) {
 }
 
 const reportsDir = args.get('reportsDir') || 'reports';
-const url = args.get('url') || 'https://remotelyamused.com/';
+const url = args.get('url') || 'https://joshbarteaux.com/';
 const device = args.get('device') || 'Mobile (Lighthouse default throttling)';
 const runs = Number(args.get('runs') || '1');
 const notes = args.get('notes') || 'Run in CI. Update values after each baseline capture.';

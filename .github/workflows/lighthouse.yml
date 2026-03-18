@@ -8,7 +8,7 @@ on:
       target_url:
         description: 'URL to audit'
         required: false
-        default: 'https://remotelyamused.com/'
+        default: 'https://joshbarteaux.com/'
 
 jobs:
   lighthouse-deploy:
@@ -30,7 +30,7 @@ jobs:
       - name: Run Lighthouse (3 runs)
         run: |
           mkdir -p reports
-          TARGET_URL="${{ inputs.target_url || 'https://remotelyamused.com/' }}"
+          TARGET_URL="${{ inputs.target_url || 'https://joshbarteaux.com/' }}"
           for i in 1 2 3; do
             npx lighthouse "$TARGET_URL" \
               --output=json \
@@ -46,7 +46,7 @@ jobs:
         run: |
           node scripts/update-quartermaster.mjs \
             --reportsDir=reports \
-            --url="${{ inputs.target_url || 'https://remotelyamused.com/' }}" \
+            --url="${{ inputs.target_url || 'https://joshbarteaux.com/' }}" \
             --device="Mobile (Lighthouse default throttling)" \
             --runs=3 \
             --notes="CI run on GitHub Actions using Lighthouse CLI."

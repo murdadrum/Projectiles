@@ -8,7 +8,7 @@ import { Typography, Box } from '@mui/material';
 
 // Import tile images from Figma
 import imgTile0 from "../assets/Tile Images/Tile1.png";
-import imgTile1 from "../assets/Tile Images/Tile2Docker.png";
+import imgTile1 from "../assets/Tile Images/Frame 2 Docker.png";
 import imgTile2 from "../assets/Tile Images/Tile3promptly.png";
 import imgTile3 from "../assets/Tile Images/Tile4lvble.png";
 import imgTile4 from "../assets/Tile Images/Tile5.png";
@@ -17,7 +17,7 @@ import imgTile6 from "../assets/Tile Images/Tile7.png";
 import imgTile7 from "../assets/535e811a44d7022bdae1e1b98488a8b98ac39536.png";
 import imgTile8 from "../assets/8d4c02cbc8a1f53547722fccbf6a7970a825b593.png";
 import imgTile9 from "../assets/f22999f701e867f15d4aeabf9f4c29760a105ea8.png";
-import imgTile10 from "../assets/50d6ceca728fe46911c413e6cc56072e69e8b89e.png";
+import imgTile10 from "../assets/Tile Images/Tile11 LetterMark-1.png";
 import imgTile11 from "../assets/6cf4f2b642a8f57792a2f325a4cef91211e940b4.png";
 import imgTile12 from "../assets/5263fe41ea24dd1c6b07fe35ce3749cf6dff3799.png";
 import imgTile13 from "../assets/70c9051db60a985c721347568f023a4add0e07d2.png";
@@ -287,7 +287,7 @@ const tileInfo: { [key: number]: {
       github: "https://github.com/murdadrum",
       figma: "https://www.figma.com/@JoshUX",
       linkedin: "https://www.linkedin.com/in/joshbarteaux",
-      gumroad: "https://remotelyamused.gumroad.com"
+      gumroad: "https://www.salesforce.com/trailblazer/g67ae2eb0oyxu7m3l3"
     }
   }
 };
@@ -611,7 +611,7 @@ function AppContent() {
           </Typography>
           <Typography
             component="a"
-            href="https://remotelyamused.gumroad.com"
+            href="https://www.salesforce.com/trailblazer/g67ae2eb0oyxu7m3l3"
             target="_blank"
             rel="noopener noreferrer"
             sx={{
@@ -631,7 +631,7 @@ function AppContent() {
               },
             }}
           >
-            Gumroad
+            Salesforce
           </Typography>
         </Box>
       </Box>
