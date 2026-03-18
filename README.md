@@ -11,7 +11,7 @@ Build the production bundle:
 npm run build
 ```
 
-Deploy to Firebase Hosting (project: `remotelyamused`):
+Deploy to Firebase Hosting (project from `.firebaserc`):
 
 ```
 firebase deploy --only hosting
@@ -57,18 +57,18 @@ Required GitHub Secrets:
 
 Manual Lighthouse run:
 ```
-node scripts/update-quartermaster.mjs --reportsDir=reports --url=https://remotelyamused.com/ --device=\"Mobile (Lighthouse default throttling)\" --runs=3 --notes=\"Local run\"
+node scripts/update-quartermaster.mjs --reportsDir=reports --url=https://joshbarteaux.com/ --device=\"Mobile (Lighthouse default throttling)\" --runs=3 --notes=\"Local run\"
 ```
 
 ## Dashboards
 
 QuarterMaster (performance baseline):
-- Public URL: `https://remotelyamused.com/QuarterMaster-PerformanceDashboard.html`
+- Public URL: `https://joshbarteaux.com/QuarterMaster-PerformanceDashboard.html`
 - Source file: `public/QuarterMaster-PerformanceDashboard.html`
 - Updated by: `.github/workflows/lighthouse.yml` after Lighthouse runs (3x) and before deploy.
 
 Test Run Dashboard (CI test status):
-- Public URL: `https://remotelyamused.com/Test-Run-Dashboard.html`
+- Public URL: `https://joshbarteaux.com/Test-Run-Dashboard.html`
 - Source file: `public/Test-Run-Dashboard.html`
 - Updated by: `.github/workflows/ci.yml` and `.github/workflows/lighthouse.yml` using `scripts/update-test-dashboard.mjs`.
 

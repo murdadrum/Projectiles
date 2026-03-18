@@ -8,16 +8,16 @@ import { Typography, Box } from '@mui/material';
 
 // Import tile images from Figma
 import imgTile0 from "../assets/Tile Images/Tile1.png";
-import imgTile1 from "../assets/f9a6bb19bfd0783ff0a609bc7dc5f4eaf168913d.png";
-import imgTile2 from "../assets/a0f033feca22effc48fe25e752d1bf608e19be19.png";
-import imgTile3 from "../assets/211a6df52740c035818e4d494bffe0c1c8d6e9b6.png";
+import imgTile1 from "../assets/Tile Images/Frame 2 Docker.png";
+import imgTile2 from "../assets/Tile Images/Tile3promptly.png";
+import imgTile3 from "../assets/Tile Images/Tile4lvble.png";
 import imgTile4 from "../assets/Tile Images/Tile5.png";
 import imgTile5 from "../assets/b6eee35dfcd6556c9a1cad0bba22b81a61d0e23e.png";
 import imgTile6 from "../assets/Tile Images/Tile7.png";
 import imgTile7 from "../assets/535e811a44d7022bdae1e1b98488a8b98ac39536.png";
 import imgTile8 from "../assets/8d4c02cbc8a1f53547722fccbf6a7970a825b593.png";
 import imgTile9 from "../assets/f22999f701e867f15d4aeabf9f4c29760a105ea8.png";
-import imgTile10 from "../assets/50d6ceca728fe46911c413e6cc56072e69e8b89e.png";
+import imgTile10 from "../assets/Tile Images/Tile11 LetterMark-1.png";
 import imgTile11 from "../assets/6cf4f2b642a8f57792a2f325a4cef91211e940b4.png";
 import imgTile12 from "../assets/5263fe41ea24dd1c6b07fe35ce3749cf6dff3799.png";
 import imgTile13 from "../assets/70c9051db60a985c721347568f023a4add0e07d2.png";
@@ -126,14 +126,14 @@ const tileInfo: { [key: number]: {
     embedUrl: "https://venndiachrome.figma.site/"
   },
   1: { // Tile 2
-    title: "NeuralCanvas",
-    subtitle: "AI Art Studio",
-    description: "Generative art platform powered by machine learning for creative exploration.",
+    title: "GeoLogic",
+    subtitle: "Geospatial Operations Platform",
+    description: "Intelligence workspace that blends satellite, sensor, and on-the-ground telemetry for terrain-aware decision making.",
     details: [
-      "Integrates multiple AI models for style transfer and image generation.",
-      "Supports batch processing with preset templates and custom parameters.",
+      "Surfaces layered map insights with historical context, live sensor feeds, and forecast overlays.",
+      "Empowers teams to build collaborative scenarios, assign regional actions, and push guided alerts.",
     ],
-    techStack: ["Python", "TensorFlow", "React"]
+    techStack: ["React", "Mapbox GL JS", "PostGIS", "Node.js"]
   },
   2: { // Tile 3
     title: "Promptly",
@@ -147,14 +147,15 @@ const tileInfo: { [key: number]: {
     embedUrl: "https://promptly-779175721635.us-west1.run.app"
   },
   3: { // Tile 4
-    title: "CodeReview AI",
-    subtitle: "Developer Tools",
-    description: "Automated code review assistant with AI-powered suggestions.",
+    title: "QADMS",
+    subtitle: "Quality Assurance Platform",
+    description: "Lovable's QA Data Management System aggregates tests, metrics, and diagnostics into a single, shareable workspace.",
     details: [
-      "Analyzes pull requests for potential bugs, security issues, and style violations.",
-      "Learns from team patterns to provide contextual recommendations.",
+      "Surfaces cross-project test runs, auto-linking failures to builds and investigations.",
+      "Highlights triaged bugs and stabilizes QA handoffs with contextual notes and status tracking.",
     ],
-    techStack: ["TypeScript", "OpenAI", "GitHub API"]
+    techStack: ["TypeScript", "React", "PostgreSQL"],
+    embedUrl: "https://qadms.lovable.app/"
   },
   4: { // Tile 5
     title: "Sidenote",
@@ -286,7 +287,7 @@ const tileInfo: { [key: number]: {
       github: "https://github.com/murdadrum",
       figma: "https://www.figma.com/@JoshUX",
       linkedin: "https://www.linkedin.com/in/joshbarteaux",
-      gumroad: "https://remotelyamused.gumroad.com"
+      gumroad: "https://www.salesforce.com/trailblazer/g67ae2eb0oyxu7m3l3"
     }
   }
 };
@@ -512,6 +513,7 @@ function AppContent() {
             overflow: 'auto',
           }}
         >
+          {/*
           <Typography
             component="a"
             href="mailto:josh@remotelyamused.com"
@@ -534,6 +536,7 @@ function AppContent() {
           >
             email
           </Typography>
+          */}
           <Typography
             component="a"
             href="https://github.com/murdadrum"
@@ -608,7 +611,7 @@ function AppContent() {
           </Typography>
           <Typography
             component="a"
-            href="https://remotelyamused.gumroad.com"
+            href="https://www.salesforce.com/trailblazer/g67ae2eb0oyxu7m3l3"
             target="_blank"
             rel="noopener noreferrer"
             sx={{
@@ -628,7 +631,7 @@ function AppContent() {
               },
             }}
           >
-            Gumroad
+            Salesforce
           </Typography>
         </Box>
       </Box>

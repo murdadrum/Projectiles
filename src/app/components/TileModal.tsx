@@ -58,6 +58,12 @@ export function TileModal({ color, index, totalTiles, onClose, onNext, onPrev, p
   const [isVisible, setIsVisible] = useState(false);
   const [formSubmitted, setFormSubmitted] = useState(false);
   const theme = useTheme();
+  const sharedIframeProps = {
+    className: "w-full h-full border-0",
+    allow: "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture",
+    sandbox: "allow-same-origin allow-scripts allow-forms allow-popups allow-modals",
+    style: { border: 0, width: '100%', height: '100%' } as const,
+  };
 
   useEffect(() => {
     // Trigger entrance animation
@@ -114,12 +120,12 @@ export function TileModal({ color, index, totalTiles, onClose, onNext, onPrev, p
           backgroundImage: 'none',
           m: { xs: 0, sm: 1.5, md: 2, lg: 3 },
           borderRadius: { xs: 0, md: 1 },
-          width: { xs: '100%', sm: 'fit-content', md: 'fit-content', lg: 'fit-content' },
-          height: { xs: '100%', sm: 'fit-content', md: 'fit-content', lg: 'fit-content' },
+          width: { xs: '100%', sm: '94vw', md: 'min(79vw, 1660px)', lg: 'min(79vw, 1660px)' },
+          height: { xs: '100%', sm: 'min(90vh, 760px)', md: 'min(57vh, 780px)', lg: 'min(57vh, 780px)' },
           minWidth: { sm: '600px', md: '800px', lg: '1000px' },
           minHeight: { sm: '400px', md: '500px', lg: '600px' },
-          maxWidth: { xs: '100%', sm: '98vw', md: '96vw', lg: '2200px' },
-          maxHeight: { xs: '100%', sm: '96vh', md: '94vh', lg: '1100px' },
+          maxWidth: { xs: '100%', sm: '94vw', md: 'min(79vw, 1660px)', lg: 'min(79vw, 1660px)' },
+          maxHeight: { xs: '100%', sm: 'min(90vh, 760px)', md: 'min(57vh, 780px)', lg: 'min(57vh, 780px)' },
         },
       }}
       sx={{
@@ -171,12 +177,27 @@ export function TileModal({ color, index, totalTiles, onClose, onNext, onPrev, p
                 bgcolor: 'rgba(0, 0, 0, 0.2)',
                 flexDirection: 'column',
                 flexShrink: 0,
+                minWidth: 0,
+                minHeight: 0,
                 borderLeft: '1px solid rgba(255, 255, 255, 0.1)',
                 position: 'relative',
               }}
             >
               {tileInfo.embedUrl || previewImage ? (
-                <Box sx={{ position: 'relative', flex: 1, p: 4, display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden' }} className="bg-[rgba(0,0,0,0)]">
+                <Box
+                  sx={{
+                    position: 'relative',
+                    flex: 1,
+                    p: 4,
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    minWidth: 0,
+                    minHeight: 0,
+                    overflow: 'hidden',
+                  }}
+                  className="bg-[rgba(0,0,0,0)]"
+                >
                   {/* Inner Container */}
                   <Paper
                     elevation={8}
@@ -187,25 +208,21 @@ export function TileModal({ color, index, totalTiles, onClose, onNext, onPrev, p
                       overflow: 'hidden',
                       bgcolor: theme.palette.background.default,
                       position: 'relative',
+                      minWidth: 0,
+                      minHeight: 0,
                     }}
                   >
                     {index === 14 ? (
                       <iframe
                         src="https://joshbarteaux.atlassian.net/jira/software/projects/PORTO/summary"
-                        className="w-full h-full border-0"
                         title="Jira Board"
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                        sandbox="allow-same-origin allow-scripts allow-forms allow-popups allow-modals"
-                        style={{ border: 0, width: '100%', height: '100%' }}
+                        {...sharedIframeProps}
                       />
                     ) : tileInfo.embedUrl ? (
                       <iframe
                         src={tileInfo.embedUrl}
-                        className="w-full h-full border-0"
                         title={tileInfo.title}
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                        sandbox="allow-same-origin allow-scripts allow-forms allow-popups allow-modals"
-                        style={{ border: 0, width: '100%', height: '100%' }}
+                        {...sharedIframeProps}
                       />
                     ) : previewImage ? (
                       <Box
@@ -287,6 +304,7 @@ export function TileModal({ color, index, totalTiles, onClose, onNext, onPrev, p
                 p: { xs: 2, sm: 2.5, md: 3, lg: 4 },
                 bgcolor: 'rgba(10, 10, 10, 0.95)',
                 flexShrink: 0,
+                minWidth: 0,
                 overflowY: 'auto',
               }}
             >
@@ -555,7 +573,7 @@ export function TileModal({ color, index, totalTiles, onClose, onNext, onPrev, p
                           <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z" />
                         </Box>
                         <Typography variant="body2" sx={{ fontSize: { xs: '0.8125rem', sm: '0.8438rem', md: '0.875rem' } }}>
-                          Gumroad
+                          Salesforce
                         </Typography>
                       </Link>
                     </Box>
@@ -608,6 +626,8 @@ export function TileModal({ color, index, totalTiles, onClose, onNext, onPrev, p
                       ? "Built with Web Audio API for low-latency real-time sound processing. Features MIDI support and customizable synthesizer parameters for creative music production."
                       : index === 2
                       ? "Promptly uses multimodal AI models to analyze uploaded assets and construct detailed, structurally sound prompts for creative workflows."
+                      : index === 3
+                      ? "QADMS keeps QA metrics, test run histories, and investigative context centralized so engineering teams can trace regressions with clarity."
                       : "Advanced architecture leveraging modern frameworks and best practices for optimal performance, scalability, and user experience."}
                   </Typography>
                 </Box>
@@ -694,28 +714,29 @@ export function TileModal({ color, index, totalTiles, onClose, onNext, onPrev, p
             {/* Image/Embed Column */}
             <Box
               sx={{
-                width: { xs: '100%', md: '66.666%' },
+                display: { xs: 'none', md: 'flex' },
+                width: { md: '66.666%' },
                 bgcolor: 'rgba(0, 0, 0, 0.2)',
-                display: 'flex',
                 flexDirection: 'column',
                 flexShrink: 0,
-                height: { xs: '45vh', md: 'auto' },
-                minHeight: { xs: '300px', md: 0 },
-                borderBottom: { xs: '1px solid rgba(255, 255, 255, 0.1)', md: 'none' },
-                borderLeft: { xs: 'none', md: '1px solid rgba(255, 255, 255, 0.1)' },
+                minWidth: 0,
+                minHeight: 0,
+                borderLeft: '1px solid rgba(255, 255, 255, 0.1)',
                 position: 'relative',
               }}
             >
-              <Box sx={{ position: 'relative', flex: 1, p: { xs: 0, md: 4 }, display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden' }}>
+              <Box sx={{ position: 'relative', flex: 1, p: 4, display: 'flex', alignItems: 'center', justifyContent: 'center', minWidth: 0, minHeight: 0, overflow: 'hidden' }}>
                 <Paper
                   elevation={8}
                   sx={{
                     width: '100%',
                     height: '100%',
-                    borderRadius: { xs: 0, md: 0.5 },
+                    borderRadius: 0.5,
                     overflow: 'hidden',
                     position: 'relative',
-                    bgcolor: color,
+                    bgcolor: theme.palette.background.default,
+                    minWidth: 0,
+                    minHeight: 0,
                   }}
                 >
                   {previewImage && (
@@ -724,7 +745,7 @@ export function TileModal({ color, index, totalTiles, onClose, onNext, onPrev, p
                         component="img"
                         src={previewImage}
                         alt={`Preview ${index + 1}`}
-                        sx={{ width: '100%', height: '100%', objectFit: 'contain', borderRadius: 0.5 }}
+                        sx={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: 0.5 }}
                       />
                     </Box>
                   )}
@@ -734,9 +755,7 @@ export function TileModal({ color, index, totalTiles, onClose, onNext, onPrev, p
                     <iframe
                       src="https://musebox-779175721635.us-west1.run.app/"
                       title="Musebox App"
-                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                      sandbox="allow-same-origin allow-scripts allow-forms allow-popups allow-modals"
-                      style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', border: 0 }}
+                      {...sharedIframeProps}
                     />
                   )}
                 </Paper>
