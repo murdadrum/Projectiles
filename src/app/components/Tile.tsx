@@ -1,9 +1,10 @@
 import { useRef, useState, useEffect } from "react";
 import { Card, CardActionArea, Box } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
-import tile1Image from '../../../images/Tile1.png';
-import tile5Image from '../../../images/Tile5.png';
-import tile16Image from '../../../images/Tile16.png';
+import tile1Image from '../../assets/Tile Images/Tile1.png';
+import tile5Image from '../../assets/Tile Images/Tile5.png';
+import tile15Image from '../../assets/Tile Images/Tile15.png';
+import tile16Image from '../../assets/Tile Images/Tile16.png';
 
 interface TileProps {
   color: string;
@@ -21,25 +22,7 @@ interface TileProps {
   isTouchDevice?: boolean;
 }
 
-// Placeholder images for the back of tiles
-const placeholderImages = [
-  "https://images.unsplash.com/photo-1595411425732-e69c1abe2763?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxhYnN0cmFjdCUyMGdlb21ldHJpYyUyMHBhdHRlcm58ZW58MXx8fHwxNzY4OTcxNDgyfDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
-  "https://images.unsplash.com/photo-1665764884116-11bf71512155?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjb2xvcmZ1bCUyMGdyYWRpZW50JTIwYXJ0fGVufDF8fHx8MTc2ODk3MTQ4M3ww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
-  "https://images.unsplash.com/photo-1704428381440-ae3d3b758a0a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtb2Rlcm4lMjBtaW5pbWFsaXN0JTIwZGVzaWdufGVufDF8fHx8MTc2ODkzMjk1Mnww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
-  "https://images.unsplash.com/photo-1688413709025-5f085266935a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxkaWdpdGFsJTIwYXJ0d29yayUyMHBhdHRlcm58ZW58MXx8fHwxNzY4OTcxNDg0fDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
-  "https://images.unsplash.com/photo-1585314062340-f1a5a7c9328d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHx0ZXh0dXJlJTIwYmFja2dyb3VuZHxlbnwxfHx8fDE3Njg5NzE0ODR8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
-  "https://images.unsplash.com/photo-1595411425732-e69c1abe2763?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxhYnN0cmFjdCUyMHNoYXBlcyUyMGRlc2lnbnxlbnwxfHx8fDE3Njg4ODgzMDJ8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
-  "https://images.unsplash.com/photo-1558770735-10c8dd635e20?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjcmVhdGl2ZSUyMGNvbXBvc2l0aW9ufGVufDF8fHx8MTc2ODk3NzQ2MHww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
-  "https://images.unsplash.com/photo-1622986819498-60765a6e52c0?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHx2aWJyYW50JTIwY29sb3JzJTIwYWJzdHJhY3R8ZW58MXx8fHwxNzY4ODkxNTA5fDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
-  "https://images.unsplash.com/photo-1631295285425-ee8ddc8b3b0a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtb2Rlcm4lMjBhcnQlMjBwaG90b2dyYXBoeXxlbnwxfHx8fDE3Njg5NzE0ODV8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
-  "https://images.unsplash.com/photo-1692530943891-589e88b780a1?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxhcnRpc3RpYyUyMGJhY2tncm91bmQlMjBwYXR0ZXJufGVufDF8fHx8MTc2ODk3MTQ4Nnww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
-  "https://images.unsplash.com/photo-1630388740756-6fe7ca15f806?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtaW5pbWFsaXN0JTIwdGV4dHVyZSUyMGRlc2lnbnxlbnwxfHx8fDE3Njg5NzE0ODZ8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
-  "https://images.unsplash.com/photo-1536241455566-5709c3aefd3d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjb250ZW1wb3JhcnklMjBhcnQlMjBhYnN0cmFjdHxlbnwxfHx8fDE3Njg5NzE0ODZ8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
-  "https://images.unsplash.com/photo-1759265686020-0e69c0f2bc9e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxncmFwaGljJTIwZGVzaWduJTIwcGF0dGVybnxlbnwxfHx8fDE3Njg5NzE0ODd8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
-  "https://images.unsplash.com/photo-1640735853641-5d799222afbe?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjb2xvcmZ1bCUyMHRleHR1cmUlMjBiYWNrZ3JvdW5kfGVufDF8fHx8MTc2ODk3MTQ4N3ww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
-  "https://images.unsplash.com/photo-1748186673815-7f015a99a8e2?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxnZW9tZXRyaWMlMjBhcnQlMjBkZXNpZ258ZW58MXx8fHwxNzY4OTcxNDg3fDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
-  "https://images.unsplash.com/photo-1611087966028-bc70bc75d5f3?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjcmVhdGl2ZSUyMHZpc3VhbCUyMGFydHxlbnwxfHx8fDE3Njg5NzE0ODh8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
-];
+// Back-face images are the tile preview assets when provided.
 
 export function Tile({ color, index, onClick, previewImage, mousePosition, prevMousePosition, isActiveHover, onTileHoverChange, initialFlipped, cascadeDelay, onInitialFlipComplete, isTouchFlipped, isTouchDevice }: TileProps) {
   const tileRef = useRef<HTMLDivElement>(null);
@@ -47,10 +30,7 @@ export function Tile({ color, index, onClick, previewImage, mousePosition, prevM
   const [flipDirection, setFlipDirection] = useState<'horizontal' | 'vertical'>('horizontal');
   const [showingBack, setShowingBack] = useState(initialFlipped || false);
   const [showAfterglow, setShowAfterglow] = useState(false);
-  
-  // Tiles that should NOT show preview on hover (indices 5, 6, 8 = tiles 6, 7, 9)
-  const noPreviewIndices = [5, 6, 8];
-  const shouldShowPreview = previewImage && !noPreviewIndices.includes(index);
+  const shouldShowPreview = !!previewImage;
 
   // On touch devices, override showingBack with isTouchFlipped state
   const effectiveShowingBack = isTouchDevice ? isTouchFlipped : showingBack;
@@ -228,6 +208,7 @@ export function Tile({ color, index, onClick, previewImage, mousePosition, prevM
           '100%': { transform: 'translateY(0)' },
         },
       }}
+      data-testid={`tile-${index}`}
       onMouseEnter={() => onTileHoverChange?.(true)}
       onMouseLeave={() => onTileHoverChange?.(false)}
     >
@@ -315,7 +296,7 @@ export function Tile({ color, index, onClick, previewImage, mousePosition, prevM
           >
             <Box
               component="img"
-              src={index === 15 ? tile16Image : index === 0 ? tile1Image : index === 4 ? tile5Image : placeholderImages[index]}
+              src={previewImage ?? (index === 15 ? tile16Image : index === 14 ? tile15Image : index === 0 ? tile1Image : index === 4 ? tile5Image : tile1Image)}
               alt={`Tile ${index + 1} back`}
               sx={{
                 width: '100%',

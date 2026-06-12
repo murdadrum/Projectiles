@@ -6,23 +6,104 @@ import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import { Typography, Box } from '@mui/material';
 
+const maintenanceMode = String(import.meta.env.VITE_MAINTENANCE_MODE).toLowerCase() === 'true';
+
+function MaintenanceScreen() {
+  return (
+    <Box
+      sx={{
+        minHeight: '100vh',
+        width: '100%',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        px: 3,
+        background:
+          'radial-gradient(circle at 20% 20%, rgba(0,229,255,0.12), transparent 50%), radial-gradient(circle at 80% 10%, rgba(255,255,255,0.08), transparent 40%), #0A0A0A',
+      }}
+    >
+      <Box
+        sx={{
+          width: '100%',
+          maxWidth: 760,
+          border: '1px solid rgba(255,255,255,0.14)',
+          borderRadius: '16px',
+          p: { xs: 3, md: 6 },
+          background: 'rgba(8, 8, 8, 0.82)',
+          backdropFilter: 'blur(8px)',
+          textAlign: 'left',
+        }}
+      >
+        <Typography
+          sx={{
+            fontFamily: '"Aldrich", sans-serif',
+            textTransform: 'uppercase',
+            letterSpacing: '3px',
+            fontSize: { xs: '12px', md: '14px' },
+            color: '#00E5FF',
+            mb: 2,
+          }}
+        >
+          Planned Maintenance
+        </Typography>
+        <Typography
+          sx={{
+            fontFamily: '"Aldrich", sans-serif',
+            fontSize: { xs: '28px', md: '44px' },
+            lineHeight: 1.1,
+            letterSpacing: '1.5px',
+            color: '#FFFFFF',
+            mb: 2,
+          }}
+        >
+          ProjecTiles is temporarily unavailable
+        </Typography>
+        <Typography
+          sx={{
+            color: 'rgba(255,255,255,0.72)',
+            fontSize: { xs: '15px', md: '18px' },
+            lineHeight: 1.6,
+            mb: 3,
+          }}
+        >
+          We are performing an infrastructure update and will be back shortly.
+          Thank you for your patience.
+        </Typography>
+        <Typography
+          sx={{
+            color: 'rgba(255,255,255,0.55)',
+            fontFamily: '"Abel", sans-serif',
+            letterSpacing: '1.2px',
+            textTransform: 'uppercase',
+            fontSize: { xs: '11px', md: '13px' },
+          }}
+        >
+          Contact: josh@remotelyamused.com
+        </Typography>
+      </Box>
+    </Box>
+  );
+}
+
 // Import tile images from Figma
-import imgTile0 from "figma:asset/e7f4d209239aa906453559f3c9d72157122359bc.png";
-import imgTile1 from "figma:asset/f9a6bb19bfd0783ff0a609bc7dc5f4eaf168913d.png";
-import imgTile2 from "figma:asset/a0f033feca22effc48fe25e752d1bf608e19be19.png";
-import imgTile3 from "figma:asset/211a6df52740c035818e4d494bffe0c1c8d6e9b6.png";
-import imgTile4 from "figma:asset/a1731673602dc60c65c2a511cab33064ca52bb4a.png";
-import imgTile5 from "figma:asset/b6eee35dfcd6556c9a1cad0bba22b81a61d0e23e.png";
-import imgTile6 from "figma:asset/139989f61001fa1248c9626e7731147f09520043.png";
-import imgTile7 from "figma:asset/535e811a44d7022bdae1e1b98488a8b98ac39536.png";
-import imgTile8 from "figma:asset/8d4c02cbc8a1f53547722fccbf6a7970a825b593.png";
-import imgTile9 from "figma:asset/f22999f701e867f15d4aeabf9f4c29760a105ea8.png";
-import imgTile10 from "figma:asset/50d6ceca728fe46911c413e6cc56072e69e8b89e.png";
-import imgTile11 from "figma:asset/6cf4f2b642a8f57792a2f325a4cef91211e940b4.png";
-import imgTile12 from "figma:asset/5263fe41ea24dd1c6b07fe35ce3749cf6dff3799.png";
-import imgTile13 from "figma:asset/70c9051db60a985c721347568f023a4add0e07d2.png";
-import imgTile14 from "figma:asset/391395dc32a58f84a9cc76c9ddc838712f3fa896.png";
-import imgTile15 from "figma:asset/70c9051db60a985c721347568f023a4add0e07d2.png";
+import imgTile0 from "../assets/Tile Images/Tile1.png";
+import imgTile1 from "../assets/Tile Images/Tile2.png";
+import imgTile2 from "../assets/Tile Images/Tile3promptly.png";
+import imgTile3 from "../assets/Tile Images/Tile4lvble.png";
+import imgTile4 from "../assets/Tile Images/Tile5.png";
+import imgTile5 from "../assets/Tile Images/Tile6.png";
+import imgTile5Modal from "../assets/Tile Images/Tile6-preview.png";
+import imgTile6 from "../assets/Tile Images/Tile7.png";
+import imgTile7 from "../assets/Tile Images/Tile8.png";
+import imgTile7Modal from "../assets/Tile Images/Tile8-preview.png";
+import imgTile8 from "../assets/8d4c02cbc8a1f53547722fccbf6a7970a825b593.png";
+import imgTile9 from "../assets/f22999f701e867f15d4aeabf9f4c29760a105ea8.png";
+import imgTile10 from "../assets/Tile Images/Tile11 LetterMark-1.png";
+import imgTile11 from "../assets/6cf4f2b642a8f57792a2f325a4cef91211e940b4.png";
+import imgTile12 from "../assets/5263fe41ea24dd1c6b07fe35ce3749cf6dff3799.png";
+import imgTile13 from "../assets/Tile Images/Tile14.png";
+import imgTile14 from "../assets/Tile Images/Tile15.png";
+import imgTile15 from "../assets/Tile Images/Tile16.png";
 
 // Material Design dark theme
 const darkTheme = createTheme({
@@ -99,13 +180,16 @@ const previewImages: { [key: number]: string } = {
 };
 
 // Tile information for special layouts
-const tileInfo: { [key: number]: { 
-  title: string; 
+const tileInfo: { [key: number]: {
+  title: string;
   subtitle?: string;
-  description: string; 
+  description: string;
   details: string[];
   techStack: string[];
   embedUrl?: string;
+  launchUrl?: string;
+  launchLabel?: string;
+  modalPreviewUrl?: string;
   contactLinks?: {
     email: string;
     github: string;
@@ -126,14 +210,18 @@ const tileInfo: { [key: number]: {
     embedUrl: "https://venndiachrome.figma.site/"
   },
   1: { // Tile 2
-    title: "NeuralCanvas",
-    subtitle: "AI Art Studio",
-    description: "Generative art platform powered by machine learning for creative exploration.",
+    title: "GitHub.com/murdadrum",
+    subtitle: "BigLeague Chewbacca",
+    description: "GitHub Pro developer with 65 repositories spanning TypeScript, Python, and React — from health apps to AI tooling to infrastructure monitoring.",
     details: [
-      "Integrates multiple AI models for style transfer and image generation.",
-      "Supports batch processing with preset templates and custom parameters.",
+      "AirStream — breath training app; MuseBox — cinematic prompt & storyboard studio.",
+      "QuarterMasterLT — endpoint monitoring and performance reporting tool.",
+      "Pull Shark & Pair Extraordinaire badges (×2) — consistent collaborator and code reviewer.",
+      "Quickdraw & YOLO badges — fast responder and decisive contributor across open projects.",
     ],
-    techStack: ["Python", "TensorFlow", "React"]
+    techStack: ["TypeScript", "Python", "React", "Node.js", "GitHub Actions"],
+    launchUrl: "https://github.com/murdadrum",
+    launchLabel: "Open GitHub",
   },
   2: { // Tile 3
     title: "Promptly",
@@ -147,14 +235,15 @@ const tileInfo: { [key: number]: {
     embedUrl: "https://promptly-779175721635.us-west1.run.app"
   },
   3: { // Tile 4
-    title: "CodeReview AI",
-    subtitle: "Developer Tools",
-    description: "Automated code review assistant with AI-powered suggestions.",
+    title: "QADMS",
+    subtitle: "Quality Assurance Platform",
+    description: "Lovable's QA Data Management System aggregates tests, metrics, and diagnostics into a single, shareable workspace.",
     details: [
-      "Analyzes pull requests for potential bugs, security issues, and style violations.",
-      "Learns from team patterns to provide contextual recommendations.",
+      "Surfaces cross-project test runs, auto-linking failures to builds and investigations.",
+      "Highlights triaged bugs and stabilizes QA handoffs with contextual notes and status tracking.",
     ],
-    techStack: ["TypeScript", "OpenAI", "GitHub API"]
+    techStack: ["TypeScript", "React", "PostgreSQL"],
+    embedUrl: "https://qadms.lovable.app/"
   },
   4: { // Tile 5
     title: "Sidenote",
@@ -167,15 +256,18 @@ const tileInfo: { [key: number]: {
     techStack: ["React Native", "Firebase", "HealthKit"]
   },
   5: { // Tile 6
-    title: "MuseBox Audio",
-    subtitle: "Web Application",
-    description: "Interactive music sequencer and audio synthesis playground.",
+    title: "MuseBox",
+    subtitle: "Storyboard Studio",
+    description: "Streamlined storyboarding app for quickly generating and organizing image thumbnails into scene-ready boards.",
     details: [
-      "Built with Web Audio API for low-latency real-time sound processing.",
-      "Features MIDI support and customizable synthesizer parameters.",
+      "Combine prompt references with global style attributes — lens, lighting, aspect ratio — for consistent frame generation.",
+      "Organizes outputs into visual scene boards with quick export for production handoff.",
+      "Drag-and-drop image and video assets as style references alongside text prompts.",
     ],
-    techStack: ["Web Audio API", "React", "Tone.js"],
-    embedUrl: "https://musebox-779175721635.us-west1.run.app/"
+    techStack: ["React", "Vite", "Gemini API", "Node.js"],
+    launchUrl: "https://musebox-779175721635.us-west1.run.app/",
+    launchLabel: "Launch MuseBox",
+    modalPreviewUrl: imgTile5Modal,
   },
   6: { // Tile 7
     title: "QuarterMaster",
@@ -189,15 +281,19 @@ const tileInfo: { [key: number]: {
     embedUrl: "/QuarterMaster-PerformanceDashboard.html"
   },
   7: { // Tile 8
-    title: "MuseBox",
-    subtitle: "Web Application",
-    description: "A cinematic prompt studio for generating image sequences and storyboard-ready frames.",
+    title: "CCO United",
+    subtitle: "Cherokee Nation Community Platform",
+    description: "Unified digital platform consolidating tools and resources for Cherokee Nation's Community & Cultural Outreach organizations — connecting 450K+ citizens across 14+ community groups.",
     details: [
-      "Combines prompt + style references with global attributes like lens, lighting, and aspect.",
-      "Organizes outputs into scene boards with quick export options for production handoff.",
+      "Salesforce-based system spanning 9 service areas: housing, events, resource directories, grant management, and volunteer/donor CRM.",
+      "Alisdelisgi — a 24/7 AI assistant trained on Cherokee Nation mission data, providing culturally-grounded support in Cherokee and English.",
+      "Comprehensive resource directory covering healthcare, youth services, elder support, food distribution, and emergency response.",
+      "Integrated learning platform via NonprofitReady partnership and a public-facing Lightning Web Digital Experience.",
     ],
-    techStack: ["React", "Vite", "Gemini API"],
-    embedUrl: "https://musebox-779175721635.us-west1.run.app/"
+    techStack: ["Salesforce", "Agentforce", "LWC", "Data Cloud", "GitHub Actions"],
+    launchUrl: "https://sf.cco-united.joshbarteaux.com",
+    launchLabel: "Launch CCO United",
+    modalPreviewUrl: imgTile7Modal,
   },
   8: { // Tile 9
     title: "VoiceScript",
@@ -250,14 +346,18 @@ const tileInfo: { [key: number]: {
     techStack: ["Electron", "Rust", "SQLCipher"]
   },
   13: { // Tile 14
-    title: "LearnHub",
-    subtitle: "Education Platform",
-    description: "Adaptive learning platform with personalized course recommendations.",
+    title: "Salesforce",
+    subtitle: "Trailblazer Ranger",
+    description: "Salesforce Certified Administrator with Trailhead Ranger status — 121 badges earned across the full Salesforce platform.",
     details: [
-      "Uses spaced repetition algorithms to optimize knowledge retention.",
-      "Tracks learning progress with detailed analytics and achievement badges.",
+      "Agentforce & AI — Agentforce Basics, Agentforce Builder, RAG, Autonomous Agents, LLMs, Generative AI.",
+      "Platform & Admin — Data Modeling, LWC, Apex, Flows, Permission Sets, Sandbox Administration.",
+      "Testing & QA — Salesforce App Testing with Provar, Test Management, Continuous Testing, BDD/Agile.",
+      "Business Analysis — Process Mapping, BA Best Practices, Salesforce CRM, Reports & Dashboards.",
     ],
-    techStack: ["Next.js", "PostgreSQL", "Redis"]
+    techStack: ["Salesforce", "Agentforce", "LWC / Apex", "Trailhead", "Data Cloud"],
+    launchUrl: "https://www.salesforce.com/trailblazer/g67ae2eb0oyxu7m3l3",
+    launchLabel: "Launch Trailblazer",
   },
   14: { // Tile 15
     title: "PixelForge",
@@ -285,7 +385,7 @@ const tileInfo: { [key: number]: {
       github: "https://github.com/murdadrum",
       figma: "https://www.figma.com/@JoshUX",
       linkedin: "https://www.linkedin.com/in/joshbarteaux",
-      gumroad: "https://remotelyamused.gumroad.com"
+      gumroad: "https://www.salesforce.com/trailblazer/g67ae2eb0oyxu7m3l3"
     }
   }
 };
@@ -459,6 +559,7 @@ function AppContent() {
               gap: '6px',
               width: '100%',
             }}
+            data-testid="tile-grid"
             onMouseMove={handleGridMouseMove}
             onMouseLeave={handleGridMouseLeave}
             ref={gridRef}
@@ -510,6 +611,7 @@ function AppContent() {
             overflow: 'auto',
           }}
         >
+          {/*
           <Typography
             component="a"
             href="mailto:josh@remotelyamused.com"
@@ -532,6 +634,7 @@ function AppContent() {
           >
             email
           </Typography>
+          */}
           <Typography
             component="a"
             href="https://github.com/murdadrum"
@@ -606,7 +709,7 @@ function AppContent() {
           </Typography>
           <Typography
             component="a"
-            href="https://remotelyamused.gumroad.com"
+            href="https://www.salesforce.com/trailblazer/g67ae2eb0oyxu7m3l3"
             target="_blank"
             rel="noopener noreferrer"
             sx={{
@@ -626,7 +729,7 @@ function AppContent() {
               },
             }}
           >
-            Gumroad
+            Salesforce
           </Typography>
         </Box>
       </Box>
@@ -659,7 +762,7 @@ export default function App(props: any) {
     <div>
       <ThemeProvider theme={darkTheme}>
         <CssBaseline />
-        <AppContent />
+        {maintenanceMode ? <MaintenanceScreen /> : <AppContent />}
       </ThemeProvider>
     </div>
   );
