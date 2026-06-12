@@ -202,7 +202,9 @@ const tileInfo: { [key: number]: {
       "Features customizable widgets with drag-and-drop layout configuration.",
     ],
     techStack: ["React", "D3.js", "WebSockets"],
-    embedUrl: "https://venndiachrome.figma.site/"
+    embedUrl: "https://venndiachrome.figma.site/",
+    launchUrl: "https://venndiachrome.figma.site/",
+    launchLabel: "Launch VennDiachrome",
   },
   1: { // Tile 2
     title: "GeoLogic",
@@ -223,18 +225,22 @@ const tileInfo: { [key: number]: {
       "Supports dragging and dropping video or image assets.",
     ],
     techStack: ["Next.js", "GPT-4", "Vector DB"],
-    embedUrl: "https://promptly-779175721635.us-west1.run.app"
+    embedUrl: "https://promptly-779175721635.us-west1.run.app",
+    launchUrl: "https://promptly-779175721635.us-west1.run.app",
+    launchLabel: "Launch Promptly",
   },
   3: { // Tile 4
-    title: "QADMS",
-    subtitle: "Quality Assurance Platform",
+    title: "JoshUX",
+    subtitle: "QADMS Quality Assurance Design Management System",
     description: "Lovable's QA Data Management System aggregates tests, metrics, and diagnostics into a single, shareable workspace.",
     details: [
       "Surfaces cross-project test runs, auto-linking failures to builds and investigations.",
       "Highlights triaged bugs and stabilizes QA handoffs with contextual notes and status tracking.",
     ],
     techStack: ["TypeScript", "React", "PostgreSQL"],
-    embedUrl: "https://qadms.lovable.app/"
+    embedUrl: "https://qadms.lovable.app/",
+    launchUrl: "https://qadms.lovable.app/",
+    launchLabel: "Launch JoshUX",
   },
   4: { // Tile 5
     title: "Sidenote",
@@ -266,7 +272,9 @@ const tileInfo: { [key: number]: {
       "Designed as a lightweight snapshot for audit-ready reporting.",
     ],
     techStack: ["HTML", "CSS", "JavaScript", "Lighthouse"],
-    embedUrl: "/QuarterMaster-PerformanceDashboard.html"
+    embedUrl: "/QuarterMaster-PerformanceDashboard.html",
+    launchUrl: "/QuarterMaster-PerformanceDashboard.html",
+    launchLabel: "Launch QuarterMaster",
   },
   7: { // Tile 8
     title: "MuseBox",
@@ -352,7 +360,7 @@ const tileInfo: { [key: number]: {
   },
   15: { // Tile 16 - About Me
     title: "About Me",
-    subtitle: "UX Engineer & Creative Technologist",
+    subtitle: "QA / BA / UX Engineer",
     description: "I'm a multidisciplinary designer and developer passionate about creating delightful user experiences through the intersection of design and technology.",
     details: [
       "10+ years of experience in UX design, front-end development, and creative coding.",
@@ -361,6 +369,8 @@ const tileInfo: { [key: number]: {
       "Passionate about bridging the gap between design and engineering teams.",
     ],
     techStack: ["React", "TypeScript", "Figma", "Node.js", "Three.js"],
+    launchUrl: "https://www.linkedin.com/in/joshbarteaux",
+    launchLabel: "LinkedIn",
     contactLinks: {
       email: "josh@remotelyamused.com",
       github: "https://github.com/murdadrum",
