@@ -187,7 +187,7 @@ export function TileModal({ color, index, totalTiles, onClose, onNext, onPrev, p
                 position: 'relative',
               }}
             >
-              {tileInfo.embedUrl || tileInfo.modalPreviewUrl || previewImage ? (
+              {tileInfo.soundcloudUrl || tileInfo.embedUrl || tileInfo.modalPreviewUrl || previewImage ? (
                 <Box
                   sx={{
                     position: 'relative',
@@ -222,6 +222,18 @@ export function TileModal({ color, index, totalTiles, onClose, onNext, onPrev, p
                         title="Jira Board"
                         {...sharedIframeProps}
                       />
+                    ) : tileInfo.soundcloudUrl ? (
+                      <Box sx={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', p: 2 }}>
+                        <iframe
+                          width="100%"
+                          height="300"
+                          scrolling="no"
+                          frameBorder="no"
+                          allow="autoplay; encrypted-media"
+                          src={tileInfo.soundcloudUrl}
+                          style={{ border: 0, borderRadius: 4 }}
+                        />
+                      </Box>
                     ) : tileInfo.embedUrl ? (
                       <iframe
                         src={tileInfo.embedUrl}
@@ -464,20 +476,6 @@ export function TileModal({ color, index, totalTiles, onClose, onNext, onPrev, p
                 </Box>
               )}
 
-              {/* SoundCloud Player */}
-              {tileInfo.soundcloudUrl && (
-                <Box sx={{ mb: { xs: 2.5, sm: 3, md: 3.5 } }}>
-                  <iframe
-                    width="100%"
-                    height="166"
-                    scrolling="no"
-                    frameBorder="no"
-                    allow="autoplay; encrypted-media"
-                    src={tileInfo.soundcloudUrl}
-                    style={{ borderRadius: 4 }}
-                  />
-                </Box>
-              )}
 
               <Divider sx={{ my: { xs: 2, sm: 2.5, md: 3 }, borderColor: 'rgba(255, 255, 255, 0.05)' }} />
 
