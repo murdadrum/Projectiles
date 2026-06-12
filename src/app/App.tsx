@@ -299,16 +299,14 @@ const tileInfo: { [key: number]: {
   8: { // Tile 9
     title: "murdadrum",
     subtitle: "SoundCloud",
-    description: "Electronic music producer and multi-instrumentalist. Blending ambient, cinematic, and rhythmic textures into immersive soundscapes.",
+    description: "Cinematic blend of juxtaposed dnb subgenres.",
     details: [
-      "Sleepless Knights ch II — latest release blending orchestral tension with electronic production.",
-      "Original compositions spanning ambient, cinematic, and groove-driven electronic genres.",
+      "Sleepless Knights ch II — latest release.",
     ],
     techStack: ["SoundCloud", "Ableton Live", "Original Music"],
-    soundcloudUrl: "https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/soundcloud%3Atracks%3A2040154129&color=%23ff5500&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true",
+    soundcloudUrl: "https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/soundcloud%253Atracks%253A2040154129&color=%23ff5500&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true&visual=true",
     launchUrl: "https://soundcloud.com/murdadrum",
     launchLabel: "Open SoundCloud",
-    modalPreviewUrl: imgTile8,
   },
   9: { // Tile 10
     title: "MarketPulse",
