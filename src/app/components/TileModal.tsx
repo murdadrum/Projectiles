@@ -245,7 +245,7 @@ export function TileModal({ color, index, totalTiles, onClose, onNext, onPrev, p
                         component="img"
                         src={tileInfo.modalPreviewUrl ?? previewImage}
                         alt={tileInfo.title}
-                        sx={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                        sx={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: [1, 4, 9, 11, 12].includes(index) ? 'top' : 'center' }}
                       />
                     ) : null}
                   </Paper>

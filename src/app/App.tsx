@@ -90,19 +90,20 @@ import imgTile0 from "../assets/Tile Images/Tile1.png";
 import imgTile1 from "../assets/Tile Images/Tile2.png";
 import imgTile2 from "../assets/Tile Images/Tile3promptly.png";
 import imgTile3 from "../assets/Tile Images/Tile4lvble.png";
-import imgTile4 from "../assets/Tile Images/Tile5.png";
+import imgTile4 from "../assets/Tile Images/Sidenote-Label.png";
 import imgTile5 from "../assets/Tile Images/Tile6.png";
 import imgTile5Modal from "../assets/Tile Images/Tile6-preview.png";
 import imgTile6 from "../assets/Tile Images/Tile7.png";
 import imgTile7 from "../assets/Tile Images/Tile8.png";
 import imgTile7Modal from "../assets/Tile Images/Tile8-preview.png";
 import imgTile8 from "../assets/Tile Images/Tile9.png";
-import imgTile9 from "../assets/f22999f701e867f15d4aeabf9f4c29760a105ea8.png";
+import imgTile9 from "../assets/Tile Images/Sidenote-Label.png";
 import imgTile10 from "../assets/Tile Images/Tile11 LetterMark-1.png";
-import imgTile11 from "../assets/6cf4f2b642a8f57792a2f325a4cef91211e940b4.png";
-import imgTile12 from "../assets/5263fe41ea24dd1c6b07fe35ce3749cf6dff3799.png";
+import imgTile11 from "../assets/Tile Images/Sidenote-Label.png";
+import imgTile12 from "../assets/Tile Images/Sidenote-Label.png";
 import imgTile13 from "../assets/Tile Images/Tile14.png";
 import imgTile14 from "../assets/Tile Images/Tile15.png";
+import imgSidenote from "../assets/Tile Images/Sidenote-Label.png";
 import imgTile15 from "../assets/Tile Images/Tile16.png";
 
 // Material Design dark theme
@@ -260,7 +261,8 @@ const tileInfo: { [key: number]: {
       "Syncs with wearable devices for comprehensive health metrics.",
       "Provides personalized recommendations based on behavioral patterns.",
     ],
-    techStack: ["React Native", "Firebase", "HealthKit"]
+    techStack: ["React Native", "Firebase", "HealthKit"],
+    modalPreviewUrl: imgSidenote,
   },
   5: { // Tile 6
     title: "MuseBox",
@@ -324,7 +326,8 @@ const tileInfo: { [key: number]: {
       "Aggregates data from multiple financial APIs for comprehensive market coverage.",
       "Uses machine learning for trend detection and anomaly alerts.",
     ],
-    techStack: ["React", "Python", "TensorFlow"]
+    techStack: ["React", "Python", "TensorFlow"],
+    modalPreviewUrl: imgSidenote,
   },
   10: { // Tile 11
     title: "EcoTracker",
@@ -344,7 +347,8 @@ const tileInfo: { [key: number]: {
       "Auto-generates documentation from code with live component previews.",
       "Version control for design tokens with multi-platform export.",
     ],
-    techStack: ["React", "Storybook", "Figma API"]
+    techStack: ["React", "Storybook", "Figma API"],
+    modalPreviewUrl: imgSidenote,
   },
   12: { // Tile 13
     title: "SecureVault",
@@ -354,7 +358,8 @@ const tileInfo: { [key: number]: {
       "Zero-knowledge architecture ensures only users can decrypt their data.",
       "Supports team vaults with granular access control and audit logs.",
     ],
-    techStack: ["Electron", "Rust", "SQLCipher"]
+    techStack: ["Electron", "Rust", "SQLCipher"],
+    modalPreviewUrl: imgSidenote,
   },
   13: { // Tile 14
     title: "Salesforce",
