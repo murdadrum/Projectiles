@@ -87,19 +87,21 @@ function MaintenanceScreen() {
 
 // Import tile images from Figma
 import imgTile0 from "../assets/Tile Images/Tile1.png";
-import imgTile1 from "../assets/Tile Images/Frame 2 Docker.png";
+import imgTile1 from "../assets/Tile Images/Tile2.png";
 import imgTile2 from "../assets/Tile Images/Tile3promptly.png";
 import imgTile3 from "../assets/Tile Images/Tile4lvble.png";
 import imgTile4 from "../assets/Tile Images/Tile5.png";
-import imgTile5 from "../assets/b6eee35dfcd6556c9a1cad0bba22b81a61d0e23e.png";
+import imgTile5 from "../assets/Tile Images/Tile6.png";
+import imgTile5Modal from "../assets/Tile Images/Tile6-preview.png";
 import imgTile6 from "../assets/Tile Images/Tile7.png";
-import imgTile7 from "../assets/535e811a44d7022bdae1e1b98488a8b98ac39536.png";
+import imgTile7 from "../assets/Tile Images/Tile8.png";
+import imgTile7Modal from "../assets/Tile Images/Tile8-preview.png";
 import imgTile8 from "../assets/8d4c02cbc8a1f53547722fccbf6a7970a825b593.png";
 import imgTile9 from "../assets/f22999f701e867f15d4aeabf9f4c29760a105ea8.png";
 import imgTile10 from "../assets/Tile Images/Tile11 LetterMark-1.png";
 import imgTile11 from "../assets/6cf4f2b642a8f57792a2f325a4cef91211e940b4.png";
 import imgTile12 from "../assets/5263fe41ea24dd1c6b07fe35ce3749cf6dff3799.png";
-import imgTile13 from "../assets/70c9051db60a985c721347568f023a4add0e07d2.png";
+import imgTile13 from "../assets/Tile Images/Tile14.png";
 import imgTile14 from "../assets/Tile Images/Tile15.png";
 import imgTile15 from "../assets/Tile Images/Tile16.png";
 
@@ -178,13 +180,16 @@ const previewImages: { [key: number]: string } = {
 };
 
 // Tile information for special layouts
-const tileInfo: { [key: number]: { 
-  title: string; 
+const tileInfo: { [key: number]: {
+  title: string;
   subtitle?: string;
-  description: string; 
+  description: string;
   details: string[];
   techStack: string[];
   embedUrl?: string;
+  launchUrl?: string;
+  launchLabel?: string;
+  modalPreviewUrl?: string;
   contactLinks?: {
     email: string;
     github: string;
@@ -205,14 +210,18 @@ const tileInfo: { [key: number]: {
     embedUrl: "https://venndiachrome.figma.site/"
   },
   1: { // Tile 2
-    title: "GeoLogic",
-    subtitle: "Geospatial Operations Platform",
-    description: "Intelligence workspace that blends satellite, sensor, and on-the-ground telemetry for terrain-aware decision making.",
+    title: "GitHub.com/murdadrum",
+    subtitle: "BigLeague Chewbacca",
+    description: "GitHub Pro developer with 65 repositories spanning TypeScript, Python, and React — from health apps to AI tooling to infrastructure monitoring.",
     details: [
-      "Surfaces layered map insights with historical context, live sensor feeds, and forecast overlays.",
-      "Empowers teams to build collaborative scenarios, assign regional actions, and push guided alerts.",
+      "AirStream — breath training app; MuseBox — cinematic prompt & storyboard studio.",
+      "QuarterMasterLT — endpoint monitoring and performance reporting tool.",
+      "Pull Shark & Pair Extraordinaire badges (×2) — consistent collaborator and code reviewer.",
+      "Quickdraw & YOLO badges — fast responder and decisive contributor across open projects.",
     ],
-    techStack: ["React", "Mapbox GL JS", "PostGIS", "Node.js"]
+    techStack: ["TypeScript", "Python", "React", "Node.js", "GitHub Actions"],
+    launchUrl: "https://github.com/murdadrum",
+    launchLabel: "Open GitHub",
   },
   2: { // Tile 3
     title: "Promptly",
@@ -247,15 +256,18 @@ const tileInfo: { [key: number]: {
     techStack: ["React Native", "Firebase", "HealthKit"]
   },
   5: { // Tile 6
-    title: "MuseBox Audio",
-    subtitle: "Web Application",
-    description: "Interactive music sequencer and audio synthesis playground.",
+    title: "MuseBox",
+    subtitle: "Storyboard Studio",
+    description: "Streamlined storyboarding app for quickly generating and organizing image thumbnails into scene-ready boards.",
     details: [
-      "Built with Web Audio API for low-latency real-time sound processing.",
-      "Features MIDI support and customizable synthesizer parameters.",
+      "Combine prompt references with global style attributes — lens, lighting, aspect ratio — for consistent frame generation.",
+      "Organizes outputs into visual scene boards with quick export for production handoff.",
+      "Drag-and-drop image and video assets as style references alongside text prompts.",
     ],
-    techStack: ["Web Audio API", "React", "Tone.js"],
-    embedUrl: "https://musebox-779175721635.us-west1.run.app/"
+    techStack: ["React", "Vite", "Gemini API", "Node.js"],
+    launchUrl: "https://musebox-779175721635.us-west1.run.app/",
+    launchLabel: "Launch MuseBox",
+    modalPreviewUrl: imgTile5Modal,
   },
   6: { // Tile 7
     title: "QuarterMaster",
@@ -269,15 +281,19 @@ const tileInfo: { [key: number]: {
     embedUrl: "/QuarterMaster-PerformanceDashboard.html"
   },
   7: { // Tile 8
-    title: "MuseBox",
-    subtitle: "Web Application",
-    description: "A cinematic prompt studio for generating image sequences and storyboard-ready frames.",
+    title: "CCO United",
+    subtitle: "Cherokee Nation Community Platform",
+    description: "Unified digital platform consolidating tools and resources for Cherokee Nation's Community & Cultural Outreach organizations — connecting 450K+ citizens across 14+ community groups.",
     details: [
-      "Combines prompt + style references with global attributes like lens, lighting, and aspect.",
-      "Organizes outputs into scene boards with quick export options for production handoff.",
+      "Salesforce-based system spanning 9 service areas: housing, events, resource directories, grant management, and volunteer/donor CRM.",
+      "Alisdelisgi — a 24/7 AI assistant trained on Cherokee Nation mission data, providing culturally-grounded support in Cherokee and English.",
+      "Comprehensive resource directory covering healthcare, youth services, elder support, food distribution, and emergency response.",
+      "Integrated learning platform via NonprofitReady partnership and a public-facing Lightning Web Digital Experience.",
     ],
-    techStack: ["React", "Vite", "Gemini API"],
-    embedUrl: "https://musebox-779175721635.us-west1.run.app/"
+    techStack: ["Salesforce", "Agentforce", "LWC", "Data Cloud", "GitHub Actions"],
+    launchUrl: "https://sf.cco-united.joshbarteaux.com",
+    launchLabel: "Launch CCO United",
+    modalPreviewUrl: imgTile7Modal,
   },
   8: { // Tile 9
     title: "VoiceScript",
@@ -330,15 +346,18 @@ const tileInfo: { [key: number]: {
     techStack: ["Electron", "Rust", "SQLCipher"]
   },
   13: { // Tile 14
-    title: "LearnHub",
-    subtitle: "Education Platform",
-    description: "Adaptive learning platform with personalized course recommendations.",
+    title: "Salesforce",
+    subtitle: "Trailblazer Ranger",
+    description: "Salesforce Certified Administrator with Trailhead Ranger status — 121 badges earned across the full Salesforce platform.",
     details: [
-      "Uses spaced repetition algorithms to optimize knowledge retention.",
-      "Tracks learning progress with detailed analytics and achievement badges.",
+      "Agentforce & AI — Agentforce Basics, Agentforce Builder, RAG, Autonomous Agents, LLMs, Generative AI.",
+      "Platform & Admin — Data Modeling, LWC, Apex, Flows, Permission Sets, Sandbox Administration.",
+      "Testing & QA — Salesforce App Testing with Provar, Test Management, Continuous Testing, BDD/Agile.",
+      "Business Analysis — Process Mapping, BA Best Practices, Salesforce CRM, Reports & Dashboards.",
     ],
-    techStack: ["Next.js", "PostgreSQL", "Redis"],
-    embedUrl: "/Test-Run-Dashboard.html"
+    techStack: ["Salesforce", "Agentforce", "LWC / Apex", "Trailhead", "Data Cloud"],
+    launchUrl: "https://www.salesforce.com/trailblazer/g67ae2eb0oyxu7m3l3",
+    launchLabel: "Launch Trailblazer",
   },
   14: { // Tile 15
     title: "PixelForge",
