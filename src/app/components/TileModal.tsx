@@ -38,6 +38,9 @@ interface TileModalProps {
     details: string[];
     techStack: string[];
     embedUrl?: string;
+    launchUrl?: string;
+    launchLabel?: string;
+    modalPreviewUrl?: string;
     contactLinks?: {
       email: string;
       github: string;
@@ -183,7 +186,7 @@ export function TileModal({ color, index, totalTiles, onClose, onNext, onPrev, p
                 position: 'relative',
               }}
             >
-              {tileInfo.embedUrl || previewImage ? (
+              {tileInfo.embedUrl || tileInfo.modalPreviewUrl || previewImage ? (
                 <Box
                   sx={{
                     position: 'relative',
@@ -224,10 +227,10 @@ export function TileModal({ color, index, totalTiles, onClose, onNext, onPrev, p
                         title={tileInfo.title}
                         {...sharedIframeProps}
                       />
-                    ) : previewImage ? (
+                    ) : (tileInfo.modalPreviewUrl ?? previewImage) ? (
                       <Box
                         component="img"
-                        src={previewImage}
+                        src={tileInfo.modalPreviewUrl ?? previewImage}
                         alt={tileInfo.title}
                         sx={{ width: '100%', height: '100%', objectFit: 'cover' }}
                       />
@@ -356,9 +359,9 @@ export function TileModal({ color, index, totalTiles, onClose, onNext, onPrev, p
               </Box>
 
               {/* Mobile: Link to open app */}
-              {tileInfo.embedUrl && (
+              {(tileInfo.embedUrl || tileInfo.launchUrl) && (
                 <Button
-                  href={tileInfo.embedUrl}
+                  href={tileInfo.launchUrl ?? tileInfo.embedUrl}
                   target="_blank"
                   rel="noopener noreferrer"
                   variant="contained"
@@ -375,7 +378,31 @@ export function TileModal({ color, index, totalTiles, onClose, onNext, onPrev, p
                     fontSize: { xs: '0.75rem', sm: '0.8125rem', md: '0.875rem' },
                   }}
                 >
-                  Launch App
+                  {tileInfo.launchLabel ?? 'Launch App'}
+                </Button>
+              )}
+
+              {/* Desktop: External launch button (launchUrl only — no iframe) */}
+              {tileInfo.launchUrl && (
+                <Button
+                  href={tileInfo.launchUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  variant="contained"
+                  color="primary"
+                  endIcon={<OpenInNewIcon />}
+                  fullWidth
+                  sx={{
+                    display: { xs: 'none', md: 'flex' },
+                    mb: { xs: 2, sm: 2.5, md: 3 },
+                    py: { xs: 1.25, sm: 1.5 },
+                    textTransform: 'uppercase',
+                    letterSpacing: '0.1em',
+                    fontWeight: 500,
+                    fontSize: { xs: '0.75rem', sm: '0.8125rem', md: '0.875rem' },
+                  }}
+                >
+                  {tileInfo.launchLabel ?? 'Launch App'}
                 </Button>
               )}
 
@@ -620,9 +647,7 @@ export function TileModal({ color, index, totalTiles, onClose, onNext, onPrev, p
                       fontSize: { xs: '0.8125rem', sm: '0.8438rem', md: '0.875rem' },
                     }}
                   >
-                    {index === 7 
-                      ? "MuseBox layers prompt inputs, style refs, and shot metadata into a structured payload before dispatching model requests. Generated assets stream back into a scene-based storyboard, with previews and export actions optimized for fast iteration."
-                      : index === 5
+                    {index === 5
                       ? "Built with Web Audio API for low-latency real-time sound processing. Features MIDI support and customizable synthesizer parameters for creative music production."
                       : index === 2
                       ? "Promptly uses multimodal AI models to analyze uploaded assets and construct detailed, structurally sound prompts for creative workflows."
