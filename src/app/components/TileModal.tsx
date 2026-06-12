@@ -41,6 +41,7 @@ interface TileModalProps {
     launchUrl?: string;
     launchLabel?: string;
     modalPreviewUrl?: string;
+    soundcloudUrl?: string;
     contactLinks?: {
       email: string;
       github: string;
@@ -460,6 +461,21 @@ export function TileModal({ color, index, totalTiles, onClose, onNext, onPrev, p
                       ))}
                     </Box>
                   )}
+                </Box>
+              )}
+
+              {/* SoundCloud Player */}
+              {tileInfo.soundcloudUrl && (
+                <Box sx={{ mb: { xs: 2.5, sm: 3, md: 3.5 } }}>
+                  <iframe
+                    width="100%"
+                    height="166"
+                    scrolling="no"
+                    frameBorder="no"
+                    allow="autoplay; encrypted-media"
+                    src={tileInfo.soundcloudUrl}
+                    style={{ borderRadius: 4 }}
+                  />
                 </Box>
               )}
 

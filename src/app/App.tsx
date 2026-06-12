@@ -96,7 +96,7 @@ import imgTile5Modal from "../assets/Tile Images/Tile6-preview.png";
 import imgTile6 from "../assets/Tile Images/Tile7.png";
 import imgTile7 from "../assets/Tile Images/Tile8.png";
 import imgTile7Modal from "../assets/Tile Images/Tile8-preview.png";
-import imgTile8 from "../assets/8d4c02cbc8a1f53547722fccbf6a7970a825b593.png";
+import imgTile8 from "../assets/Tile Images/Tile9.png";
 import imgTile9 from "../assets/f22999f701e867f15d4aeabf9f4c29760a105ea8.png";
 import imgTile10 from "../assets/Tile Images/Tile11 LetterMark-1.png";
 import imgTile11 from "../assets/6cf4f2b642a8f57792a2f325a4cef91211e940b4.png";
@@ -190,6 +190,7 @@ const tileInfo: { [key: number]: {
   launchUrl?: string;
   launchLabel?: string;
   modalPreviewUrl?: string;
+  soundcloudUrl?: string;
   contactLinks?: {
     email: string;
     github: string;
@@ -296,14 +297,18 @@ const tileInfo: { [key: number]: {
     modalPreviewUrl: imgTile7Modal,
   },
   8: { // Tile 9
-    title: "VoiceScript",
-    subtitle: "Accessibility Tools",
-    description: "Speech-to-text transcription service with multi-language support.",
+    title: "murdadrum",
+    subtitle: "SoundCloud",
+    description: "Electronic music producer and multi-instrumentalist. Blending ambient, cinematic, and rhythmic textures into immersive soundscapes.",
     details: [
-      "Leverages transformer models for accurate speaker diarization.",
-      "Exports formatted transcripts with timestamps and speaker labels.",
+      "Sleepless Knights ch II — latest release blending orchestral tension with electronic production.",
+      "Original compositions spanning ambient, cinematic, and groove-driven electronic genres.",
     ],
-    techStack: ["Python", "Whisper AI", "FastAPI"]
+    techStack: ["SoundCloud", "Ableton Live", "Original Music"],
+    soundcloudUrl: "https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/soundcloud%3Atracks%3A2040154129&color=%23ff5500&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true",
+    launchUrl: "https://soundcloud.com/murdadrum",
+    launchLabel: "Open SoundCloud",
+    modalPreviewUrl: imgTile8,
   },
   9: { // Tile 10
     title: "MarketPulse",
