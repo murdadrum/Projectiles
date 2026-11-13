@@ -18,13 +18,11 @@ interface TileProps {
   initialFlipped?: boolean;
   cascadeDelay?: number;
   onInitialFlipComplete?: () => void;
-  isTouchFlipped?: boolean;
-  isTouchDevice?: boolean;
 }
 
 // Back-face images are the tile preview assets when provided.
 
-export function Tile({ color, index, onClick, previewImage, mousePosition, prevMousePosition, isActiveHover, onTileHoverChange, initialFlipped, cascadeDelay, onInitialFlipComplete, isTouchFlipped, isTouchDevice }: TileProps) {
+export function Tile({ color, index, onClick, previewImage, mousePosition, prevMousePosition, isActiveHover, onTileHoverChange, initialFlipped, cascadeDelay, onInitialFlipComplete }: TileProps) {
   const tileRef = useRef<HTMLDivElement>(null);
   const theme = useTheme();
   const [flipDirection, setFlipDirection] = useState<'horizontal' | 'vertical'>('horizontal');
@@ -32,12 +30,9 @@ export function Tile({ color, index, onClick, previewImage, mousePosition, prevM
   const [showAfterglow, setShowAfterglow] = useState(false);
   const shouldShowPreview = !!previewImage;
 
-  // On touch devices, override showingBack with isTouchFlipped state
-  const effectiveShowingBack = isTouchDevice ? isTouchFlipped : showingBack;
-
-  // Calculate if this tile is a neighbor of the hovered tile (disabled on touch)
+  // Calculate if this tile is a neighbor of the hovered tile
   const isNeighbor = () => {
-    if (isTouchDevice || !mousePosition || !tileRef.current || isActiveHover) return false;
+    if (!mousePosition || !tileRef.current || isActiveHover) return false;
     
     const rect = tileRef.current.getBoundingClientRect();
     const gridRect = tileRef.current.parentElement?.getBoundingClientRect();
@@ -182,7 +177,7 @@ export function Tile({ color, index, onClick, previewImage, mousePosition, prevM
 
   // Calculate the final transform based on showingBack state and proximity rotation
   const getFinalTransform = () => {
-    if (effectiveShowingBack) {
+    if (showingBack) {
       // When showing back, flip 180 degrees (override proximity rotation)
       return flipDirection === 'horizontal' ? 'rotateY(180deg)' : 'rotateX(180deg)';
     } else {
@@ -220,14 +215,14 @@ export function Tile({ color, index, onClick, previewImage, mousePosition, prevM
           transformStyle: 'preserve-3d',
           transform: getFinalTransform(),
           transition: theme.transitions.create(['transform'], {
-            duration: effectiveShowingBack || isActiveHover ? 400 : theme.transitions.duration.shorter,
-            easing: effectiveShowingBack || isActiveHover ? 'cubic-bezier(0.34, 1.56, 0.64, 1)' : theme.transitions.easing.easeOut,
+            duration: showingBack || isActiveHover ? 400 : theme.transitions.duration.shorter,
+            easing: showingBack || isActiveHover ? 'cubic-bezier(0.34, 1.56, 0.64, 1)' : theme.transitions.easing.easeOut,
           }),
         }}
       >
         {/* Front face - colored tile */}
         <Card
-          elevation={effectiveShowingBack ? 2 : (isActiveHover ? 8 : 2)}
+          elevation={showingBack ? 2 : (isActiveHover ? 8 : 2)}
           sx={{
             position: 'absolute',
             width: '100%',
@@ -275,7 +270,7 @@ export function Tile({ color, index, onClick, previewImage, mousePosition, prevM
 
         {/* Back face - placeholder image (horizontal flip) */}
         <Card
-          elevation={effectiveShowingBack ? 8 : 2}
+          elevation={showingBack ? 8 : 2}
           sx={{
             position: 'absolute',
             width: '100%',
