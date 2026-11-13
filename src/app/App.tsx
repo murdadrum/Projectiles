@@ -679,30 +679,6 @@ function AppContent() {
           </Typography>
           <Typography
             component="a"
-            href="https://www.figma.com/@JoshUX"
-            target="_blank"
-            rel="noopener noreferrer"
-            sx={{
-              fontFamily: '"Aldrich", sans-serif',
-              fontWeight: 400,
-              fontSize: { xs: '12px', sm: '14px', md: '16px' },
-              lineHeight: { xs: '12px', sm: '14px', md: '16px' },
-              letterSpacing: '2px',
-              textTransform: 'uppercase',
-              color: 'text.primary',
-              textDecoration: 'none',
-              cursor: 'pointer',
-              transition: 'opacity 0.2s',
-              whiteSpace: 'nowrap',
-              '&:hover': {
-                opacity: 0.7,
-              },
-            }}
-          >
-            Figma
-          </Typography>
-          <Typography
-            component="a"
             href="https://www.linkedin.com/in/joshbarteaux"
             target="_blank"
             rel="noopener noreferrer"
