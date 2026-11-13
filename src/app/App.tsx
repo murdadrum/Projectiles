@@ -414,13 +414,7 @@ function AppContent() {
   const [prevMousePosition, setPrevMousePosition] = useState<{ x: number; y: number } | null>(null);
   const [hoveredTileIndex, setHoveredTileIndex] = useState<number | null>(null);
   const [initialAnimationComplete, setInitialAnimationComplete] = useState(false);
-  const [touchFlippedTiles, setTouchFlippedTiles] = useState<Set<number>>(new Set());
-  const [randomlyFlippedTiles, setRandomlyFlippedTiles] = useState<Set<number>>(new Set());
   const gridRef = useRef<HTMLDivElement>(null);
-  const flipTimerRef = useRef<NodeJS.Timeout | null>(null);
-
-  // Detect if device supports touch
-  const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
 
   const handleNext = () => {
     if (selectedTile) {
@@ -437,66 +431,7 @@ function AppContent() {
   };
 
   const handleTileClick = (color: string, index: number) => {
-    if (isTouchDevice) {
-      // Clear any existing timer
-      if (flipTimerRef.current) {
-        clearTimeout(flipTimerRef.current);
-        flipTimerRef.current = null;
-      }
-
-      // On touch devices: first click flips, second click opens modal
-      if (touchFlippedTiles.has(index)) {
-        // Already flipped, so open modal
-        setSelectedTile({ color, index });
-        // Reset flipped state when modal opens
-        setTouchFlippedTiles(new Set());
-      } else {
-        // Not flipped yet, so flip it (and unflip any other tiles)
-        setTouchFlippedTiles(new Set([index]));
-        
-        // Start 1200ms timer (50% longer than 800ms) to auto-flip back and then flip a random different tile
-        flipTimerRef.current = setTimeout(() => {
-          // Flip back to original
-          setTouchFlippedTiles(new Set());
-          
-          // After a brief delay, flip a random different tile to command attention
-          setTimeout(() => {
-            // Get available tiles (not yet randomly flipped and not the current tile)
-            const availableTiles = Array.from({ length: tileColors.length }, (_, i) => i)
-              .filter(i => i !== index && !randomlyFlippedTiles.has(i));
-            
-            // If all tiles have been randomly flipped, reset the tracking
-            let randomIndex;
-            if (availableTiles.length === 0) {
-              // Reset and exclude only the current tile
-              setRandomlyFlippedTiles(new Set([index]));
-              const resetAvailable = Array.from({ length: tileColors.length }, (_, i) => i)
-                .filter(i => i !== index);
-              randomIndex = resetAvailable[Math.floor(Math.random() * resetAvailable.length)];
-            } else {
-              // Select from available tiles
-              randomIndex = availableTiles[Math.floor(Math.random() * availableTiles.length)];
-            }
-            
-            // Mark this tile as randomly flipped
-            setRandomlyFlippedTiles(prev => new Set([...prev, randomIndex]));
-            
-            // Flip the random tile
-            setTouchFlippedTiles(new Set([randomIndex]));
-            
-            // Set another timer for the new flipped tile (1200ms)
-            flipTimerRef.current = setTimeout(() => {
-              setTouchFlippedTiles(new Set());
-              flipTimerRef.current = null;
-            }, 1200);
-          }, 300); // 300ms delay between flip back and new flip for visual clarity
-          
-        }, 1200);
-      }
-    } else {
-      // On desktop: click always opens modal
-      setSelectedTile({ color, index });
-    }
+    setSelectedTile({ color, index });
   };
 
   const handleGridMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -595,9 +530,9 @@ function AppContent() {
                   index={index}
                   onClick={() => handleTileClick(color, index)}
                   previewImage={previewImages[index]}
-                  mousePosition={isTouchDevice ? null : mousePosition}
-                  isActiveHover={isTouchDevice ? false : hoveredTileIndex === index}
-                  onTileHoverChange={(isHovering) => !isTouchDevice && setHoveredTileIndex(isHovering ? index : null)}
+                  mousePosition={mousePosition}
+                  isActiveHover={hoveredTileIndex === index}
+                  onTileHoverChange={(isHovering) => setHoveredTileIndex(isHovering ? index : null)}
                   prevMousePosition={prevMousePosition}
                   initialFlipped={!initialAnimationComplete}
                   cascadeDelay={cascadeDelay}
@@ -607,8 +542,6 @@ function AppContent() {
                       setInitialAnimationComplete(true);
                     }
                   }}
-                  isTouchFlipped={touchFlippedTiles.has(index)}
-                  isTouchDevice={isTouchDevice}
                 />
               );
             })}
@@ -676,30 +609,6 @@ function AppContent() {
             }}
           >
             GitHub
-          </Typography>
-          <Typography
-            component="a"
-            href="https://www.figma.com/@JoshUX"
-            target="_blank"
-            rel="noopener noreferrer"
-            sx={{
-              fontFamily: '"Aldrich", sans-serif',
-              fontWeight: 400,
-              fontSize: { xs: '12px', sm: '14px', md: '16px' },
-              lineHeight: { xs: '12px', sm: '14px', md: '16px' },
-              letterSpacing: '2px',
-              textTransform: 'uppercase',
-              color: 'text.primary',
-              textDecoration: 'none',
-              cursor: 'pointer',
-              transition: 'opacity 0.2s',
-              whiteSpace: 'nowrap',
-              '&:hover': {
-                opacity: 0.7,
-              },
-            }}
-          >
-            Figma
           </Typography>
           <Typography
             component="a"
